@@ -1,22 +1,13 @@
 package com.allianceever.projectERP.controller;
 
 import com.allianceever.projectERP.model.dto.EmployeeDto;
-import com.allianceever.projectERP.model.dto.EstimatesInvoicesDto;
-import com.allianceever.projectERP.model.dto.LeavesDto;
-import com.allianceever.projectERP.model.entity.Employee;
-import com.allianceever.projectERP.model.entity.EstimatesInvoices;
 import com.allianceever.projectERP.model.entity.Expenses;
 import com.allianceever.projectERP.model.entity.Leaves;
 import com.allianceever.projectERP.service.*;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -29,6 +20,16 @@ public class NavigationController {
     private EstimatesInvoicesService estimatesInvoicesService;
     private PaymentService paymentService;
     private ExpensesService expensesService;
+
+    private DepartmentService departmentService;
+    private DesignationService designationService;
+    private ClientService clientService;
+    private ProjectService projectService;
+    private ImageProjectService imageProjectService;
+    private FileProjectService fileProjectService;
+    private EmployeeProjectService employeeProjectService;
+    private LeaderProjectService leaderProjectService;
+    private TaskService taskService;
 
 
 
@@ -50,14 +51,13 @@ public class NavigationController {
         }
 
 
+    //**** Part Ayoub Ighachen:
     //
     @GetMapping("/employees.html")
     public String ListEmployees(Model model){
         model.addAttribute("employees", employeeService.getAll());
         return "employees";
     }
-
-
 
     @RequestMapping("/profile.html")
     public String Profile(){
@@ -69,6 +69,76 @@ public class NavigationController {
         model.addAttribute("employee", employeeService.getById(employeeID));
         return "profile";
     }
+
+    //
+    @GetMapping("/departments.html")
+    public String ListDepartments(Model model){
+        model.addAttribute("departments", departmentService.getAll());
+        return "departments";
+    }
+
+    //
+    @GetMapping("/designations.html")
+    public String ListDesignations(Model model){
+        model.addAttribute("designations", designationService.getAll());
+        return "designations";
+    }
+
+    //
+    @GetMapping("/clients.html")
+    public String ListClients(Model model){
+        model.addAttribute("clients", clientService.getAll());
+        return "clients";
+    }
+
+    @RequestMapping("/client-profile.html")
+    public String ClientProfile(){
+        return "client-profile";
+    }
+
+    @GetMapping("/client-profile.html/{id}")
+    public String getClientProfile(@PathVariable("id") Long clientID, Model model){
+        model.addAttribute("client", clientService.getById(clientID));
+        return "client-profile";
+    }
+
+    //
+    @GetMapping("/projects.html")
+    public String ListProjects(Model model){
+        model.addAttribute("projects", projectService.getAll());
+        return "projects";
+    }
+
+    @RequestMapping("/project-view.html")
+    public String ViewProject(){
+        return "project-view";
+    }
+
+    @GetMapping("/project-view.html/{id}")
+    public String getViewProject(@PathVariable("id") Long projectID, Model model){
+        model.addAttribute("project", projectService.getById(projectID));
+        model.addAttribute("imageProjects", imageProjectService.findAll(String.valueOf(projectID)));
+        model.addAttribute("fileProjects", fileProjectService.findAll(String.valueOf(projectID)));
+        model.addAttribute("employeeProjects", employeeProjectService.findAll(String.valueOf(projectID)));
+        model.addAttribute("leaderProjects", leaderProjectService.findAll(String.valueOf(projectID)));
+        model.addAttribute("tasks", taskService.findAll(String.valueOf(projectID)));
+        return "project-view";
+    }
+
+    @RequestMapping("/tasks.html")
+    public String Tasks(){
+        return "tasks";
+    }
+
+    @GetMapping("/tasks.html/{id}")
+    public String getTasks(@PathVariable("id") Long projectID, Model model){
+        model.addAttribute("projects", projectService.getAll());
+        model.addAttribute("projectTasks", projectService.getById(projectID));
+        model.addAttribute("tasks", taskService.findAll(String.valueOf(projectID)));
+        return "tasks";
+    }
+
+    //************************
 
 
 
@@ -88,7 +158,7 @@ public class NavigationController {
 
 
     @GetMapping("/leaves-employee.html")
-        public String ListLeaves(Model model){
+    public String ListLeaves(Model model){
 
         model.addAttribute("leaves", leavesService.getAllLeavesOrderedByDate());
         Leaves leave = new Leaves();
@@ -98,7 +168,7 @@ public class NavigationController {
 
         return "leaves-employee";
 
-        }
+    }
 
 
     @GetMapping("/leaves.html")
@@ -141,7 +211,7 @@ public class NavigationController {
     public String viewEstimates(Model model){
         return "estimate-view";
     }
-////////////////
+    ////////////////
     @GetMapping("/create-invoice.html")
     public String create_invoice(Model model){
 
