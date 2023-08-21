@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://thymeleaf.org">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
@@ -8,28 +8,28 @@
         <meta name="author" content="Dreamguys - Bootstrap Admin Template">
         <meta name="robots" content="noindex, nofollow">
         <title>Create Estimate - HRMS admin template</title>
-		
+
 		<!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-		
+
 		<!-- Bootstrap CSS -->
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-		
+
 		<!-- Fontawesome CSS -->
         <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-		
+
 		<!-- Lineawesome CSS -->
 		<link rel="stylesheet" href="assets/css/line-awesome.min.css">
-		
+
 		<!-- Select2 CSS -->
 		<link rel="stylesheet" href="assets/css/select2.min.css">
-		
+
 		<!-- Datetimepicker CSS -->
 		<link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
-		
+
 		<!-- Main CSS -->
         <link rel="stylesheet" href="assets/css/style.css">
-		
+
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 			<script src="assets/js/html5shiv.min.js"></script>
@@ -39,10 +39,10 @@
     <body>
 		<!-- Main Wrapper -->
         <div class="main-wrapper">
-		
+
 			<!-- Header -->
             <div class="header">
-			
+
 				<!-- Logo -->
                 <div class="header-left">
                     <a href="index.html" class="logo">
@@ -50,7 +50,7 @@
 					</a>
                 </div>
 				<!-- /Logo -->
-				
+
 				<a id="toggle_btn" href="javascript:void(0);">
 					<span class="bar-icon">
 						<span></span>
@@ -58,18 +58,18 @@
 						<span></span>
 					</span>
 				</a>
-				
+
 				<!-- Header Title -->
                 <div class="page-title-box">
 					<h3>Dreamguy's Technologies</h3>
                 </div>
 				<!-- /Header Title -->
-				
+
 				<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
-				
+
 				<!-- Header Menu -->
 				<ul class="nav user-menu">
-				
+
 					<!-- Search -->
 					<li class="nav-item">
 						<div class="top-nav-search">
@@ -83,7 +83,7 @@
 						</div>
 					</li>
 					<!-- /Search -->
-				
+
 					<!-- Flag -->
 					<li class="nav-item dropdown has-arrow flag-nav">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
@@ -105,7 +105,7 @@
 						</div>
 					</li>
 					<!-- /Flag -->
-				
+
 					<!-- Notifications -->
 					<li class="nav-item dropdown">
 						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
@@ -191,7 +191,7 @@
 						</div>
 					</li>
 					<!-- /Notifications -->
-					
+
 					<!-- Message Notifications -->
 					<li class="nav-item dropdown">
 						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
@@ -312,7 +312,7 @@
 					</li>
 				</ul>
 				<!-- /Header Menu -->
-				
+
 				<!-- Mobile Menu -->
 				<div class="dropdown mobile-user-menu">
 					<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
@@ -323,16 +323,16 @@
 					</div>
 				</div>
 				<!-- /Mobile Menu -->
-				
+
             </div>
 			<!-- /Header -->
-			
+
 			<!-- Sidebar -->
             <div class="sidebar" id="sidebar">
                 <div class="sidebar-inner slimscroll">
 					<div id="sidebar-menu" class="sidebar-menu">
 						<ul>
-							<li class="menu-title"> 
+							<li class="menu-title">
 								<span>Main</span>
 							</li>
 							<li class="submenu">
@@ -361,7 +361,7 @@
 									<li><a href="file-manager.html">File Manager</a></li>
 								</ul>
 							</li>
-							<li class="menu-title"> 
+							<li class="menu-title">
 								<span>Employees</span>
 							</li>
 							<li class="submenu">
@@ -380,7 +380,7 @@
 									<li><a href="overtime.html">Overtime</a></li>
 								</ul>
 							</li>
-							<li> 
+							<li>
 								<a href="clients.html"><i class="la la-users"></i> <span>Clients</span></a>
 							</li>
 							<li class="submenu">
@@ -391,13 +391,13 @@
 									<li><a href="task-board.html">Task Board</a></li>
 								</ul>
 							</li>
-							<li> 
+							<li>
 								<a href="leads.html"><i class="la la-user-secret"></i> <span>Leads</span></a>
 							</li>
-							<li> 
+							<li>
 								<a href="tickets.html"><i class="la la-ticket"></i> <span>Tickets</span></a>
 							</li>
-							<li class="menu-title"> 
+							<li class="menu-title">
 								<span>HR</span>
 							</li>
 							<li class="submenu">
@@ -419,7 +419,7 @@
 									<li><a href="payroll-items.html"> Payroll Items </a></li>
 								</ul>
 							</li>
-							<li> 
+							<li>
 								<a href="policies.html"><i class="la la-file-pdf-o"></i> <span>Policies</span></a>
 							</li>
 							<li class="submenu">
@@ -429,7 +429,7 @@
 									<li><a href="invoice-reports.html"> Invoice Report </a></li>
 								</ul>
 							</li>
-							<li class="menu-title"> 
+							<li class="menu-title">
 								<span>Performance</span>
 							</li>
 							<li class="submenu">
@@ -458,10 +458,10 @@
 							<li><a href="promotion.html"><i class="la la-bullhorn"></i> <span>Promotion</span></a></li>
 							<li><a href="resignation.html"><i class="la la-external-link-square"></i> <span>Resignation</span></a></li>
 							<li><a href="termination.html"><i class="la la-times-circle"></i> <span>Termination</span></a></li>
-							<li class="menu-title"> 
+							<li class="menu-title">
 								<span>Administration</span>
 							</li>
-							<li> 
+							<li>
 								<a href="assets.html"><i class="la la-object-ungroup"></i> <span>Assets</span></a>
 							</li>
 							<li class="submenu">
@@ -471,19 +471,19 @@
 									<li><a href="job-applicants.html"> Applied Candidates </a></li>
 								</ul>
 							</li>
-							<li> 
+							<li>
 								<a href="knowledgebase.html"><i class="la la-question"></i> <span>Knowledgebase</span></a>
 							</li>
-							<li> 
+							<li>
 								<a href="activities.html"><i class="la la-bell"></i> <span>Activities</span></a>
 							</li>
-							<li> 
+							<li>
 								<a href="users.html"><i class="la la-user-plus"></i> <span>Users</span></a>
 							</li>
-							<li> 
+							<li>
 								<a href="settings.html"><i class="la la-cog"></i> <span>Settings</span></a>
 							</li>
-							<li class="menu-title"> 
+							<li class="menu-title">
 								<span>Pages</span>
 							</li>
 							<li class="submenu">
@@ -528,10 +528,10 @@
 									<li><a href="blank-page.html"> Blank Page </a></li>
 								</ul>
 							</li>
-							<li class="menu-title"> 
+							<li class="menu-title">
 								<span>UI Interface</span>
 							</li>
-							<li> 
+							<li>
 								<a href="components.html"><i class="la la-puzzle-piece"></i> <span>Components</span></a>
 							</li>
 							<li class="submenu">
@@ -552,13 +552,13 @@
 									<li><a href="data-tables.html">Data Table </a></li>
 								</ul>
 							</li>
-							<li class="menu-title"> 
+							<li class="menu-title">
 								<span>Extras</span>
 							</li>
-							<li> 
+							<li>
 								<a href="#"><i class="la la-file-text"></i> <span>Documentation</span></a>
 							</li>
-							<li> 
+							<li>
 								<a href="javascript:void(0);"><i class="la la-info"></i> <span>Change Log</span> <span class="badge badge-primary ml-auto">v3.4</span></a>
 							</li>
 							<li class="submenu">
@@ -588,13 +588,13 @@
                 </div>
             </div>
 			<!-- /Sidebar -->
-			
+
 			<!-- Page Wrapper -->
             <div class="page-wrapper">
-			
+
 				<!-- Page Content -->
                 <div class="content container-fluid">
-				
+
 					<!-- Page Header -->
 					<div class="page-header">
 						<div class="row">
@@ -608,36 +608,38 @@
 						</div>
 					</div>
 					<!-- /Page Header -->
-					
+
 					<div class="row">
 						<div class="col-sm-12">
-							<form>
+							<button id="calculateButton" class="btn btn-primary">Calculate</button>
+
+							<form  id="invoiceForm">
 								<div class="row">
 									<div class="col-sm-6 col-md-3">
 										<div class="form-group">
 											<label>Client <span class="text-danger">*</span></label>
-											<select class="select">
+											<select class="select" name="clientID" id="clientID">
 												<option>Please Select</option>
-												<option selected>Barry Cuda</option>
-												<option>Tressa Wexler</option>
+												<option selected>1</option>
+												<option>2</option>
 											</select>
 										</div>
 									</div>
 									<div class="col-sm-6 col-md-3">
 										<div class="form-group">
 											<label>Project <span class="text-danger">*</span></label>
-											<select class="select">
+											<select class="select"  name="projectID" id="projectID">
 												<option>Select Project</option>
-												<option selected>Office Management</option>
-												<option>Project Management</option>
+												<option selected>1</option>
+												<option>2</option>
 											</select>
 										</div>
 									</div>
-									
+
 									<div class="col-sm-6 col-md-3">
 										<div class="form-group">
 											<label>Email</label>
-											<input class="form-control" type="email">
+											<input class="form-control" type="email"  >
 										</div>
 									</div>
 									<div class="col-sm-6 col-md-3">
@@ -667,7 +669,7 @@
 										<div class="form-group">
 											<label>Estimate Date <span class="text-danger">*</span></label>
 											<div class="cal-icon">
-												<input class="form-control datetimepicker" type="text">
+												<input class="form-control datetimepicker" type="text" name="estimateDate" id="estimateDate" >
 											</div>
 										</div>
 									</div>
@@ -675,114 +677,106 @@
 										<div class="form-group">
 											<label>Expiry Date <span class="text-danger">*</span></label>
 											<div class="cal-icon">
-												<input class="form-control datetimepicker" type="text">
+												<input class="form-control datetimepicker" type="text" name="expiryDate" id="expiryDate">
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="row">
-									<div class="col-md-12 col-sm-12">
-										<div class="table-responsive">
-											<table class="table table-hover table-white">
-												<thead>
-													<tr>
-														<th style="width: 20px">#</th>
+
+										<div class="row">
+											<div class="col-md-12 col-sm-12">
+
+												<div class="tableResponsive">
+													<table class="table table-hover table-white" id="myTable">
+														<thead>
 														<th class="col-sm-2">Item</th>
 														<th class="col-md-6">Description</th>
 														<th style="width:100px;">Unit Cost</th>
 														<th style="width:80px;">Qty</th>
 														<th>Amount</th>
 														<th> </th>
-													</tr>
-												</thead>
-												<tbody>
-												<tr>
-													<td>1</td>
-													<td>
-														<input class="form-control" type="text" style="min-width:150px">
-													</td>
-													<td>
-														<input class="form-control" type="text" style="min-width:150px">
-													</td>
-													<td>
-														<input class="form-control" style="width:100px" type="text">
-													</td>
-													<td>
-														<input class="form-control" style="width:80px" type="text">
-													</td>
-													<td>
-														<input class="form-control" readonly style="width:120px" type="text">
-													</td>
-													<td><a href="javascript:void(0)" class="text-success font-18" title="Add"><i class="fa fa-plus"></i></a></td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>
-														<input class="form-control" type="text" style="min-width:150px">
-													</td>
-													<td>
-														<input class="form-control" type="text" style="min-width:150px">
-													</td>
-													<td>
-														<input class="form-control" style="width:100px" type="text">
-													</td>
-													<td>
-														<input class="form-control" style="width:80px" type="text">
-													</td>
-													<td>
-														<input class="form-control" readonly style="width:120px" type="text">
-													</td>
-													<td><a href="javascript:void(0)" class="text-danger font-18" title="Remove"><i class="fa fa-trash-o"></i></a></td>
-												</tr>
-												</tbody>
-											</table>
+														</thead>
+														<tbody class="item">
+
+														<tr>
+															<td>
+																<input class="form-control name" type="text" style="min-width:150px">
+															</td>
+															<td>
+																<input class="form-control description" type="text" style="min-width:150px">
+															</td>
+															<td>
+																<input class="form-control uniteCost" style="width:100px" type="text">
+															</td>
+															<td>
+																<input class="form-control Quantity" style="width:80px" type="text">
+															</td>
+															<td>
+																<input class="form-control totalAmount" style="width:120px" type="text">
+															</td>
+															<td>
+																<a class="text-success font-18 add-row" title="Add"><i class="fa fa-plus"></i></a>
+															</td>
+														</tr>
+
+														<!-- Additional rows will be added here -->
+
+														</tbody>
+													</table>
+												</div>
+											</div>
 										</div>
-										<div class="table-responsive">
-											<table class="table table-hover table-white">
-												<tbody>
-													<tr>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td class="text-right">Total</td>
-														<td style="text-align: right; padding-right: 30px;width: 230px">0</td>
-													</tr>
-													<tr>
-														<td colspan="5" class="text-right">Tax</td>
-														<td style="text-align: right; padding-right: 30px;width: 230px">
-															<input class="form-control text-right" value="0" readonly type="text">
-														</td>
-													</tr>
-													<tr>
-														<td colspan="5" class="text-right">
-															Discount %
-														</td>
-														<td style="text-align: right; padding-right: 30px;width: 230px">
-															<input class="form-control text-right" type="text">
-														</td>
-													</tr>
-													<tr>
-														<td colspan="5" style="text-align: right; font-weight: bold">
-															Grand Total
-														</td>
-														<td style="text-align: right; padding-right: 30px; font-weight: bold; font-size: 16px;width: 230px">
-															$ 0.00
-														</td>
-													</tr>
-												</tbody>
-											</table>                               
-										</div>
+
+
+
+								<div class="table-responsive">
+									<table class="table table-hover table-white">
+										<tbody>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td class="text-right"></td>
+											<td style="text-align: right; padding-right: 30px;width: 230px"></td>
+										</tr>
+										<tr>
+											<!-- ... previous rows ... -->
+											<td colspan="5" class="text-right">Tax</td>
+											<td style="text-align: right; padding-right: 30px;width: 230px">
+												<input id="taxInput" class="form-control text-right"   type="text">
+											</td>
+										</tr>
+										<tr>
+											<!-- ... previous rows ... -->
+											<td colspan="5" class="text-right">
+												Discount %
+											</td>
+											<td style="text-align: right; padding-right: 30px;width: 230px">
+												<input id="discountInput" class="form-control text-right" type="text">
+											</td>
+										</tr>
+										<tr>
+											<!-- ... previous rows ... -->
+											<td colspan="5" style="text-align: right; font-weight: bold">
+												Grand Total
+											</td>
+											<td id="finalAmountCell" style="text-align: right; padding-right: 30px; font-weight: bold; font-size: 16px;width: 230px">
+
+											</td>
+										</tr>
+
+										</tbody>
+									</table>
+								</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
 													<label>Other Information</label>
-													<textarea class="form-control" rows="4"></textarea>
+													<textarea class="form-control" rows="4" id="otherInfo"></textarea>
 												</div>
 											</div>
 										</div>
-									</div>
-								</div>
 								<div class="submit-section">
 									<button class="btn btn-primary submit-btn m-r-10">Save & Send</button>
 									<button class="btn btn-primary submit-btn">Save</button>
@@ -792,32 +786,176 @@
 					</div>
 				</div>
 				<!-- /Page Content -->
-				
+
 			</div>
 			<!-- /Page Wrapper -->
-			
+
         </div>
 		<!-- /Main Wrapper -->
-		
+
 		<!-- jQuery -->
         <script src="assets/js/jquery-3.2.1.min.js"></script>
-		
+
 		<!-- Bootstrap Core JS -->
         <script src="assets/js/popper.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
-		
+
 		<!-- Slimscroll JS -->
 		<script src="assets/js/jquery.slimscroll.min.js"></script>
-		
+
 		<!-- Select2 JS -->
 		<script src="assets/js/select2.min.js"></script>
-		
+
 		<!-- Datetimepicker JS -->
 		<script src="assets/js/moment.min.js"></script>
 		<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
-		
+
 		<!-- Custom JS -->
 		<script src="assets/js/app.js"></script>
-		
-    </body>
+
+
+		<script>
+			$(document).ready(function() {
+				// Attach event listener to add-row link
+				$('.add-row').on('click', function() {
+					var newRow = $('<tr>' +
+							'<td><input class="form-control name" type="text" style="min-width:150px"></td>' +
+							'<td><input class="form-control description" type="text" style="min-width:150px"></td>' +
+							'<td><input class="form-control uniteCost" style="width:100px" type="text"></td>' +
+							'<td><input class="form-control Quantity" style="width:80px" type="text"></td>' +
+							'<td><input class="form-control totalAmount" style="width:120px" type="text"></td>' +
+							'<td><a class="text-success font-18 add-row" title="Add"><i class="fa fa-plus"></i></a></td>' +
+							'</tr>');
+
+					// Attach input change event listeners to the new row
+					newRow.find('.quantity, .unitCost').on('input', function() {
+						calculateAndUpdate();
+					});
+
+					// Replace add-row link with remove-row link
+					newRow.find('.add-row').removeClass('add-row').addClass('remove-row').html('<i class="fa fa-minus"></i>');
+
+					// Append the new row to the table
+					$('.item').append(newRow);
+
+					calculateAndUpdate();
+				});
+
+				// Attach event listener to remove-row link
+				$(document).on('click', '.remove-row', function() {
+					$(this).closest('tr').remove();
+					calculateAndUpdate();
+				});
+
+				$('#taxInput, #discountInput').on('input', function() {
+					calculateAndUpdate();
+				});
+
+				$('#calculateButton').on('click', function() {
+					calculateAndUpdate();
+				});
+				function calculateAndUpdate() {
+					var totalAmount = 0;
+
+					$('.item tr').each(function(index, row) {
+						var quantity = parseFloat($(row).find('.Quantity').val());
+						var unitCost = parseFloat($(row).find('.uniteCost').val());
+						var rowTotal = quantity * unitCost;
+
+						$(row).find('.totalAmount').val(rowTotal.toFixed(2));
+						totalAmount += rowTotal;
+					});
+
+					$('#grandTotal').text('$ ' + totalAmount.toFixed(2));
+
+					var tax = parseFloat($('#taxInput').val());
+					var discount = parseFloat($('#discountInput').val());
+
+					var taxAmount = (totalAmount * (tax / 100));
+					var discountAmount = (totalAmount * (discount / 100));
+
+					var finalAmount = totalAmount + taxAmount - discountAmount;
+
+					//$('#taxInput').val(taxAmount.toFixed(2));
+					$('#finalAmountCell').text('$ ' + finalAmount.toFixed(2));
+				}
+			});
+		</script>
+
+
+
+
+
+
+		<script>
+
+			document.getElementById("invoiceForm").addEventListener("submit", function(event) {
+				event.preventDefault();
+				var finalAmountValue = parseFloat(document.getElementById("finalAmountCell").textContent.replace('$', '').trim());
+
+				var invoiceData = {
+					clientID: document.getElementById("clientID").value,
+					projectID: document.getElementById("projectID").value,
+					tax: document.getElementById("taxInput").value,
+					type:"estimate",
+
+
+
+
+					estimateDate: document.getElementById("estimateDate").value,
+					expiryDate: document.getElementById("expiryDate").value,
+
+					otherInfo: document.getElementById("otherInfo").value,
+					total:finalAmountValue,
+
+
+
+					items: []
+				};
+
+				$("#myTable tr:not(:first)").each(function(index, row) {
+					var name = $(row).find(".name").val();
+					var description = $(row).find(".description").val();
+					var uniteCost = $(row).find(".uniteCost").val();
+					var Quantity = $(row).find(".Quantity").val();
+					var amount = $(row).find(".totalAmount").val();
+
+					invoiceData.items.push({
+						name: name,
+						description: description,
+						uniteCost: uniteCost,
+						quantity: Quantity,
+						amount: amount,
+
+					});
+
+				});
+
+
+
+
+
+
+				// Send the data to the server using AJAX or fetch
+				// Example: use fetch to send the data as JSON
+				fetch("/createEstimateInvoice/create", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(invoiceData),
+				})
+						.then(response => window.location.href = "/estimates.html")
+
+						//.then(response => response.text())
+						//.then(message => {
+						//	alert(message);
+						//})
+						.catch(error => {
+							console.error("Error:", error);
+						});
+			});
+		</script>
+
+	</body>
 </html>

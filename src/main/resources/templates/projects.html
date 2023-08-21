@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-	  xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
@@ -653,22 +652,22 @@
 					<!-- Search Filter -->
 					
 					<div class="row">
-						<div class="col-lg-4 col-sm-6 col-md-4 col-xl-3" th:each="project: ${projects}">
+						<div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
 							<div class="card">
 								<div class="card-body">
 									<div class="dropdown dropdown-action profile-action">
 										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
 										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item edit-link" th:href="@{/project/{id}(id=${project.getProjectID()})}" th:data-project-id="${project.getProjectID()}" data-toggle="modal" data-target="#edit_project"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" onclick="captureProjectId(event)" th:data-project-id="${project.getProjectID()}" data-toggle="modal" data-target="#delete_project"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_project"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
 										</div>
 									</div>
-									<h4 class="project-title"><a th:href="@{/project-view.html/{id}(id=${project.getProjectID()})}" th:text="${project.getProject_Name()}">Office Management</a></h4>
+									<h4 class="project-title"><a href="project-view.html">Office Management</a></h4>
 									<small class="block text-ellipsis m-b-15">
 										<span class="text-xs">1</span> <span class="text-muted">open tasks, </span>
 										<span class="text-xs">9</span> <span class="text-muted">tasks completed</span>
 									</small>
-									<p class="text-muted" th:text="${project.getDescription()}">Lorem Ipsum is simply dummy text of the printing and
+									<p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
 										typesetting industry. When an unknown printer took a galley of type and
 										scrambled it...
 									</p>
@@ -676,7 +675,7 @@
 										<div class="sub-title">
 											Deadline:
 										</div>
-										<div class="text-muted" th:text="${project.getEnd_Date()}">
+										<div class="text-muted">
 											17 Apr 2019
 										</div>
 									</div>
@@ -757,14 +756,349 @@
 											</li>
 										</ul>
 									</div>
-									<p class="m-b-5">Progress <span class="text-success float-right" th:text="${project.getProgress() ?: '80%'}">40%</span></p>
+									<p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
 									<div class="progress progress-xs mb-0">
-										<div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="70%" style="width: 80%"></div>
+										<div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="40%" style="width: 40%"></div>
 									</div>
 								</div>
 							</div>
 						</div>
-
+						
+						<div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+							<div class="card">
+								<div class="card-body">
+									<div class="dropdown dropdown-action profile-action">
+										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+										<div class="dropdown-menu dropdown-menu-right">
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_project"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+										</div>
+									</div>
+									<h4 class="project-title"><a href="project-view.html">Project Management</a></h4>
+									<small class="block text-ellipsis m-b-15">
+										<span class="text-xs">2</span> <span class="text-muted">open tasks, </span>
+										<span class="text-xs">5</span> <span class="text-muted">tasks completed</span>
+									</small>
+									<p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
+										typesetting industry. When an unknown printer took a galley of type and
+										scrambled it...
+									</p>
+									<div class="pro-deadline m-b-15">
+										<div class="sub-title">
+											Deadline:
+										</div>
+										<div class="text-muted">
+											17 Apr 2019
+										</div>
+									</div>
+									<div class="project-members m-b-15">
+										<div>Project Leader :</div>
+										<ul class="team-members">
+											<li>
+												<a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt="" src="assets/img/profiles/avatar-16.jpg"></a>
+											</li>
+										</ul>
+									</div>
+									<div class="project-members m-b-15">
+										<div>Team :</div>
+										<ul class="team-members">
+											<li>
+												<a href="#" data-toggle="tooltip" title="John Doe"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
+											</li>
+											<li>
+												<a href="#" data-toggle="tooltip" title="Richard Miles"><img alt="" src="assets/img/profiles/avatar-09.jpg"></a></a>
+											</li>
+											<li>
+												<a href="#" data-toggle="tooltip" title="John Smith"><img alt="" src="assets/img/profiles/avatar-10.jpg"></a>
+											</li>
+											<li>
+												<a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt="" src="assets/img/profiles/avatar-05.jpg"></a>
+											</li>
+											<li class="dropdown avatar-dropdown">
+												<a href="#" class="all-users dropdown-toggle" data-toggle="dropdown" aria-expanded="false">+15</a>
+												<div class="dropdown-menu dropdown-menu-right">
+													<div class="avatar-group">
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-02.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-09.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-10.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-05.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-11.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-12.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-13.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-01.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-16.jpg">
+														</a>
+													</div>
+													<div class="avatar-pagination">
+														<ul class="pagination">
+															<li class="page-item">
+																<a class="page-link" href="#" aria-label="Previous">
+																	<span aria-hidden="true">«</span>
+																	<span class="sr-only">Previous</span>
+																</a>
+															</li>
+															<li class="page-item"><a class="page-link" href="#">1</a></li>
+															<li class="page-item"><a class="page-link" href="#">2</a></li>
+															<li class="page-item">
+																<a class="page-link" href="#" aria-label="Next">
+																	<span aria-hidden="true">»</span>
+																<span class="sr-only">Next</span>
+																</a>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
+									<div class="progress progress-xs mb-0">
+										<div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="40%" style="width: 40%"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+							<div class="card">
+								<div class="card-body">
+									<div class="dropdown dropdown-action profile-action">
+										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+										<div class="dropdown-menu dropdown-menu-right">
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_project"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+										</div>
+									</div>
+									<h4 class="project-title"><a href="project-view.html">Video Calling App</a></h4>
+									<small class="block text-ellipsis m-b-15">
+										<span class="text-xs">3</span> <span class="text-muted">open tasks, </span>
+										<span class="text-xs">3</span> <span class="text-muted">tasks completed</span>
+									</small>
+									<p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
+										typesetting industry. When an unknown printer took a galley of type and
+										scrambled it...
+									</p>
+									<div class="pro-deadline m-b-15">
+										<div class="sub-title">
+											Deadline:
+										</div>
+										<div class="text-muted">
+											17 Apr 2019
+										</div>
+									</div>
+									<div class="project-members m-b-15">
+										<div>Project Leader :</div>
+										<ul class="team-members">
+											<li>
+												<a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt="" src="assets/img/profiles/avatar-16.jpg"></a>
+											</li>
+										</ul>
+									</div>
+									<div class="project-members m-b-15">
+										<div>Team :</div>
+										<ul class="team-members">
+											<li>
+												<a href="#" data-toggle="tooltip" title="John Doe"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
+											</li>
+											<li>
+												<a href="#" data-toggle="tooltip" title="Richard Miles"><img alt="" src="assets/img/profiles/avatar-09.jpg"></a></a>
+											</li>
+											<li>
+												<a href="#" data-toggle="tooltip" title="John Smith"><img alt="" src="assets/img/profiles/avatar-10.jpg"></a>
+											</li>
+											<li>
+												<a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt="" src="assets/img/profiles/avatar-05.jpg"></a>
+											</li>
+											<li class="dropdown avatar-dropdown">
+												<a href="#" class="all-users dropdown-toggle" data-toggle="dropdown" aria-expanded="false">+15</a>
+												<div class="dropdown-menu dropdown-menu-right">
+													<div class="avatar-group">
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-02.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-09.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-10.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-05.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-11.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-12.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-13.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-01.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-16.jpg">
+														</a>
+													</div>
+													<div class="avatar-pagination">
+														<ul class="pagination">
+															<li class="page-item">
+																<a class="page-link" href="#" aria-label="Previous">
+																	<span aria-hidden="true">«</span>
+																	<span class="sr-only">Previous</span>
+																</a>
+															</li>
+															<li class="page-item"><a class="page-link" href="#">1</a></li>
+															<li class="page-item"><a class="page-link" href="#">2</a></li>
+															<li class="page-item">
+																<a class="page-link" href="#" aria-label="Next">
+																	<span aria-hidden="true">»</span>
+																<span class="sr-only">Next</span>
+																</a>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
+									<div class="progress progress-xs mb-0">
+										<div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="40%" style="width: 40%"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+							<div class="card">
+								<div class="card-body">
+									<div class="dropdown dropdown-action profile-action">
+										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+										<div class="dropdown-menu dropdown-menu-right">
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_project"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+										</div>
+									</div>
+									<h4 class="project-title"><a href="project-view.html">Hospital Administration</a></h4>
+									<small class="block text-ellipsis m-b-15">
+										<span class="text-xs">12</span> <span class="text-muted">open tasks, </span>
+										<span class="text-xs">4</span> <span class="text-muted">tasks completed</span>
+									</small>
+									<p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
+										typesetting industry. When an unknown printer took a galley of type and
+										scrambled it...
+									</p>
+									<div class="pro-deadline m-b-15">
+										<div class="sub-title">
+											Deadline:
+										</div>
+										<div class="text-muted">
+											17 Apr 2019
+										</div>
+									</div>
+									<div class="project-members m-b-15">
+										<div>Project Leader :</div>
+										<ul class="team-members">
+											<li>
+												<a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt="" src="assets/img/profiles/avatar-16.jpg"></a>
+											</li>
+										</ul>
+									</div>
+									<div class="project-members m-b-15">
+										<div>Team :</div>
+										<ul class="team-members">
+											<li>
+												<a href="#" data-toggle="tooltip" title="John Doe"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
+											</li>
+											<li>
+												<a href="#" data-toggle="tooltip" title="Richard Miles"><img alt="" src="assets/img/profiles/avatar-09.jpg"></a></a>
+											</li>
+											<li>
+												<a href="#" data-toggle="tooltip" title="John Smith"><img alt="" src="assets/img/profiles/avatar-10.jpg"></a>
+											</li>
+											<li>
+												<a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt="" src="assets/img/profiles/avatar-05.jpg"></a>
+											</li>
+											<li class="dropdown avatar-dropdown">
+												<a href="#" class="all-users dropdown-toggle" data-toggle="dropdown" aria-expanded="false">+15</a>
+												<div class="dropdown-menu dropdown-menu-right">
+													<div class="avatar-group">
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-02.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-09.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-10.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-05.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-11.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-12.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-13.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-01.jpg">
+														</a>
+														<a class="avatar avatar-xs" href="#">
+															<img alt="" src="assets/img/profiles/avatar-16.jpg">
+														</a>
+													</div>
+													<div class="avatar-pagination">
+														<ul class="pagination">
+															<li class="page-item">
+																<a class="page-link" href="#" aria-label="Previous">
+																	<span aria-hidden="true">«</span>
+																	<span class="sr-only">Previous</span>
+																</a>
+															</li>
+															<li class="page-item"><a class="page-link" href="#">1</a></li>
+															<li class="page-item"><a class="page-link" href="#">2</a></li>
+															<li class="page-item">
+																<a class="page-link" href="#" aria-label="Next">
+																	<span aria-hidden="true">»</span>
+																<span class="sr-only">Next</span>
+																</a>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
+									<div class="progress progress-xs mb-0">
+										<div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="40%" style="width: 40%"></div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
                 </div>
 				<!-- /Page Content -->
@@ -780,18 +1114,18 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<form th:action="@{/project/create}" method="POST" id="addForm">
+								<form>
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="form-group">
 												<label>Project Name</label>
-												<input class="form-control" type="text" name="project_Name">
+												<input class="form-control" type="text">
 											</div>
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group">
 												<label>Client</label>
-												<select class="select" name="company_Name">
+												<select class="select">
 													<option>Global Technologies</option>
 													<option>Delta Infotech</option>
 												</select>
@@ -803,7 +1137,7 @@
 											<div class="form-group">
 												<label>Start Date</label>
 												<div class="cal-icon">
-													<input class="form-control datetimepicker" type="text" name="start_Date">
+													<input class="form-control datetimepicker" type="text">
 												</div>
 											</div>
 										</div>
@@ -811,7 +1145,7 @@
 											<div class="form-group">
 												<label>End Date</label>
 												<div class="cal-icon">
-													<input class="form-control datetimepicker" type="text" name="end_Date">
+													<input class="form-control datetimepicker" type="text">
 												</div>
 											</div>
 										</div>
@@ -820,13 +1154,13 @@
 										<div class="col-sm-3">
 											<div class="form-group">
 												<label>Rate</label>
-												<input placeholder="$50" class="form-control" type="text" name="rate">
+												<input placeholder="$50" class="form-control" type="text">
 											</div>
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<label>Type</label>
-												<select class="select" name="rate_Type">
+												<label>&nbsp;</label>
+												<select class="select">
 													<option>Hourly</option>
 													<option>Fixed</option>
 												</select>
@@ -835,7 +1169,7 @@
 										<div class="col-sm-6">
 											<div class="form-group">
 												<label>Priority</label>
-												<select class="select" name="priority">
+												<select class="select">
 													<option>High</option>
 													<option>Medium</option>
 													<option>Low</option>
@@ -846,36 +1180,59 @@
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label>Total Hours</label>
-												<input class="form-control" type="text" name="total_Hours">
+												<label>Add Project Leader</label>
+												<input class="form-control" type="text">
 											</div>
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label>Status</label>
-												<select class="select" name="status">
-													<option>Working</option>
-													<option>Completed</option>
-													<option>Pending</option>
-												</select>
+												<label>Team Leader</label>
+												<div class="project-members">
+													<a href="#" data-toggle="tooltip" title="Jeffery Lalor" class="avatar">
+														<img src="assets/img/profiles/avatar-16.jpg" alt="">
+													</a>
+												</div>
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label>Created by</label>
-												<input class="form-control" type="text" name="created_By">
+												<label>Add Team</label>
+												<input class="form-control" type="text">
+											</div>
+										</div>
+										<div class="col-sm-6">
+											<div class="form-group">
+												<label>Team Members</label>
+												<div class="project-members">
+													<a href="#" data-toggle="tooltip" title="John Doe" class="avatar">
+														<img src="assets/img/profiles/avatar-16.jpg" alt="">
+													</a>
+													<a href="#" data-toggle="tooltip" title="Richard Miles" class="avatar">
+														<img src="assets/img/profiles/avatar-09.jpg" alt="">
+													</a>
+													<a href="#" data-toggle="tooltip" title="John Smith" class="avatar">
+														<img src="assets/img/profiles/avatar-10.jpg" alt="">
+													</a>
+													<a href="#" data-toggle="tooltip" title="Mike Litorus" class="avatar">
+														<img src="assets/img/profiles/avatar-05.jpg" alt="">
+													</a>
+													<span class="all-team">+2</span>
+												</div>
 											</div>
 										</div>
 									</div>
 									<div class="form-group">
 										<label>Description</label>
-										<textarea rows="4" class="form-control" placeholder="Enter your message here" name="description"></textarea>
+										<textarea rows="4" class="form-control summernote" placeholder="Enter your message here"></textarea>
 									</div>
-
+									<div class="form-group">
+										<label>Upload Files</label>
+										<input class="form-control" type="file">
+									</div>
 									<div class="submit-section">
-										<button class="btn btn-primary submit-btn" type="submit">Submit</button>
+										<button class="btn btn-primary submit-btn">Submit</button>
 									</div>
 								</form>
 							</div>
@@ -895,32 +1252,18 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<form th:action="@{/project/updateProject}" method="POST" id="editForm">
-									<div class="row">
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label>Project ID</label>
-												<input type="text" readonly class="form-control floating" name="projectID">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label>Created by</label>
-												<input class="form-control floating" type="text" name="created_By" readonly>
-											</div>
-										</div>
-									</div>
+								<form>
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="form-group">
 												<label>Project Name</label>
-												<input class="form-control" type="text" name="project_Name">
+												<input class="form-control" value="Project Management" type="text">
 											</div>
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group">
 												<label>Client</label>
-												<select class="select" placeholder="Choose client" name="company_Name">
+												<select class="select">
 													<option>Global Technologies</option>
 													<option>Delta Infotech</option>
 												</select>
@@ -932,7 +1275,7 @@
 											<div class="form-group">
 												<label>Start Date</label>
 												<div class="cal-icon">
-													<input class="form-control datetimepicker" type="text" name="start_Date">
+													<input class="form-control datetimepicker" type="text">
 												</div>
 											</div>
 										</div>
@@ -940,7 +1283,7 @@
 											<div class="form-group">
 												<label>End Date</label>
 												<div class="cal-icon">
-													<input class="form-control datetimepicker" type="text" name="end_Date">
+													<input class="form-control datetimepicker" type="text">
 												</div>
 											</div>
 										</div>
@@ -949,23 +1292,23 @@
 										<div class="col-sm-3">
 											<div class="form-group">
 												<label>Rate</label>
-												<input placeholder="$50" class="form-control" type="text" name="rate">
+												<input placeholder="$50" class="form-control" value="$5000" type="text">
 											</div>
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<label>Type</label>
-												<select class="select" name="rate_Type">
+												<label>&nbsp;</label>
+												<select class="select">
 													<option>Hourly</option>
-													<option>Fixed</option>
+													<option selected>Fixed</option>
 												</select>
 											</div>
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group">
 												<label>Priority</label>
-												<select class="select" name="priority">
-													<option>High</option>
+												<select class="select">
+													<option selected>High</option>
 													<option>Medium</option>
 													<option>Low</option>
 												</select>
@@ -975,28 +1318,59 @@
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label>Total Hours</label>
-												<input class="form-control" type="text" name="total_Hours">
+												<label>Add Project Leader</label>
+												<input class="form-control" type="text">
 											</div>
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label>Status</label>
-												<select class="select" name="status">
-													<option>Working</option>
-													<option>Completed</option>
-													<option>Pending</option>
-												</select>
+												<label>Team Leader</label>
+												<div class="project-members">
+													<a href="#" data-toggle="tooltip" title="Jeffery Lalor" class="avatar">
+														<img src="assets/img/profiles/avatar-16.jpg" alt="">
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-6">
+											<div class="form-group">
+												<label>Add Team</label>
+												<input class="form-control" type="text">
+											</div>
+										</div>
+										<div class="col-sm-6">
+											<div class="form-group">
+												<label>Team Members</label>
+												<div class="project-members">
+													<a href="#" data-toggle="tooltip" title="John Doe" class="avatar">
+														<img src="assets/img/profiles/avatar-16.jpg" alt="">
+													</a>
+													<a href="#" data-toggle="tooltip" title="Richard Miles" class="avatar">
+														<img src="assets/img/profiles/avatar-09.jpg" alt="">
+													</a>
+													<a href="#" data-toggle="tooltip" title="John Smith" class="avatar">
+														<img src="assets/img/profiles/avatar-10.jpg" alt="">
+													</a>
+													<a href="#" data-toggle="tooltip" title="Mike Litorus" class="avatar">
+														<img src="assets/img/profiles/avatar-05.jpg" alt="">
+													</a>
+													<span class="all-team">+2</span>
+												</div>
 											</div>
 										</div>
 									</div>
 									<div class="form-group">
 										<label>Description</label>
-										<textarea rows="4" class="form-control" placeholder="Enter your message here" name="description"></textarea>
+										<textarea rows="4" class="form-control" placeholder="Enter your message here"></textarea>
 									</div>
-
+									<div class="form-group">
+										<label>Upload Files</label>
+										<input class="form-control" type="file">
+									</div>
 									<div class="submit-section">
-										<button class="btn btn-primary submit-btn" type="submit">Update</button>
+										<button class="btn btn-primary submit-btn">Save</button>
 									</div>
 								</form>
 							</div>
@@ -1017,7 +1391,7 @@
 								<div class="modal-btn delete-action">
 									<div class="row">
 										<div class="col-6">
-											<a href="javascript:void(0);" class="btn btn-primary continue-btn" onclick="deleteProject()">Delete</a>
+											<a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
 										</div>
 										<div class="col-6">
 											<a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
@@ -1058,125 +1432,5 @@
 
 		<!-- Custom JS -->
 		<script src="assets/js/app.js"></script>
-
-		<script th:inline="javascript">
-			// Edit Project
-			// JavaScript to handle the AJAX call and pre-fill the form
-			var editForm = document.getElementById("editForm");
-
-			function populateFormWithData(project) {
-				editForm.querySelector('[name=projectID]').value = project.projectID;
-				editForm.querySelector('[name=created_By]').value = project.created_By;
-				editForm.querySelector('[name=project_Name]').value = project.project_Name;
-				editForm.querySelector('[name=company_Name]').value = project.company_Name;
-				editForm.querySelector('[name=start_Date]').value = project.start_Date;
-				editForm.querySelector('[name=end_Date]').value = project.end_Date;
-				editForm.querySelector('[name=rate]').value = project.rate;
-				editForm.querySelector('[name=rate_Type]').value = project.rate_Type;
-				editForm.querySelector('[name=priority]').value = project.priority;
-				editForm.querySelector('[name=total_Hours]').value = project.total_Hours;
-				editForm.querySelector('[name=status]').value = project.status;
-				editForm.querySelector('[name=description]').value = project.description;
-			}
-
-			document.querySelectorAll(".edit-link").forEach(link => {
-				link.addEventListener("click", function(event) {
-					event.preventDefault();
-					var projectID = link.getAttribute("data-project-id");
-					fetch('/project/' + projectID)
-							.then(response => response.json())
-							.then(data => populateFormWithData(data))
-							.catch(error => console.error(error));
-				});
-			});
-
-			// JavaScript to handle the form submission and page reload
-			editForm.addEventListener('submit', function(event) {
-				event.preventDefault();
-
-				// Serialize the form data
-				const formData = new URLSearchParams(new FormData(editForm));
-
-				fetch(editForm.action, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/x-www-form-urlencoded' // Set the Content-Type to form data
-					},
-					body: formData
-				})
-						.then(response => {
-							if (response.ok) {
-								window.location.reload(); // Reload the page after successful update
-							} else {
-								console.error('Error updating project data.');
-							}
-						})
-						.catch(error => console.error(error));
-			});
-		</script>
-
-		<script th:inline="javascript">
-			// Add Project
-			// JavaScript to handle the AJAX call and pre-fill the form
-			var addForm = document.getElementById("addForm");
-
-			// JavaScript to handle the form submission and page reload
-			addForm.addEventListener('submit', function(event) {
-				event.preventDefault();
-
-				// Serialize the form data
-				const formData = new URLSearchParams(new FormData(addForm));
-
-				fetch(addForm.action, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/x-www-form-urlencoded' // Set the Content-Type to form data
-					},
-					body: formData
-				})
-						.then(response => {
-							if (response.ok) {
-								window.location.reload(); // Reload the page after successful update
-							} else {
-								console.error('Error updating project data.');
-							}
-						})
-						.catch(error => console.error(error));
-			});
-		</script>
-
-		<script th:inline="javascript">
-			// Delete Project
-			var deleteProjectId; // Variable to store the project ID
-
-			function captureProjectId(event) {
-				event.preventDefault();
-				deleteProjectId = event.target.getAttribute("data-project-id");
-			}
-
-			// Function to handle the deletion
-			function deleteProject() {
-				// Check if deleteProjectId is set
-				if (!deleteProjectId) {
-					console.error("Project ID not captured.");
-					return;
-				}
-
-				// Send a POST request to delete the project
-				fetch('/project/delete/' + deleteProjectId, {
-					method: 'POST'
-				})
-						.then(response => {
-							if (response.ok) {
-								// Reload the page after successful deletion
-								window.location.reload();
-							} else {
-								console.error('Error deleting project.');
-							}
-						})
-						.catch(error => console.error(error));
-			}
-		</script>
-
     </body>
 </html>

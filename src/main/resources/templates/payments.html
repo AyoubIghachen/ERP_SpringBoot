@@ -8,7 +8,8 @@
         <meta name="author" content="Dreamguys - Bootstrap Admin Template">
         <meta name="robots" content="noindex, nofollow">
         <title>Payments - HRMS admin template</title>
-		
+		<link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 		
@@ -22,6 +23,7 @@
         <link rel="stylesheet" href="assets/css/line-awesome.min.css">
 		
 		<!-- Datatable CSS -->
+
 		<link rel="stylesheet" href="assets/css/dataTables.bootstrap4.min.css">
 		
 		<!-- Main CSS -->
@@ -613,40 +615,35 @@
 									<thead>
 										<tr>
 											<th>Invoice ID</th>
-											<th>Client</th>
-											<th>Payment Type</th>
+
 											<th>Paid Date</th>
 											<th>Paid Amount</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td><a href="invoice-view.html">#INV-0001</a></td>
-											<td>
-												<h2><a href="#">Global Technologies</a></h2>
-											</td>
-											<td>Paypal</td>
-											<td>8 Feb 2019</td>
-											<td>$500</td>
-										</tr>
-										<tr>
-											<td><a href="invoice-view.html">#INV-0002</a></td>
-											<td>
-												<h2><a href="#">Delta Infotech</a></h2>
-											</td>
-											<td>Paypal</td>
-											<td>8 Feb 2019</td>
-											<td>$500</td>
-										</tr>
-										<tr>
-											<td><a href="invoice-view.html">#INV-0003</a></td>
-											<td>
-												<h2><a href="#">Cream Inc</a></h2>
-											</td>
-											<td>Paypal</td>
-											<td>8 Feb 2019</td>
-											<td>$500</td>
-										</tr>
+									<tr >
+										<td><input type="text" class="invoiceID" ></td>
+
+										<td> <input type="date" class="paidDate" ></td>
+										<td><input type="text" class="paidAmount" ></td>
+										<td>
+											<a class="text-success font-18 add-row" title="Add"><i class="fa fa-plus"></i></a>
+										</td>
+
+									</tr>
+									<tr th:each="payment : ${payments}">
+										<td th:text="${payment.getInvoiceID()}" >/td>
+
+										<td  th:text="${payment.getPaidDate()}" > </td>
+										<td th:text="${payment.getPaidAmount()}" ></td>
+
+										<td>
+											<a class="text-success font-18 deleteButton"   th:attr="data-id=${payment.getId()}"><i class="fa fa-minus"></i></a>
+										</td>
+									</tr>
+
+
+
 									</tbody>
 								</table>
 							</div>
@@ -660,6 +657,9 @@
 
         </div>
 		<!-- /Main Wrapper -->
+		<!-- Datetimepicker JS -->
+		<script src="assets/js/moment.min.js"></script>
+		<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
 
 		<!-- jQuery -->
         <script src="assets/js/jquery-3.2.1.min.js"></script>
@@ -677,6 +677,92 @@
 
 		<!-- Custom JS -->
 		<script src="assets/js/app.js"></script>
-		
-    </body>
+
+
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				$(".add-row").click(function () {
+					var $row = $(this).closest("tr");
+					var invoiceID = $row.find(".invoiceID").val();
+					var paidDate = $row.find(".paidDate").val();
+					var paidAmount = $row.find(".paidAmount").val();
+					var invoiceData = {
+						invoiceID: invoiceID,
+						paidDate: paidDate,
+						paidAmount:paidAmount
+					};
+
+
+					if (invoiceID !== "" && paidDate !== "" && paidAmount !== "") {
+						fetch("/payment/addPayment", {
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json"
+							},
+							body: JSON.stringify(invoiceData),
+						})
+								.then(response => window.location.href = "/payments.html")
+
+								//.then(response => response.text())
+								//.then(message => {
+								//	alert(message);
+								//})
+								.catch(error => {
+									console.error("Error:", error);
+								});
+
+
+						// Create a new row and append to the table
+										var newRow = '<tr>' +
+												'<td><a href="invoice-view.html">#' + invoiceID + '</a></td>' +
+												'<td>' + paidDate + '</td>' +
+												'<td>$' + paidAmount + '</td>' +
+												'<td class="text-success font-18  deleteButton"   th:attr="data-id=${payment.getId()}" ><i class="fa fa-minus"></i></td>' +
+												'</tr>';
+
+										$("tbody").append(newRow);
+
+										// Send AJAX request to add payment information
+
+										// Clear input fields
+										$row.find(".invoiceID").val("");
+										$row.find(".paidDate").val("");
+										$row.find(".paidAmount").val("");
+									}  else {
+						alert("Please fill in all fields.");
+					}
+				})
+			})
+
+
+
+
+		</script>
+
+		<!-- ... Other HTML code ... -->
+
+		<script>
+			$(document).ready(function () {
+				$(".deleteButton").click(function () {
+					var leaveID = $(this).attr("data-id");
+					var clickedButton = $(this); // Store the reference to the clicked button
+
+					$.ajax({
+						url: '/payment/delete/' + leaveID,
+						type: 'DELETE',
+						success: function (result) {
+							// Remove the row from the table
+							clickedButton.closest("tr").remove();
+						},
+						error: function (error) {
+							console.error("Error:", error);
+						}
+					});
+				});
+			});
+		</script>
+
+
+	</body>
 </html>

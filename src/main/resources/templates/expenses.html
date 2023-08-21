@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
@@ -676,82 +676,33 @@
 											<th>Purchase Date</th>
 											<th>Purchased By</th>
 											<th>Amount</th>
-											<th>Paid By</th>
-											<th class="text-center">Status</th>
 											<th class="text-right">Actions</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
+										<tr  th:each="expense: ${expenses}">
 											<td>
-												<strong>Dell Laptop</strong>
+												<strong th:text="${expense.getItemName()}"></strong>
 											</td>
-											<td>Amazon</td>
-											<td>5 Jan 2019</td>
-											<td>
-												<h2 class="table-avatar">
-													<a href="profile.html" class="avatar avatar-xs"><img src="assets/img/profiles/avatar-04.jpg" alt=""></a>
-													<a href="profile.html">Loren Gatlin</a>
-												</h2>
+											<td th:text="${expense.getPurchaseFrom()}" >Amazon</td>
+											<td th:text="${expense.getPurchaseDate()}" >5 Jan 2019</td>
+											<td th:text="${expense.getPurchasedBy()}"  >
+												employee
 											</td>
-											<td>$1215</td>
-											<td>Cash</td>
-											<td class="text-center">
-												<div class="dropdown action-label">
-													<a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-														<i class="fa fa-dot-circle-o text-danger"></i> Pending
-													</a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Pending</a>
-														<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
-													</div>
-												</div>
-											</td>
+											<td th:text="${expense.getAmount()}" >$1215</td>
+
+
+
 											<td class="text-right">
 												<div class="dropdown dropdown-action">
 													<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
 													<div class="dropdown-menu dropdown-menu-right">
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_expense"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_expense"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_expense" onclick="captureEmployeeId(event)" th:data-employee-id="${expense.getId()}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
 													</div>
 												</div>
 											</td>
 										</tr>
-										<tr>
-											<td>
-												<strong>Mac System</strong>
-											</td>
-											<td>Amazon</td>
-											<td>5 Jan 2019</td>
-											<td>
-												<h2 class="table-avatar">
-													<a href="profile.html" class="avatar avatar-xs"><img src="assets/img/profiles/avatar-03.jpg" alt=""></a>
-													<a href="profile.html">Tarah Shropshire</a>
-												</h2>
-											</td>
-											<td>$1215</td>
-											<td>Cheque</td>
-											<td class="text-center">
-												<div class="dropdown action-label">
-													<a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-														<i class="fa fa-dot-circle-o text-success"></i> Approved
-													</a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Pending</a>
-														<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
-													</div>
-												</div>
-											</td>
-											<td class="text-right">
-												<div class="dropdown dropdown-action">
-													<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_expense"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_expense"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-													</div>
-												</div>
-											</td>
-										</tr>
+
 									</tbody>
 								</table>
 							</div>
@@ -771,18 +722,18 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<form>
+								<form method="POST" id="addForm" enctype="multipart/form-data" th:action="@{/expenses/create}" th:object="${oneExpense}">
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Item Name</label>
-												<input class="form-control" type="text">
+												<input class="form-control" type="text" th:field="*{itemName}">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Purchase From</label>
-												<input class="form-control" type="text">
+												<input class="form-control" type="text" th:field="*{purchaseFrom}" >
 											</div>
 										</div>
 									</div>
@@ -790,16 +741,14 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Purchase Date</label>
-												<div class="cal-icon"><input class="form-control datetimepicker" type="text"></div>
+												<div class="cal-icon"><input class="form-control datetimepicker" type="text" th:field="*{purchaseDate}"></div>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Purchased By </label>
-												<select class="select">
-													<option>Daniel Porter</option>
-													<option>Roger Dixon</option>
-												</select>
+												<input class="form-control" type="text" th:field="*{purchasedBy}">
+
 											</div>
 										</div>
 									</div>
@@ -807,50 +756,15 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Amount</label>
-												<input placeholder="$50" class="form-control" type="text">
+												<input  class="form-control" type="text" th:field="*{Amount}">
 											</div>
 										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Paid By</label>
-												<select class="select">
-													<option>Cash</option>
-													<option>Cheque</option>
-												</select>
-											</div>
-										</div>
+
 									</div>
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Status</label>
-												<select class="select">
-													<option>Pending</option>
-													<option>Approved</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Attachments</label>
-												<input class="form-control" type="file">
-											</div>
-										</div>
-									</div>
-									<div class="attach-files">
-										<ul>
-											<li>
-												<img src="assets/img/placeholder.jpg" alt="">
-												<a href="#" class="fa fa-close file-remove"></a>
-											</li>
-											<li>
-												<img src="assets/img/placeholder.jpg" alt="">
-												<a href="#" class="fa fa-close file-remove"></a>
-											</li>
-										</ul>
-									</div>
+
+
 									<div class="submit-section">
-										<button class="btn btn-primary submit-btn">Submit</button>
+										<button class="btn btn-primary submit-btn" type="button" id="submitBtn">Submit</button>
 									</div>
 								</form>
 							</div>
@@ -865,23 +779,26 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title">Edit Expense</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">v
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
 							<div class="modal-body">
-								<form>
+								<form th:action="@{/update}" method="post" enctype="multipart/form-data" th:object="${oneExpense}">
+									<!-- Hidden field to retain expense ID for update -->
+									<input type="hidden" th:field="*{id}" id="id" name="id">
+
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Item Name</label>
-												<input class="form-control" value="Dell Laptop" type="text">
+												<input class="form-control" th:field="*{itemName}" type="text" id="itemName" name="itemName">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Purchase From</label>
-												<input class="form-control" value="Amazon" type="text">
+												<input class="form-control" th:field="*{purchaseFrom}" type="text" id="purchaseFrom" name="purchaseFrom">
 											</div>
 										</div>
 									</div>
@@ -889,16 +806,13 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Purchase Date</label>
-												<div class="cal-icon"><input class="form-control datetimepicker" type="text"></div>
+												<div class="cal-icon"><input class="form-control datetimepicker" th:field="*{purchaseDate}" type="text" id="purchaseDate" name="purchaseDate"></div>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Purchased By </label>
-												<select class="select">
-													<option>Daniel Porter</option>
-													<option>Roger Dixon</option>
-												</select>
+												<label>Purchased By</label>
+												<input class="form-control" th:field="*{purchasedBy}" type="text" id="purchasedBy" name="purchasedBy">
 											</div>
 										</div>
 									</div>
@@ -906,48 +820,17 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Amount</label>
-												<input placeholder="$50" class="form-control" value="$10000" type="text">
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Paid By</label>
-												<select class="select">
-													<option>Cash</option>
-													<option>Cheque</option>
-												</select>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Status</label>
-												<select class="select">
-													<option>Pending</option>
-													<option>Approved</option>
-												</select>
+												<input class="form-control" th:field="*{amount}" type="text" id="Amount" name="amount">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Attachments</label>
-												<input class="form-control" type="file">
+												<input class="form-control" type="file" name="file" id="file">
 											</div>
 										</div>
 									</div>
-									<div class="attach-files">
-										<ul>
-											<li>
-												<img src="assets/img/placeholder.jpg" alt="">
-												<a href="#" class="fa fa-close file-remove"></a>
-											</li>
-											<li>
-												<img src="assets/img/placeholder.jpg" alt="">
-												<a href="#" class="fa fa-close file-remove"></a>
-											</li>
-										</ul>
-									</div>
+
 									<div class="submit-section">
 										<button class="btn btn-primary submit-btn">Save</button>
 									</div>
@@ -970,7 +853,7 @@
 								<div class="modal-btn delete-action">
 									<div class="row">
 										<div class="col-6">
-											<a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+											<a href="javascript:void(0);" class="btn btn-primary continue-btn" onclick="deleteEmployee()">Delete</a>
 										</div>
 										<div class="col-6">
 											<a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
@@ -988,7 +871,7 @@
 			
         </div>
 		<!-- /Main Wrapper -->
-		
+
 		<!-- jQuery -->
         <script src="assets/js/jquery-3.2.1.min.js"></script>
 		
@@ -1012,6 +895,94 @@
 		
 		<!-- Custom JS -->
 		<script src="assets/js/app.js"></script>
-		
-    </body>
+		<script th:inline="javascript">
+			$(document).ready(function() {
+				$("#submitBtn").click(function() {
+					var form = $('#addForm')[0];
+					var formData = new FormData(form);
+
+					$.ajax({
+						type: "POST",
+						enctype: 'multipart/form-data',
+						url: '/expenses/create',
+						data: formData,
+						processData: false,
+						contentType: false,
+						cache: false,
+						success: function (data) {
+							window.location.reload();
+						},
+						error: function (e) {
+							// Handle error response
+						}
+					});
+				});
+			});
+		</script>
+
+		<script th:inline="javascript">
+			// Delete Employee
+			var deleteEmployeeId; // Variable to store the employee ID
+
+			function captureEmployeeId(event) {
+				event.preventDefault();
+				deleteEmployeeId = event.target.getAttribute("data-employee-id");
+			}
+
+			// Function to handle the deletion
+			function deleteEmployee() {
+				// Check if deleteEmployeeId is set
+				if (!deleteEmployeeId) {
+					console.error("Expenses ID not captured.");
+					return;
+				}
+
+				// Send a POST request to delete the employee
+				fetch('/expenses/delete/' + deleteEmployeeId, {
+					method: 'POST'
+				})
+						.then(response => {
+							if (response.ok) {
+								// Reload the page after successful deletion
+								window.location.reload();
+							} else {
+								console.error('Error deleting expense.');
+							}
+						})
+						.catch(error => console.error(error));
+			}
+		</script>
+
+
+	////
+
+
+
+		<script th:inline="javascript">
+			$(document).ready(function() {
+				$(".edit-link").click(function(event) {
+					event.preventDefault();
+
+					var expenseId = $(this).data("expense-id");
+
+					$.ajax({
+						type: 'GET',
+						url: 'expenses/getExpense/' + expenseId,
+						success: function(data) {
+							console.log(data);
+							document.getElementById("itemName").value = data.itemName;
+							document.getElementById("purchaseFrom").value = data.purchaseFrom;
+							document.getElementById("purchaseDate").value = data.purchaseDate;
+							document.getElementById("purchasedBy").value = data.purchasedBy;
+							document.getElementById("Amount").value = data.amount;
+						},
+						error: function(error) {
+							console.error('Error fetching expense data.', error);
+						}
+					});
+				});
+			});
+		</script>
+
+	</body>
 </html>

@@ -118,19 +118,15 @@ public class EmployeeController {
     }
 
 
-    // Build Get All Employee By first Name REST API
-    @GetMapping("/searchEmployees/{search}")
-    public ResponseEntity<List<EmployeeDto>> getAllEmployees(@PathVariable("search") String search){
-        List<EmployeeDto> employees = employeeService.findByFirst_Name(search);
-        return ResponseEntity.ok(employees);
-    }
-
-
 
 
 
     // Helper method to get the names of null properties in the employeeDto
     public static String[] getNullPropertyNames(Object source) {
+        return getStrings(source);
+    }
+
+    static String[] getStrings(Object source) {
         final BeanWrapper src = new BeanWrapperImpl(source);
         java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
 

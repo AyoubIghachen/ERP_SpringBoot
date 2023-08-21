@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
@@ -31,6 +31,7 @@
 		<!--[if lt IE 9]>
 			<script src="assets/js/html5shiv.min.js"></script>
 			<script src="assets/js/respond.min.js"></script>
+
 		<![endif]-->
     </head>
     <body>
@@ -596,7 +597,7 @@
 					<div class="page-header">
 						<div class="row align-items-center">
 							<div class="col">
-								<h3 class="page-title">Holidays 2019</h3>
+								<h3 class="page-title">Holidays 2023</h3>
 								<ul class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
 									<li class="breadcrumb-item active">Holidays</li>
@@ -617,94 +618,29 @@
 										<tr>
 											<th>#</th>
 											<th>Title </th>
-											<th>Holiday Date</th>
-											<th>Day</th>
+											<th>Holiday Start</th>
+											<th>Holiday End</th>
 											<th class="text-right">Action</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr class="holiday-completed">
-											<td>1</td>
-											<td>New Year</td>
-											<td>1 Jan 2019</td>
-											<td>Sunday</td>
-											<td></td>
-										</tr>
-										<tr class="holiday-completed">
-											<td>2</td>
-											<td>Good Friday</td>
-											<td>14 Apr 2019</td>
-											<td>Friday</td>
-											<td></td>
-										</tr>
-										<tr class="holiday-completed">
-											<td>3</td>
-											<td>May Day</td>
-											<td>1 May 2019</td>
-											<td>Monday</td>
-											<td class="text-center">
-											</td>
-										</tr>
-										<tr class="holiday-completed">
-											<td>4</td>
-											<td>Memorial Day</td>
-											<td>28 May 2019</td>
-											<td>Monday</td>
-											<td class="text-center">
-											</td>
-										</tr>
-										<tr class="holiday-completed">
-											<td>5</td>
-											<td>Ramzon</td>
-											<td>26 Jun 2019</td>
-											<td>Monday</td>
-											<td></td>
-										</tr>
-										<tr class="holiday-upcoming">
-											<td>6</td>
-											<td>Bakrid</td>
-											<td>2 Sep 2019</td>
-											<td>Saturday</td>
+
+										<tr class="holiday-upcoming" th:each="holiday,holidayIndex: ${holidays}">
+											<td th:text="${holidayIndex.index + 1}"></td>
+											<td th:text="${holiday.getHolidayName()}"></td>
+											<td th:text="${holiday.getHolidayDate()}"></td>
+											<td th:text="${holiday.getHolidayDateEnd()}"></td>
 											<td class="text-right">
 												<div class="dropdown dropdown-action">
 													<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
 													<div class="dropdown-menu dropdown-menu-right">
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_holiday"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_holiday"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+														<a class="dropdown-item edit-link" th:href="@{/holiday/{holidayName}(holidayName=${holiday.getHolidayName()})}" th:data-holiday-holidayName="${holiday.getHolidayName()}" data-toggle="modal" data-target="#edit_holiday"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+														<a class="dropdown-item edit-link" href="#"  onclick="captureHolidayName(event)" th:data-holiday-holidayName="${holiday.getHolidayName()}"   data-toggle="modal" data-target="#delete_holiday"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
 													</div>
 												</div>
 											</td>
 										</tr>
-										<tr class="holiday-upcoming">
-											<td>7</td>
-											<td>Deepavali</td>
-											<td>18 Oct 2019</td>
-											<td>Wednesday</td>
-											<td class="text-right">
-												<div class="dropdown dropdown-action">
-													<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_holiday"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_holiday"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<tr class="holiday-upcoming">
-											<td>8</td>
-											<td>Christmas</td>
-											<td>25 Dec 2019</td>
-											<td>Monday</td>
-											<td class="text-right">
-												<div class="dropdown dropdown-action">
-													<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_holiday"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_holiday"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-													</div>
-												</div>
-											</td>
-										</tr>
+
 									</tbody>
 								</table>
 							</div>
@@ -724,14 +660,18 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<form>
+								<form th:action="@{/holiday/create}" method="POST"  id="addForm">
 									<div class="form-group">
 										<label>Holiday Name <span class="text-danger">*</span></label>
-										<input class="form-control" type="text">
+										<input class="form-control" type="text" name="holidayName">
 									</div>
 									<div class="form-group">
-										<label>Holiday Date <span class="text-danger">*</span></label>
-										<div class="cal-icon"><input class="form-control datetimepicker" type="text"></div>
+										<label>Holiday Start <span class="text-danger">*</span></label>
+										<div class="cal-icon"><input class="form-control datetimepicker" type="text" name="holidayDate"></div>
+									</div>
+									<div class="form-group">
+										<label>Holiday End <span class="text-danger">*</span></label>
+										<div class="cal-icon"><input class="form-control datetimepicker" type="text" name="holidayDateEnd"></div>
 									</div>
 									<div class="submit-section">
 										<button class="btn btn-primary submit-btn">Submit</button>
@@ -754,14 +694,18 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<form>
+								<form th:action="@{/holiday/updateHoliday}" method="POST" id="editForm">
 									<div class="form-group">
 										<label>Holiday Name <span class="text-danger">*</span></label>
-										<input class="form-control" value="New Year" type="text">
+										<input class="form-control"  type="text"  name="holidayName">
 									</div>
 									<div class="form-group">
 										<label>Holiday Date <span class="text-danger">*</span></label>
-										<div class="cal-icon"><input class="form-control datetimepicker" value="01-01-2019" type="text"></div>
+										<div class="cal-icon"><input class="form-control datetimepicker"  type="text" name="holidayDate"></div>
+									</div>
+									<div class="form-group">
+										<label>Holiday Date <span class="text-danger">*</span></label>
+										<div class="cal-icon"><input class="form-control datetimepicker"  type="text" name="holidayDateEnd"></div>
 									</div>
 									<div class="submit-section">
 										<button class="btn btn-primary submit-btn">Save</button>
@@ -785,7 +729,7 @@
 								<div class="modal-btn delete-action">
 									<div class="row">
 										<div class="col-6">
-											<a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+											<a href="javascript:void(0);" class="btn btn-primary continue-btn" onclick="deleteHoliday()">Delete</a>
 										</div>
 										<div class="col-6">
 											<a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
@@ -803,7 +747,9 @@
 			
         </div>
 		<!-- /Main Wrapper -->
-		
+
+		<!-- JavaScript function to get the day name from a date string -->
+
 		<!-- jQuery -->
         <script src="assets/js/jquery-3.2.1.min.js"></script>
 		
@@ -820,6 +766,120 @@
 		
 		<!-- Custom JS -->
 		<script src="assets/js/app.js"></script>
-		
+
+
+		<script th:inline="javascript">
+			// Edit Employee
+			// JavaScript to handle the AJAX call and pre-fill the form
+			var editForm = document.getElementById("editForm");
+
+			function populateFormWithData(holiday) {
+				editForm.querySelector('[name=holidayName]').value = holiday.holidayName;
+				editForm.querySelector('[name=holidayDate]').value = holiday.holidayDate;
+				editForm.querySelector('[name=holidayDateEnd]').value=holiday.holidayDateEnd;
+
+			}
+
+			document.querySelectorAll(".edit-link").forEach(link => {
+				link.addEventListener("click", function(event) {
+					event.preventDefault();
+					var holidayName = link.getAttribute("data-holiday-holidayName");
+					fetch('/holiday/' + holidayName)
+							.then(response => response.json())
+							.then(data => populateFormWithData(data))
+							.catch(error => console.error(error));
+				});
+			});
+
+			// JavaScript to handle the form submission and page reload
+			editForm.addEventListener('submit', function(event) {
+				event.preventDefault();
+
+				// Serialize the form data
+				const formData = new URLSearchParams(new FormData(editForm));
+
+				fetch(editForm.action, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded' // Set the Content-Type to form data
+					},
+					body: formData
+				})
+						.then(response => {
+							if (response.ok) {
+								window.location.reload(); // Reload the page after successful update
+							} else {
+								console.error('Error updating holiday data.');
+							}
+						})
+						.catch(error => console.error(error));
+			});
+		</script>
+
+	////
+
+		<script th:inline="javascript">
+			// Add Holiday
+			// JavaScript to handle the AJAX call and pre-fill the form
+			var addForm = document.getElementById("addForm");
+
+			// JavaScript to handle the form submission and page reload
+			addForm.addEventListener('submit', function(event) {
+				event.preventDefault();
+
+				// Serialize the form data
+				const formData = new URLSearchParams(new FormData(addForm));
+
+				fetch(addForm.action, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded' // Set the Content-Type to form data
+					},
+					body: formData
+				})
+						.then(response => {
+							if (response.ok) {
+								window.location.reload(); // Reload the page after successful update
+							} else {
+								console.error('Error updating holiday data.');
+							}
+						})
+						.catch(error => console.error(error));
+			});
+		</script>
+
+	/////
+		<script th:inline="javascript">
+			// Delete Employee
+			var deleteHolidayName; // Variable to store the employee ID
+
+			function captureHolidayName(event) {
+				event.preventDefault();
+				deleteHolidayName = event.target.getAttribute("data-holiday-holidayName");
+			}
+
+			// Function to handle the deletion
+			function deleteHoliday() {
+				// Check if deleteEmployeeId is set
+				if (!deleteHolidayName) {
+					console.error("Holiday Name not captured.");
+					return;
+				}
+
+				// Send a POST request to delete the employee
+				fetch('/holiday/delete/' + deleteHolidayName, {
+					method: 'POST'
+				})
+						.then(response => {
+							if (response.ok) {
+								// Reload the page after successful deletion
+								window.location.reload();
+							} else {
+								console.error('Error deleting holiday.');
+							}
+						})
+						.catch(error => console.error(error));
+			}
+		</script>
     </body>
 </html>

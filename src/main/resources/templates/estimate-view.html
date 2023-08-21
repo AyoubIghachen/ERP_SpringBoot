@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
@@ -28,6 +28,11 @@
 		<!--[if lt IE 9]>
 			<script src="assets/js/html5shiv.min.js"></script>
 			<script src="assets/js/respond.min.js"></script>
+
+
+
+
+
 		<![endif]-->
     </head>
     <body>
@@ -601,9 +606,8 @@
 							</div>
 							<div class="col-auto float-right ml-auto">
 								<div class="btn-group btn-group-sm">
-									<button class="btn btn-white">CSV</button>
-									<button class="btn btn-white">PDF</button>
-									<button class="btn btn-white"><i class="fa fa-print fa-lg"></i> Print</button>
+
+									<button class="btn btn-white" id="printButton"><i class="fa fa-print fa-lg" ></i> Print</button>
 								</div>
 							</div>
 						</div>
@@ -613,7 +617,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="card">
-								<div class="card-body">
+								<div class="card-body" id="contentToPrint">
 									<div class="row">
 										<div class="col-sm-6 m-b-20">
 											<img src="assets/img/logo2.png" class="inv-logo" alt="">
@@ -626,10 +630,10 @@
 										</div>
 										<div class="col-sm-6 m-b-20">
 											<div class="invoice-details">
-												<h3 class="text-uppercase">Estimate #49029</h3>
+												<h3 class="text-uppercase" th:text="'Estimate'+${estimate.getId()}"></h3>
 												<ul class="list-unstyled">
-													<li>Create Date: <span>March 12, 2019</span></li>
-													<li>Expiry date: <span>May 25, 2019</span></li>
+													<li>Create Date: <span th:text="${estimate.getCreateDate()}" ></span></li>
+													<li>Expiry date: <span th:text="${estimate.getExpiryDate()}"></span></li>
 												</ul>
 											</div>
 										</div>
@@ -638,20 +642,19 @@
 										<div class="col-sm-12 col-lg-12 m-b-20">
 											<h5>Estimate to:</h5>
 				 							<ul class="list-unstyled">
-												<li><h5><strong>Barry Cuda</strong></h5></li>
-												<li>Global Technologies</li>
-												<li>5754 Airport Rd</li>
-												<li>Coosada, AL, 36020</li>
-												<li>United States</li>
-												<li>888-777-6655</li>
-												<li><a href="#">barrycuda@example.com</a></li>
+												<li><h5><strong th:text="${estimate.getClientID()}"></strong></h5></li>
+												<li></li>
+												<li></li>
+												<li></li>
+												<li></li>
+												<li></li>
+												<li><a href="#"></a></li>
 											</ul>
 										</div>
 									</div>
 									<table class="table table-striped table-hover">
 										<thead>
 											<tr>
-												<th>#</th>
 												<th>ITEM</th>
                                             <th class="d-none d-sm-table-cell">DESCRIPTION</th>
 												<th>UNIT COST</th>
@@ -660,46 +663,14 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Android Application</td>
-                                            <td class="d-none d-sm-table-cell">Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
-												<td>$1000</td>
-												<td>2</td>
-												<td class="text-right">$2000</td>
+											<tr th:each="item : ${estimate.getItems()}">
+												<td th:text="${item.getName()}"></td>
+                                            <td class="d-none d-sm-table-cell" th:text="${item.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
+												<td th:text="${item.getUniteCost()}"></td>
+												<td th:text="${item.getQuantity()}">2</td>
+												<td class="text-right" th:text="${item.getAmount()}">$2000</td>
 											</tr>
-											<tr>
-												<td>2</td>
-												<td>Ios Application</td>
-                                            <td class="d-none d-sm-table-cell">Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
-												<td>$1750</td>
-												<td>1</td>
-												<td class="text-right">$1750</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Codeigniter Project</td>
-                                            <td class="d-none d-sm-table-cell">Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
-												<td>$90</td>
-												<td>3</td>
-												<td class="text-right">$270</td>
-											</tr>
-											<tr>
-												<td>4</td>
-												<td>Phonegap Project</td>
-                                            <td class="d-none d-sm-table-cell">Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
-												<td>$1200</td>
-												<td>2</td>
-												<td class="text-right">$2400</td>
-											</tr>
-											<tr>
-												<td>5</td>
-												<td>Website Optimization</td>
-                                            <td class="d-none d-sm-table-cell">Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
-												<td>$200</td>
-												<td>2</td>
-												<td class="text-right">$400</td>
-											</tr>
+
 										</tbody>
 									</table>
 									<div>
@@ -711,17 +682,14 @@
 													<div class="table-responsive no-border">
 														<table class="table">
 															<tbody>
+
 																<tr>
-																	<th>Subtotal:</th>
-																	<td class="text-right">$7,000</td>
-																</tr>
-																<tr>
-																	<th>Tax: <span class="text-regular">(25%)</span></th>
-																	<td class="text-right">$1,750</td>
+																	<th>Tax: <span class="text-regular"></span></th>
+																	<td class="text-right" th:text="'%'+${estimate.getClientID()}"></td>
 																</tr>
 																<tr>
 																	<th>Total:</th>
-																	<td class="text-right text-primary"><h5>$8,750</h5></td>
+																	<td class="text-right text-primary"><h5 th:text="${estimate.getTotal()}"></h5></td>
 																</tr>
 															</tbody>
 														</table>
@@ -731,7 +699,7 @@
 										</div>
 										<div class="invoice-info">
 											<h5>Other information</h5>
-											<p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed dictum ligula, cursus blandit risus. Maecenas eget metus non tellus dignissim aliquam ut a ex. Maecenas sed vehicula dui, ac suscipit lacus. Sed finibus leo vitae lorem interdum, eu scelerisque tellus fermentum. Curabitur sit amet lacinia lorem. Nullam finibus pellentesque libero, eu finibus sapien interdum vel</p>
+											<p class="text-muted" th:text="${estimate.getOtherInfo()}"></p>
 										</div>
 									</div>
 								</div>
@@ -759,6 +727,27 @@
 		
 		<!-- Custom JS -->
 		<script src="assets/js/app.js"></script>
-		
-    </body>
+		<style>
+			@media print {
+				body * {
+					visibility: hidden;
+				}
+				#contentToPrint, #contentToPrint * {
+					visibility: visible;
+				}
+				#contentToPrint {
+					position: absolute;
+					left: 0;
+					top: 0;
+				}
+			}
+		</style>
+
+		<script>
+			document.getElementById('printButton').addEventListener('click', function() {
+				window.print(); // Trigger the print dialog
+			});
+		</script>
+
+	</body>
 </html>

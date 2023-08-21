@@ -7,20 +7,36 @@ import com.allianceever.projectERP.repository.EmployeeRepo;
 import com.allianceever.projectERP.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepo employeeRepo;
     private ModelMapper mapper;
+
+    public EmployeeServiceImpl(EmployeeRepo employeeRepo, ModelMapper mapper, PasswordEncoder passwordEncoder) {
+        this.employeeRepo = employeeRepo;
+        this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
+    }
+    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @Override
     public EmployeeDto create(EmployeeDto employeeDto) {
+
+
         // convert DTO to entity
         Employee employee = mapToEntity(employeeDto);
+        // Encode the password
+        String encodedPassword = passwordEncoder.encode(employee.getPassword());
+        employee.setPassword(encodedPassword);
+
         Employee newEmployee = employeeRepo.save(employee);
 
         // convert entity to DTO
@@ -69,12 +85,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepo.deleteById(EmployeeID);
     }
 
-    @Override
-    public List<EmployeeDto> findByFirst_Name(String first_Name) {
-        List<Employee> employees = employeeRepo.findByFirst_NameLikeIgnoreCase(first_Name);
-        return employees.stream().map((employee) -> mapToDTO(employee))
-                .collect(Collectors.toList());
-    }
 
 
 

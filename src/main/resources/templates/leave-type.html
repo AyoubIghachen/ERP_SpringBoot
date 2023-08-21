@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
@@ -323,44 +323,44 @@
 				
             </div>
 			<!-- /Header -->
-			
+
 			<!-- Sidebar -->
             <div class="sidebar" id="sidebar">
                 <div class="sidebar-inner slimscroll">
 					<div class="sidebar-menu">
 						<ul>
-							<li> 
+							<li>
 								<a href="index.html"><i class="la la-home"></i> <span>Back to Home</span></a>
 							</li>
 							<li class="menu-title">Settings</li>
-							<li> 
+							<li>
 								<a href="settings.html"><i class="la la-building"></i> <span>Company Settings</span></a>
 							</li>
-							<li> 
+							<li>
 								<a href="localization.html"><i class="la la-clock-o"></i> <span>Localization</span></a>
 							</li>
-							<li> 
+							<li>
 								<a href="theme-settings.html"><i class="la la-photo"></i> <span>Theme Settings</span></a>
 							</li>
-							<li> 
+							<li>
 								<a href="roles-permissions.html"><i class="la la-key"></i> <span>Roles & Permissions</span></a>
 							</li>
-							<li> 
+							<li>
 								<a href="email-settings.html"><i class="la la-at"></i> <span>Email Settings</span></a>
 							</li>
-							<li> 
+							<li>
 								<a href="invoice-settings.html"><i class="la la-pencil-square"></i> <span>Invoice Settings</span></a>
 							</li>
-							<li> 
+							<li>
 								<a href="salary-settings.html"><i class="la la-money"></i> <span>Salary Settings</span></a>
 							</li>
-							<li> 
+							<li>
 								<a href="notifications-settings.html"><i class="la la-globe"></i> <span>Notifications</span></a>
 							</li>
-							<li> 
+							<li>
 								<a href="change-password.html"><i class="la la-lock"></i> <span>Change Password</span></a>
 							</li>
-							<li class="active"> 
+							<li class="active">
 								<a href="leave-type.html"><i class="la la-cogs"></i> <span>Leave Type</span></a>
 							</li>
 						</ul>
@@ -399,94 +399,30 @@
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>Leave Type</th>
+											<th>Leave Name</th>
 											<th>Leave Days</th>
-											<th>Status</th>
+											<th></th>
 											<th class="text-right">Action</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>
-												1
-											</td>
-											<td>Casual Leave</td>
-											<td>12 Days</td>
-											<td>
-												<div class="dropdown action-label">
-													<a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-														<i class="fa fa-dot-circle-o text-success"></i> Active
-													</a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i> Active</a>
-														<a href="#" class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a>
-													</div>
-												</div>
-											</td>
+										<tr th:each="leaveType,leaveTypeIndex: ${leaveTypes}">
+											<td th:text="${leaveTypeIndex.index + 1}"></td>
+
+										<td th:text="${leaveType.getLeaveName()}"></td>
+											<td th:text="${leaveType.getDays()}"></td>
+											<td></td>
 											<td class="text-right">
 												<div class="dropdown dropdown-action">
 													<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
 													<div class="dropdown-menu dropdown-menu-right">
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_leavetype"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_leavetype"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+														<a class="dropdown-item edit-link" href="#" data-toggle="modal" data-target="#edit_leavetype" th:href="@{/leaveType/{leaveName}(leaveName=${leaveType.getLeaveName()})}" th:data-leaveType-leaveName="${leaveType.getLeaveName()}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+														<a class="dropdown-item " href="#" data-toggle="modal" data-target="#delete_leavetype" onclick="captureLeaveName(event)" th:data-leaveType-leaveName="${leaveType.getLeaveName()}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
 													</div>
 												</div>
 											</td>
 										</tr>
-										<tr>
-											<td>
-												2
-											</td>
-											<td>Medical Leave</td>
-											<td>12 Days</td>
-											<td>
-												<div class="dropdown action-label">
-													<a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-														<i class="fa fa-dot-circle-o text-danger"></i> Inactive
-													</a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a>
-														<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a>
-													</div>
-												</div>
-											</td>
-											<td class="text-right">
-												<div class="dropdown dropdown-action">
-													<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_leavetype"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_leavetype"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												3
-											</td>
-											<td>Loss of Pay</td>
-											<td>-</td>
-											<td>
-												<div class="dropdown action-label">
-													<a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-														<i class="fa fa-dot-circle-o text-success"></i> Active
-													</a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a>
-														<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a>
-													</div>
-												</div>
-											</td>
-											<td class="text-right">
-												<div class="dropdown dropdown-action">
-													<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_leavetype"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_leavetype"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-													</div>
-												</div>
-											</td>
-										</tr>
+
 									</tbody>
 								</table>
 							</div>
@@ -506,14 +442,14 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<form>
+								<form th:action="@{/leaveType/create}" method="POST" id="addLeaveType">
 									<div class="form-group">
 										<label>Leave Type <span class="text-danger">*</span></label>
-										<input class="form-control" type="text">
+										<input class="form-control" type="text" name="leaveName">
 									</div>
 									<div class="form-group">
 										<label>Number of days <span class="text-danger">*</span></label>
-										<input class="form-control" type="text">
+										<input class="form-control" type="text" name="days">
 									</div>
 									<div class="submit-section">
 										<button class="btn btn-primary submit-btn">Submit</button>
@@ -536,14 +472,14 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<form>
+								<form th:action="@{/leaveType/updateLeaveType}" method="POST" id="editLeaveType">
 									<div class="form-group">
 										<label>Leave Type <span class="text-danger">*</span></label>
-										<input class="form-control" type="text" value="Casual Leave">
+										<input class="form-control" type="text" name="leaveName"readonly>
 									</div>
 									<div class="form-group">
 										<label>Number of days <span class="text-danger">*</span></label>
-										<input class="form-control" type="text" value="12">
+										<input class="form-control" type="text"  name="days" >
 									</div>
 									<div class="submit-section">
 										<button class="btn btn-primary submit-btn">Save</button>
@@ -567,7 +503,7 @@
 								<div class="modal-btn delete-action">
 									<div class="row">
 										<div class="col-6">
-											<a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+											<a href="javascript:void(0);" class="btn btn-primary continue-btn"  onclick="deleteLeaveType()">Delete</a>
 										</div>
 										<div class="col-6">
 											<a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
@@ -602,6 +538,128 @@
 
 		<!-- Custom JS -->
 		<script src="assets/js/app.js"></script>
-		
+
+		////////////////////
+
+		<script th:inline="javascript">
+			// Add LeaveType
+			// JavaScript to handle the AJAX call and pre-fill the form
+			var add_leavetype = document.getElementById("addLeaveType");
+
+			// JavaScript to handle the form submission and page reload
+			add_leavetype.addEventListener('submit', function(event) {
+				event.preventDefault();
+				// Serialize the form data
+				const formData = new URLSearchParams(new FormData(add_leavetype));
+				//const formData = new FormData(add_leavetype);
+
+
+				fetch(add_leavetype.action, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded' // Set the Content-Type to form data
+					},
+					body: formData
+				})
+						.then(response => {
+							if (response.ok) {
+								window.location.reload(); // Reload the page after successful update
+							} else {
+								console.error('Error updating holiday data.');
+							}
+						})
+						.catch(error => console.error(error));
+			});
+		</script>
+
+
+	/////delete leave Type
+
+
+		/////
+		<script th:inline="javascript">
+			// Delete Employee
+			var deleteLeaveTypeName; // Variable to store the employee ID
+
+			function captureLeaveName(event) {
+				event.preventDefault();
+				deleteLeaveTypeName = event.target.getAttribute("data-leaveType-leaveName");
+			}
+
+			// Function to handle the deletion
+			function deleteLeaveType() {
+				// Check if deleteleavetypeName is set
+				if (!deleteLeaveTypeName) {
+					console.error("Leave Type Name not captured.");
+					return;
+				}
+
+				// Send a POST request to delete the employee
+				fetch('/leaveType/delete/' + deleteLeaveTypeName, {
+					method: 'POST'
+				})
+						.then(response => {
+							if (response.ok) {
+								// Reload the page after successful deletion
+								window.location.reload();
+							} else {
+								console.error('Error deleting leave Type.');
+							}
+						})
+						.catch(error => console.error(error));
+			}
+		</script>
+
+
+
+	////////UPDATE LEAVE TYPE
+
+		<script th:inline="javascript">
+			// Edit Leave Type
+			// JavaScript to handle the AJAX call and pre-fill the form
+			var edit_leavetype = document.getElementById("editLeaveType");
+
+			function populateFormWithData(leaveType) {
+				edit_leavetype.querySelector('[name=leaveName]').value = leaveType.leaveName;
+
+				edit_leavetype.querySelector('[name=days]').value = leaveType.days;
+
+			}
+
+			document.querySelectorAll(".edit-link").forEach(link => {
+				link.addEventListener("click", function(event) {
+					event.preventDefault();
+					var leaveName = link.getAttribute("data-leaveType-leaveName");
+					fetch('/leaveType/' + leaveName)
+							.then(response => response.json())
+							.then(data => populateFormWithData(data))
+							.catch(error => console.error(error));
+				});
+			});
+
+			// JavaScript to handle the form submission and page reload
+			edit_leavetype.addEventListener('submit', function(event) {
+				event.preventDefault();
+
+				// Serialize the form data
+				const formData = new URLSearchParams(new FormData(edit_leavetype));
+
+				fetch(edit_leavetype.action, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded' // Set the Content-Type to form data
+					},
+					body: formData
+				})
+						.then(response => {
+							if (response.ok) {
+								window.location.reload(); // Reload the page after successful update
+							} else {
+								console.error('Error updating leave Type data.');
+							}
+						})
+						.catch(error => console.error(error));
+			});
+		</script>
     </body>
 </html>

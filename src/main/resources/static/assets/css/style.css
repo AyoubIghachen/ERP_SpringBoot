@@ -3252,10 +3252,11 @@ table.dataTable thead > tr > td.sorting {
 	text-align: center;
 }
 .personal-info li .title {
-	color: #c50202;
+	color: #4f4f4f;
 	float: left;
 	font-weight: 500;
 	margin-right: 30px;
+	width: 25%;
 }
 .personal-info li .text {
 	color: #8e8e8e;
