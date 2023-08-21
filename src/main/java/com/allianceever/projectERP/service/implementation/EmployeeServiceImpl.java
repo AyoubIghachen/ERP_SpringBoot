@@ -69,6 +69,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepo.deleteById(EmployeeID);
     }
 
+    @Override
+    public List<EmployeeDto> findByFirst_Name(String first_Name) {
+        List<Employee> employees = employeeRepo.findByFirst_NameLikeIgnoreCase(first_Name);
+        return employees.stream().map((employee) -> mapToDTO(employee))
+                .collect(Collectors.toList());
+    }
 
 
 

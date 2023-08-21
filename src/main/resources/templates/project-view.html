@@ -1,1292 +1,1715 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-        <meta name="description" content="Smarthr - Bootstrap Admin Template">
-		<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
-        <meta name="author" content="Dreamguys - Bootstrap Admin Template">
-        <meta name="robots" content="noindex, nofollow">
-        <title>Project View - HRMS admin template</title>
-		
-		<!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-		
-		<!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-		
-		<!-- Fontawesome CSS -->
-        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-		
-		<!-- Lineawesome CSS -->
-        <link rel="stylesheet" href="assets/css/line-awesome.min.css">
-		
-		<!-- Select2 CSS -->
-		<link rel="stylesheet" href="assets/css/select2.min.css">
-		
-		<!-- Datetimepicker CSS -->
-		<link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
-		
-		<!-- Main CSS -->
-        <link rel="stylesheet" href="assets/css/style.css">
-		
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!--[if lt IE 9]>
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
-    </head>
-    <body>
-		<!-- Main Wrapper -->
-        <div class="main-wrapper">
-		
-			<!-- Header -->
-            <div class="header">
-			
-				<!-- Logo -->
-                <div class="header-left">
-                    <a href="index.html" class="logo">
-						<img src="assets/img/logo.png" width="40" height="40" alt="">
-					</a>
-                </div>
-				<!-- /Logo -->
-				
-				<a id="toggle_btn" href="javascript:void(0);">
+<html lang="en"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<meta name="description" content="Smarthr - Bootstrap Admin Template">
+	<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+	<meta name="author" content="Dreamguys - Bootstrap Admin Template">
+	<meta name="robots" content="noindex, nofollow">
+	<title>Project View - HRMS admin template</title>
+
+	<style>
+		/* CSS styles for the selected employee */
+		.selected-employee {
+			border-style: solid;
+			border-color: rgb(243, 137, 7);
+		}
+	</style>
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.png">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+
+	<!-- Fontawesome CSS -->
+	<link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+
+	<!-- Lineawesome CSS -->
+	<link rel="stylesheet" href="/assets/css/line-awesome.min.css">
+
+	<!-- Select2 CSS -->
+	<link rel="stylesheet" href="/assets/css/select2.min.css">
+
+	<!-- Datetimepicker CSS -->
+	<link rel="stylesheet" href="/assets/css/bootstrap-datetimepicker.min.css">
+
+	<!-- Main CSS -->
+	<link rel="stylesheet" href="/assets/css/style.css">
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="/assets/js/html5shiv.min.js"></script>
+	<script src="/assets/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+<!-- Main Wrapper -->
+<div class="main-wrapper">
+
+	<!-- Header -->
+	<div class="header">
+
+		<!-- Logo -->
+		<div class="header-left">
+			<a href="/index.html" class="logo">
+				<img src="/assets/img/logo.png" width="40" height="40" alt="">
+			</a>
+		</div>
+		<!-- /Logo -->
+
+		<a id="toggle_btn" href="/javascript:void(0);">
 					<span class="bar-icon">
 						<span></span>
 						<span></span>
 						<span></span>
 					</span>
-				</a>
-				
-				<!-- Header Title -->
-                <div class="page-title-box">
-					<h3>Dreamguy's Technologies</h3>
-                </div>
-				<!-- /Header Title -->
-				
-				<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
-				
-				<!-- Header Menu -->
-				<ul class="nav user-menu">
-				
-					<!-- Search -->
-					<li class="nav-item">
-						<div class="top-nav-search">
-							<a href="javascript:void(0);" class="responsive-search">
-								<i class="fa fa-search"></i>
-						   </a>
-							<form action="search.html">
-								<input class="form-control" type="text" placeholder="Search here">
-								<button class="btn" type="submit"><i class="fa fa-search"></i></button>
-							</form>
-						</div>
-					</li>
-					<!-- /Search -->
-				
-					<!-- Flag -->
-					<li class="nav-item dropdown has-arrow flag-nav">
-						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
-							<img src="assets/img/flags/us.png" alt="" height="20"> <span>English</span>
-						</a>
-						<div class="dropdown-menu dropdown-menu-right">
-							<a href="javascript:void(0);" class="dropdown-item">
-								<img src="assets/img/flags/us.png" alt="" height="16"> English
-							</a>
-							<a href="javascript:void(0);" class="dropdown-item">
-								<img src="assets/img/flags/fr.png" alt="" height="16"> French
-							</a>
-							<a href="javascript:void(0);" class="dropdown-item">
-								<img src="assets/img/flags/es.png" alt="" height="16"> Spanish
-							</a>
-							<a href="javascript:void(0);" class="dropdown-item">
-								<img src="assets/img/flags/de.png" alt="" height="16"> German
-							</a>
-						</div>
-					</li>
-					<!-- /Flag -->
-				
-					<!-- Notifications -->
-					<li class="nav-item dropdown">
-						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-							<i class="fa fa-bell-o"></i> <span class="badge badge-pill">3</span>
-						</a>
-						<div class="dropdown-menu notifications">
-							<div class="topnav-dropdown-header">
-								<span class="notification-title">Notifications</span>
-								<a href="javascript:void(0)" class="clear-noti"> Clear All </a>
-							</div>
-							<div class="noti-content">
-								<ul class="notification-list">
-									<li class="notification-message">
-										<a href="activities.html">
-											<div class="media">
-												<span class="avatar">
-													<img alt="" src="assets/img/profiles/avatar-02.jpg">
-												</span>
-												<div class="media-body">
-													<p class="noti-details"><span class="noti-title">John Doe</span> added new task <span class="noti-title">Patient appointment booking</span></p>
-													<p class="noti-time"><span class="notification-time">4 mins ago</span></p>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="activities.html">
-											<div class="media">
-												<span class="avatar">
-													<img alt="" src="assets/img/profiles/avatar-03.jpg">
-												</span>
-												<div class="media-body">
-													<p class="noti-details"><span class="noti-title">Tarah Shropshire</span> changed the task name <span class="noti-title">Appointment booking with payment gateway</span></p>
-													<p class="noti-time"><span class="notification-time">6 mins ago</span></p>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="activities.html">
-											<div class="media">
-												<span class="avatar">
-													<img alt="" src="assets/img/profiles/avatar-06.jpg">
-												</span>
-												<div class="media-body">
-													<p class="noti-details"><span class="noti-title">Misty Tison</span> added <span class="noti-title">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
-													<p class="noti-time"><span class="notification-time">8 mins ago</span></p>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="activities.html">
-											<div class="media">
-												<span class="avatar">
-													<img alt="" src="assets/img/profiles/avatar-17.jpg">
-												</span>
-												<div class="media-body">
-													<p class="noti-details"><span class="noti-title">Rolland Webber</span> completed task <span class="noti-title">Patient and Doctor video conferencing</span></p>
-													<p class="noti-time"><span class="notification-time">12 mins ago</span></p>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="activities.html">
-											<div class="media">
-												<span class="avatar">
-													<img alt="" src="assets/img/profiles/avatar-13.jpg">
-												</span>
-												<div class="media-body">
-													<p class="noti-details"><span class="noti-title">Bernardo Galaviz</span> added new task <span class="noti-title">Private chat module</span></p>
-													<p class="noti-time"><span class="notification-time">2 days ago</span></p>
-												</div>
-											</div>
-										</a>
-									</li>
-								</ul>
-							</div>
-							<div class="topnav-dropdown-footer">
-								<a href="activities.html">View all Notifications</a>
-							</div>
-						</div>
-					</li>
-					<!-- /Notifications -->
-					
-					<!-- Message Notifications -->
-					<li class="nav-item dropdown">
-						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-							<i class="fa fa-comment-o"></i> <span class="badge badge-pill">8</span>
-						</a>
-						<div class="dropdown-menu notifications">
-							<div class="topnav-dropdown-header">
-								<span class="notification-title">Messages</span>
-								<a href="javascript:void(0)" class="clear-noti"> Clear All </a>
-							</div>
-							<div class="noti-content">
-								<ul class="notification-list">
-									<li class="notification-message">
-										<a href="chat.html">
-											<div class="list-item">
-												<div class="list-left">
-													<span class="avatar">
-														<img alt="" src="assets/img/profiles/avatar-09.jpg">
-													</span>
-												</div>
-												<div class="list-body">
-													<span class="message-author">Richard Miles </span>
-													<span class="message-time">12:28 AM</span>
-													<div class="clearfix"></div>
-													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="chat.html">
-											<div class="list-item">
-												<div class="list-left">
-													<span class="avatar">
-														<img alt="" src="assets/img/profiles/avatar-02.jpg">
-													</span>
-												</div>
-												<div class="list-body">
-													<span class="message-author">John Doe</span>
-													<span class="message-time">6 Mar</span>
-													<div class="clearfix"></div>
-													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="chat.html">
-											<div class="list-item">
-												<div class="list-left">
-													<span class="avatar">
-														<img alt="" src="assets/img/profiles/avatar-03.jpg">
-													</span>
-												</div>
-												<div class="list-body">
-													<span class="message-author"> Tarah Shropshire </span>
-													<span class="message-time">5 Mar</span>
-													<div class="clearfix"></div>
-													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="chat.html">
-											<div class="list-item">
-												<div class="list-left">
-													<span class="avatar">
-														<img alt="" src="assets/img/profiles/avatar-05.jpg">
-													</span>
-												</div>
-												<div class="list-body">
-													<span class="message-author">Mike Litorus</span>
-													<span class="message-time">3 Mar</span>
-													<div class="clearfix"></div>
-													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="chat.html">
-											<div class="list-item">
-												<div class="list-left">
-													<span class="avatar">
-														<img alt="" src="assets/img/profiles/avatar-08.jpg">
-													</span>
-												</div>
-												<div class="list-body">
-													<span class="message-author"> Catherine Manseau </span>
-													<span class="message-time">27 Feb</span>
-													<div class="clearfix"></div>
-													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-												</div>
-											</div>
-										</a>
-									</li>
-								</ul>
-							</div>
-							<div class="topnav-dropdown-footer">
-								<a href="chat.html">View all Messages</a>
-							</div>
-						</div>
-					</li>
-					<!-- /Message Notifications -->
+		</a>
 
-					<li class="nav-item dropdown has-arrow main-drop">
-						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-							<span class="user-img"><img src="assets/img/profiles/avatar-21.jpg" alt="">
-							<span class="status online"></span></span>
-							<span>Admin</span>
-						</a>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="profile.html">My Profile</a>
-							<a class="dropdown-item" href="settings.html">Settings</a>
-							<a class="dropdown-item" href="login.html">Logout</a>
-						</div>
-					</li>
-				</ul>
-				<!-- /Header Menu -->
-				
-				<!-- Mobile Menu -->
-				<div class="dropdown mobile-user-menu">
-					<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-					<div class="dropdown-menu dropdown-menu-right">
-						<a class="dropdown-item" href="profile.html">My Profile</a>
-						<a class="dropdown-item" href="settings.html">Settings</a>
-						<a class="dropdown-item" href="login.html">Logout</a>
-					</div>
+		<!-- Header Title -->
+		<div class="page-title-box">
+			<h3>Dreamguy's Technologies</h3>
+		</div>
+		<!-- /Header Title -->
+
+		<a id="mobile_btn" class="mobile_btn" href="/#sidebar"><i class="fa fa-bars"></i></a>
+
+		<!-- Header Menu -->
+		<ul class="nav user-menu">
+
+			<!-- Search -->
+			<li class="nav-item">
+				<div class="top-nav-search">
+					<a href="/javascript:void(0);" class="responsive-search">
+						<i class="fa fa-search"></i>
+					</a>
+					<form action="search.html">
+						<input class="form-control" type="text" placeholder="Search here">
+						<button class="btn" type="submit"><i class="fa fa-search"></i></button>
+					</form>
 				</div>
-				<!-- /Mobile Menu -->
-				
-            </div>
-			<!-- /Header -->
-			
-			<!-- Sidebar -->
-            <div class="sidebar" id="sidebar">
-                <div class="sidebar-inner slimscroll">
-					<div id="sidebar-menu" class="sidebar-menu">
-						<ul>
-							<li class="menu-title"> 
-								<span>Main</span>
+			</li>
+			<!-- /Search -->
+
+			<!-- Flag -->
+			<li class="nav-item dropdown has-arrow flag-nav">
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/#" role="button">
+					<img src="/assets/img/flags/us.png" alt="" height="20"> <span>English</span>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right">
+					<a href="/javascript:void(0);" class="dropdown-item">
+						<img src="/assets/img/flags/us.png" alt="" height="16"> English
+					</a>
+					<a href="/javascript:void(0);" class="dropdown-item">
+						<img src="/assets/img/flags/fr.png" alt="" height="16"> French
+					</a>
+					<a href="/javascript:void(0);" class="dropdown-item">
+						<img src="/assets/img/flags/es.png" alt="" height="16"> Spanish
+					</a>
+					<a href="/javascript:void(0);" class="dropdown-item">
+						<img src="/assets/img/flags/de.png" alt="" height="16"> German
+					</a>
+				</div>
+			</li>
+			<!-- /Flag -->
+
+			<!-- Notifications -->
+			<li class="nav-item dropdown">
+				<a href="/#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+					<i class="fa fa-bell-o"></i> <span class="badge badge-pill">3</span>
+				</a>
+				<div class="dropdown-menu notifications">
+					<div class="topnav-dropdown-header">
+						<span class="notification-title">Notifications</span>
+						<a href="/javascript:void(0)" class="clear-noti"> Clear All </a>
+					</div>
+					<div class="noti-content">
+						<ul class="notification-list">
+							<li class="notification-message">
+								<a href="/activities.html">
+									<div class="media">
+												<span class="avatar">
+													<img alt="" src="/assets/img/profiles/avatar-02.jpg">
+												</span>
+										<div class="media-body">
+											<p class="noti-details"><span class="noti-title">John Doe</span> added new task <span class="noti-title">Patient appointment booking</span></p>
+											<p class="noti-time"><span class="notification-time">4 mins ago</span></p>
+										</div>
+									</div>
+								</a>
 							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="index.html">Admin Dashboard</a></li>
-									<li><a href="employee-dashboard.html">Employee Dashboard</a></li>
-								</ul>
+							<li class="notification-message">
+								<a href="/activities.html">
+									<div class="media">
+												<span class="avatar">
+													<img alt="" src="/assets/img/profiles/avatar-03.jpg">
+												</span>
+										<div class="media-body">
+											<p class="noti-details"><span class="noti-title">Tarah Shropshire</span> changed the task name <span class="noti-title">Appointment booking with payment gateway</span></p>
+											<p class="noti-time"><span class="notification-time">6 mins ago</span></p>
+										</div>
+									</div>
+								</a>
 							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-cube"></i> <span> Apps</span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="chat.html">Chat</a></li>
-									<li class="submenu">
-										<a href="#"><span> Calls</span> <span class="menu-arrow"></span></a>
-										<ul style="display: none;">
-											<li><a href="voice-call.html">Voice Call</a></li>
-											<li><a href="video-call.html">Video Call</a></li>
-											<li><a href="outgoing-call.html">Outgoing Call</a></li>
-											<li><a href="incoming-call.html">Incoming Call</a></li>
-										</ul>
-									</li>
-									<li><a href="events.html">Calendar</a></li>
-									<li><a href="contacts.html">Contacts</a></li>
-									<li><a href="inbox.html">Email</a></li>
-									<li><a href="file-manager.html">File Manager</a></li>
-								</ul>
+							<li class="notification-message">
+								<a href="/activities.html">
+									<div class="media">
+												<span class="avatar">
+													<img alt="" src="/assets/img/profiles/avatar-06.jpg">
+												</span>
+										<div class="media-body">
+											<p class="noti-details"><span class="noti-title">Misty Tison</span> added <span class="noti-title">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
+											<p class="noti-time"><span class="notification-time">8 mins ago</span></p>
+										</div>
+									</div>
+								</a>
 							</li>
-							<li class="menu-title"> 
-								<span>Employees</span>
+							<li class="notification-message">
+								<a href="/activities.html">
+									<div class="media">
+												<span class="avatar">
+													<img alt="" src="/assets/img/profiles/avatar-17.jpg">
+												</span>
+										<div class="media-body">
+											<p class="noti-details"><span class="noti-title">Rolland Webber</span> completed task <span class="noti-title">Patient and Doctor video conferencing</span></p>
+											<p class="noti-time"><span class="notification-time">12 mins ago</span></p>
+										</div>
+									</div>
+								</a>
 							</li>
-							<li class="submenu">
-								<a href="#" class="noti-dot"><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="employees.html">All Employees</a></li>
-									<li><a href="holidays.html">Holidays</a></li>
-									<li><a href="leaves.html">Leaves (Admin) <span class="badge badge-pill bg-primary float-right">1</span></a></li>
-									<li><a href="leaves-employee.html">Leaves (Employee)</a></li>
-									<li><a href="leave-settings.html">Leave Settings</a></li>
-									<li><a href="attendance.html">Attendance (Admin)</a></li>
-									<li><a href="attendance-employee.html">Attendance (Employee)</a></li>
-									<li><a href="departments.html">Departments</a></li>
-									<li><a href="designations.html">Designations</a></li>
-									<li><a href="timesheet.html">Timesheet</a></li>
-									<li><a href="overtime.html">Overtime</a></li>
-								</ul>
-							</li>
-							<li> 
-								<a href="clients.html"><i class="la la-users"></i> <span>Clients</span></a>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-rocket"></i> <span> Projects</span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a class="active" href="projects.html">Projects</a></li>
-									<li><a href="tasks.html">Tasks</a></li>
-									<li><a href="task-board.html">Task Board</a></li>
-								</ul>
-							</li>
-							<li> 
-								<a href="leads.html"><i class="la la-user-secret"></i> <span>Leads</span></a>
-							</li>
-							<li> 
-								<a href="tickets.html"><i class="la la-ticket"></i> <span>Tickets</span></a>
-							</li>
-							<li class="menu-title"> 
-								<span>HR</span>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-files-o"></i> <span> Accounts </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="estimates.html">Estimates</a></li>
-									<li><a href="invoices.html">Invoices</a></li>
-									<li><a href="payments.html">Payments</a></li>
-									<li><a href="expenses.html">Expenses</a></li>
-									<li><a href="provident-fund.html">Provident Fund</a></li>
-									<li><a href="taxes.html">Taxes</a></li>
-								</ul>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-money"></i> <span> Payroll </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="salary.html"> Employee Salary </a></li>
-									<li><a href="salary-view.html"> Payslip </a></li>
-									<li><a href="payroll-items.html"> Payroll Items </a></li>
-								</ul>
-							</li>
-							<li> 
-								<a href="policies.html"><i class="la la-file-pdf-o"></i> <span>Policies</span></a>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-pie-chart"></i> <span> Reports </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="expense-reports.html"> Expense Report </a></li>
-									<li><a href="invoice-reports.html"> Invoice Report </a></li>
-								</ul>
-							</li>
-							<li class="menu-title"> 
-								<span>Performance</span>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-graduation-cap"></i> <span> Performance </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="performance-indicator.html"> Performance Indicator </a></li>
-									<li><a href="performance.html"> Performance Review </a></li>
-									<li><a href="performance-appraisal.html"> Performance Appraisal </a></li>
-								</ul>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-crosshairs"></i> <span> Goals </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="goal-tracking.html"> Goal List </a></li>
-									<li><a href="goal-type.html"> Goal Type </a></li>
-								</ul>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-edit"></i> <span> Training </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="training.html"> Training List </a></li>
-									<li><a href="trainers.html"> Trainers</a></li>
-									<li><a href="training-type.html"> Training Type </a></li>
-								</ul>
-							</li>
-							<li><a href="promotion.html"><i class="la la-bullhorn"></i> <span>Promotion</span></a></li>
-							<li><a href="resignation.html"><i class="la la-external-link-square"></i> <span>Resignation</span></a></li>
-							<li><a href="termination.html"><i class="la la-times-circle"></i> <span>Termination</span></a></li>
-							<li class="menu-title"> 
-								<span>Administration</span>
-							</li>
-							<li> 
-								<a href="assets.html"><i class="la la-object-ungroup"></i> <span>Assets</span></a>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-briefcase"></i> <span> Jobs </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="jobs.html"> Manage Jobs </a></li>
-									<li><a href="job-applicants.html"> Applied Candidates </a></li>
-								</ul>
-							</li>
-							<li> 
-								<a href="knowledgebase.html"><i class="la la-question"></i> <span>Knowledgebase</span></a>
-							</li>
-							<li> 
-								<a href="activities.html"><i class="la la-bell"></i> <span>Activities</span></a>
-							</li>
-							<li> 
-								<a href="users.html"><i class="la la-user-plus"></i> <span>Users</span></a>
-							</li>
-							<li> 
-								<a href="settings.html"><i class="la la-cog"></i> <span>Settings</span></a>
-							</li>
-							<li class="menu-title"> 
-								<span>Pages</span>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-user"></i> <span> Profile </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="profile.html"> Employee Profile </a></li>
-									<li><a href="client-profile.html"> Client Profile </a></li>
-								</ul>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-key"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="login.html"> Login </a></li>
-									<li><a href="register.html"> Register </a></li>
-									<li><a href="forgot-password.html"> Forgot Password </a></li>
-									<li><a href="otp.html"> OTP </a></li>
-									<li><a href="lock-screen.html"> Lock Screen </a></li>
-								</ul>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-exclamation-triangle"></i> <span> Error Pages </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="error-404.html">404 Error </a></li>
-									<li><a href="error-500.html">500 Error </a></li>
-								</ul>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-hand-o-up"></i> <span> Subscriptions </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="subscriptions.html"> Subscriptions (Admin) </a></li>
-									<li><a href="subscriptions-company.html"> Subscriptions (Company) </a></li>
-									<li><a href="subscribed-companies.html"> Subscribed Companies</a></li>
-								</ul>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-columns"></i> <span> Pages </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="search.html"> Search </a></li>
-									<li><a href="faq.html"> FAQ </a></li>
-									<li><a href="terms.html"> Terms </a></li>
-									<li><a href="privacy-policy.html"> Privacy Policy </a></li>
-									<li><a href="blank-page.html"> Blank Page </a></li>
-								</ul>
-							</li>
-							<li class="menu-title"> 
-								<span>UI Interface</span>
-							</li>
-							<li> 
-								<a href="components.html"><i class="la la-puzzle-piece"></i> <span>Components</span></a>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-object-group"></i> <span> Forms </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="form-basic-inputs.html">Basic Inputs </a></li>
-									<li><a href="form-input-groups.html">Input Groups </a></li>
-									<li><a href="form-horizontal.html">Horizontal Form </a></li>
-									<li><a href="form-vertical.html"> Vertical Form </a></li>
-									<li><a href="form-mask.html"> Form Mask </a></li>
-									<li><a href="form-validation.html"> Form Validation </a></li>
-								</ul>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="la la-table"></i> <span> Tables </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="tables-basic.html">Basic Tables </a></li>
-									<li><a href="data-tables.html">Data Table </a></li>
-								</ul>
-							</li>
-							<li class="menu-title"> 
-								<span>Extras</span>
-							</li>
-							<li> 
-								<a href="#"><i class="la la-file-text"></i> <span>Documentation</span></a>
-							</li>
-							<li> 
-								<a href="javascript:void(0);"><i class="la la-info"></i> <span>Change Log</span> <span class="badge badge-primary ml-auto">v3.4</span></a>
-							</li>
-							<li class="submenu">
-								<a href="javascript:void(0);"><i class="la la-share-alt"></i> <span>Multi Level</span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li class="submenu">
-										<a href="javascript:void(0);"> <span>Level 1</span> <span class="menu-arrow"></span></a>
-										<ul style="display: none;">
-											<li><a href="javascript:void(0);"><span>Level 2</span></a></li>
-											<li class="submenu">
-												<a href="javascript:void(0);"> <span> Level 2</span> <span class="menu-arrow"></span></a>
-												<ul style="display: none;">
-													<li><a href="javascript:void(0);">Level 3</a></li>
-													<li><a href="javascript:void(0);">Level 3</a></li>
-												</ul>
-											</li>
-											<li><a href="javascript:void(0);"> <span>Level 2</span></a></li>
-										</ul>
-									</li>
-									<li>
-										<a href="javascript:void(0);"> <span>Level 1</span></a>
-									</li>
-								</ul>
+							<li class="notification-message">
+								<a href="/activities.html">
+									<div class="media">
+												<span class="avatar">
+													<img alt="" src="/assets/img/profiles/avatar-13.jpg">
+												</span>
+										<div class="media-body">
+											<p class="noti-details"><span class="noti-title">Bernardo Galaviz</span> added new task <span class="noti-title">Private chat module</span></p>
+											<p class="noti-time"><span class="notification-time">2 days ago</span></p>
+										</div>
+									</div>
+								</a>
 							</li>
 						</ul>
 					</div>
-                </div>
-            </div>
-			<!-- /Sidebar -->
-			
-			<!-- Page Wrapper -->
-            <div class="page-wrapper">
-				
-				<!-- Page Content -->
-                <div class="content container-fluid">
-				
-					<!-- Page Header -->
-					<div class="page-header">
-						<div class="row align-items-center">
-							<div class="col">
-								<h3 class="page-title">Hospital Admin</h3>
-								<ul class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-									<li class="breadcrumb-item active">Project</li>
-								</ul>
-							</div>
-							<div class="col-auto float-right ml-auto">
-								<a href="#" class="btn add-btn" data-toggle="modal" data-target="#edit_project"><i class="fa fa-plus"></i> Edit Project</a>
-								<a href="task-board.html" class="btn btn-white float-right m-r-10" data-toggle="tooltip" title="Task Board"><i class="fa fa-bars"></i></a>
-							</div>
-						</div>
+					<div class="topnav-dropdown-footer">
+						<a href="/activities.html">View all Notifications</a>
 					</div>
-					<!-- /Page Header -->
-					
-					<div class="row">
-						<div class="col-lg-8 col-xl-9">
-							<div class="card">
-								<div class="card-body">
-									<div class="project-title">
-										<h5 class="card-title">Hospital Administration</h5>
-										<small class="block text-ellipsis m-b-15"><span class="text-xs">2</span> <span class="text-muted">open tasks, </span><span class="text-xs">5</span> <span class="text-muted">tasks completed</span></small>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel elit neque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum sollicitudin libero vitae est consectetur, a molestie tortor consectetur. Aenean tincidunt interdum ipsum, id pellentesque diam suscipit ut. Vivamus massa mi, fermentum eget neque eget, imperdiet tristique lectus. Proin at purus ut sem pellentesque tempor sit amet ut lectus. Sed orci augue, placerat et pretium ac, hendrerit in felis. Integer scelerisque libero non metus commodo, et hendrerit diam aliquet. Proin tincidunt porttitor ligula, a tincidunt orci pellentesque nec. Ut ultricies maximus nulla id consequat. Fusce eu consequat mi, eu euismod ligula. Aliquam porttitor neque id massa porttitor, a pretium velit vehicula. Morbi volutpat tincidunt urna, vel ullamcorper ligula fermentum at. </p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel elit neque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum sollicitudin libero vitae est consectetur, a molestie tortor consectetur. Aenean tincidunt interdum ipsum, id pellentesque diam suscipit ut. Vivamus massa mi, fermentum eget neque eget, imperdiet tristique lectus. Proin at purus ut sem pellentesque tempor sit amet ut lectus. Sed orci augue, placerat et pretium ac, hendrerit in felis. Integer scelerisque libero non metus commodo, et hendrerit diam aliquet. Proin tincidunt porttitor ligula, a tincidunt orci pellentesque nec. Ut ultricies maximus nulla id consequat. Fusce eu consequat mi, eu euismod ligula. Aliquam porttitor neque id massa porttitor, a pretium velit vehicula. Morbi volutpat tincidunt urna, vel ullamcorper ligula fermentum at. </p>
-								</div>
-							</div>
-							<div class="card">
-								<div class="card-body">
-				                    <h5 class="card-title m-b-20">Uploaded image files</h5>
-									<div class="row">
-										<div class="col-md-3 col-sm-4 col-lg-4 col-xl-3">
-											<div class="uploaded-box">
-												<div class="uploaded-img">
-													<img src="assets/img/placeholder.jpg" class="img-fluid" alt="">
-												</div>
-												<div class="uploaded-img-name">
-													 demo.png
-												</div>
-											</div>
-										</div>
-										<div class="col-md-3 col-sm-4 col-lg-4 col-xl-3">
-											<div class="uploaded-box">
-												<div class="uploaded-img">
-													<img src="assets/img/placeholder.jpg" class="img-fluid" alt="">
-												</div>
-												<div class="uploaded-img-name">
-													 demo.png
-												</div>
-											</div>
-										</div>
-										<div class="col-md-3 col-sm-4 col-lg-4 col-xl-3">
-											<div class="uploaded-box">
-												<div class="uploaded-img">
-													<img src="assets/img/placeholder.jpg" class="img-fluid" alt="">
-												</div>
-												<div class="uploaded-img-name">
-													 demo.png
-												</div>
-											</div>
-										</div>
-										<div class="col-md-3 col-sm-4 col-lg-4 col-xl-3">
-											<div class="uploaded-box">
-												<div class="uploaded-img">
-													<img src="assets/img/placeholder.jpg" class="img-fluid" alt="">
-												</div>
-												<div class="uploaded-img-name">
-													 demo.png
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="card">
-								<div class="card-body">
-									<h5 class="card-title m-b-20">Uploaded files</h5>
-									<ul class="files-list">
-										<li>
-											<div class="files-cont">
-												<div class="file-type">
-													<span class="files-icon"><i class="fa fa-file-pdf-o"></i></span>
-												</div>
-												<div class="files-info">
-													<span class="file-name text-ellipsis"><a href="#">AHA Selfcare Mobile Application Test-Cases.xls</a></span>
-													<span class="file-author"><a href="#">John Doe</a></span> <span class="file-date">May 31st at 6:53 PM</span>
-													<div class="file-size">Size: 14.8Mb</div>
-												</div>
-												<ul class="files-action">
-													<li class="dropdown dropdown-action">
-														<a href="" class="dropdown-toggle btn btn-link" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_horiz</i></a>
-														<div class="dropdown-menu dropdown-menu-right">
-															<a class="dropdown-item" href="javascript:void(0)">Download</a>
-															<a class="dropdown-item" href="#" data-toggle="modal" data-target="#share_files">Share</a>
-															<a class="dropdown-item" href="javascript:void(0)">Delete</a>
-														</div>
-													</li>
-												</ul>
-											</div>
-										</li>
-										<li>
-											<div class="files-cont">
-												<div class="file-type">
-													<span class="files-icon"><i class="fa fa-file-pdf-o"></i></span>
-												</div>
-												<div class="files-info">
-													<span class="file-name text-ellipsis"><a href="#">AHA Selfcare Mobile Application Test-Cases.xls</a></span>
-													<span class="file-author"><a href="#">Richard Miles</a></span> <span class="file-date">May 31st at 6:53 PM</span>
-													<div class="file-size">Size: 14.8Mb</div>
-												</div>
-												<ul class="files-action">
-													<li class="dropdown dropdown-action">
-														<a href="" class="dropdown-toggle btn btn-link" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_horiz</i></a>
-														<div class="dropdown-menu dropdown-menu-right">
-															<a class="dropdown-item" href="javascript:void(0)">Download</a>
-															<a class="dropdown-item" href="#" data-toggle="modal" data-target="#share_files">Share</a>
-															<a class="dropdown-item" href="javascript:void(0)">Delete</a>
-														</div>
-													</li>
-												</ul>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-							<div class="project-task">
-								<ul class="nav nav-tabs nav-tabs-top nav-justified mb-0">
-									<li class="nav-item"><a class="nav-link active" href="#all_tasks" data-toggle="tab" aria-expanded="true">All Tasks</a></li>
-									<li class="nav-item"><a class="nav-link" href="#pending_tasks" data-toggle="tab" aria-expanded="false">Pending Tasks</a></li>
-									<li class="nav-item"><a class="nav-link" href="#completed_tasks" data-toggle="tab" aria-expanded="false">Completed Tasks</a></li>
-								</ul>
-								<div class="tab-content">
-									<div class="tab-pane show active" id="all_tasks">
-										<div class="task-wrapper">
-											<div class="task-list-container">
-												<div class="task-list-body">
-													<ul id="task-list">
-														<li class="task">
-															<div class="task-container">
-																<span class="task-action-btn task-check">
-																	<span class="action-circle large complete-btn" title="Mark Complete">
-																		<i class="material-icons">check</i>
-																	</span>
-																</span>
-																<span class="task-label" contenteditable="true">Patient appointment booking</span>
-																<span class="task-action-btn task-btn-right">
-																	<span class="action-circle large" title="Assign">
-																		<i class="material-icons">person_add</i>
-																	</span>
-																	<span class="action-circle large delete-btn" title="Delete Task">
-																		<i class="material-icons">delete</i>
-																	</span>
-																</span>
-															</div>
-														</li>
-														<li class="task">
-															<div class="task-container">
-																<span class="task-action-btn task-check">
-																	<span class="action-circle large complete-btn" title="Mark Complete">
-																		<i class="material-icons">check</i>
-																	</span>
-																</span>
-																<span class="task-label" contenteditable="true">Appointment booking with payment gateway</span>
-																<span class="task-action-btn task-btn-right">
-																	<span class="action-circle large" title="Assign">
-																		<i class="material-icons">person_add</i>
-																	</span>
-																	<span class="action-circle large delete-btn" title="Delete Task">
-																		<i class="material-icons">delete</i>
-																	</span>
-																</span>
-															</div>
-														</li>
-														<li class="completed task">
-															<div class="task-container">
-																<span class="task-action-btn task-check">
-																	<span class="action-circle large complete-btn" title="Mark Complete">
-																		<i class="material-icons">check</i>
-																	</span>
-																</span>
-																<span class="task-label">Doctor available module</span>
-																<span class="task-action-btn task-btn-right">
-																	<span class="action-circle large" title="Assign">
-																		<i class="material-icons">person_add</i>
-																	</span>
-																	<span class="action-circle large delete-btn" title="Delete Task">
-																		<i class="material-icons">delete</i>
-																	</span>
-																</span>
-															</div>
-														</li>
-														<li class="task">
-															<div class="task-container">
-																<span class="task-action-btn task-check">
-																	<span class="action-circle large complete-btn" title="Mark Complete">
-																		<i class="material-icons">check</i>
-																	</span>
-																</span>
-																<span class="task-label" contenteditable="true">Patient and Doctor video conferencing</span>
-																<span class="task-action-btn task-btn-right">
-																	<span class="action-circle large" title="Assign">
-																		<i class="material-icons">person_add</i>
-																	</span>
-																	<span class="action-circle large delete-btn" title="Delete Task">
-																		<i class="material-icons">delete</i>
-																	</span>
-																</span>
-															</div>
-														</li>
-														<li class="task">
-															<div class="task-container">
-																<span class="task-action-btn task-check">
-																	<span class="action-circle large complete-btn" title="Mark Complete">
-																		<i class="material-icons">check</i>
-																	</span>
-																</span>
-																<span class="task-label" contenteditable="true">Private chat module</span>
-																<span class="task-action-btn task-btn-right">
-																	<span class="action-circle large" title="Assign">
-																		<i class="material-icons">person_add</i>
-																	</span>
-																	<span class="action-circle large delete-btn" title="Delete Task">
-																		<i class="material-icons">delete</i>
-																	</span>
-																</span>
-															</div>
-														</li>
-														<li class="task">
-															<div class="task-container">
-																<span class="task-action-btn task-check">
-																	<span class="action-circle large complete-btn" title="Mark Complete">
-																		<i class="material-icons">check</i>
-																	</span>
-																</span>
-																<span class="task-label" contenteditable="true">Patient Profile add</span>
-																<span class="task-action-btn task-btn-right">
-																	<span class="action-circle large" title="Assign">
-																		<i class="material-icons">person_add</i>
-																	</span>
-																	<span class="action-circle large delete-btn" title="Delete Task">
-																		<i class="material-icons">delete</i>
-																	</span>
-																</span>
-															</div>
-														</li>
-													</ul>
-												</div>
-												<div class="task-list-footer">
-													<div class="new-task-wrapper">
-														<textarea  id="new-task" placeholder="Enter new task here. . ."></textarea>
-														<span class="error-message hidden">You need to enter a task first</span>
-														<span class="add-new-task-btn btn" id="add-task">Add Task</span>
-														<span class="btn" id="close-task-panel">Close</span>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane" id="pending_tasks"></div>
-									<div class="tab-pane" id="completed_tasks"></div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-xl-3">
-							<div class="card">
-								<div class="card-body">
-									<h6 class="card-title m-b-15">Project details</h6>
-									<table class="table table-striped table-border">
-										<tbody>
-											<tr>
-												<td>Cost:</td>
-												<td class="text-right">$1200</td>
-											</tr>
-											<tr>
-												<td>Total Hours:</td>
-												<td class="text-right">100 Hours</td>
-											</tr>
-											<tr>
-												<td>Created:</td>
-												<td class="text-right">25 Feb, 2019</td>
-											</tr>
-											<tr>
-												<td>Deadline:</td>
-												<td class="text-right">12 Jun, 2019</td>
-											</tr>
-											<tr>
-												<td>Priority:</td>
-												<td class="text-right">
-													<div class="btn-group">
-														<a href="#" class="badge badge-danger dropdown-toggle" data-toggle="dropdown">Highest </a>
-														<div class="dropdown-menu dropdown-menu-right">
-															<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Highest priority</a>
-															<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> High priority</a>
-															<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-primary"></i> Normal priority</a>
-															<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> Low priority</a>
-														</div>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td>Created by:</td>
-												<td class="text-right"><a href="profile.html">Barry Cuda</a></td>
-											</tr>
-											<tr>
-												<td>Status:</td>
-												<td class="text-right">Working</td>
-											</tr>
-										</tbody>
-									</table>
-									<p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
-									<div class="progress progress-xs mb-0">
-										<div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="40%" style="width: 40%"></div>
-									</div>
-								</div>
-							</div>
-							<div class="card project-user">
-								<div class="card-body">
-									<h6 class="card-title m-b-20">Assigned Leader <button type="button" class="float-right btn btn-primary btn-sm" data-toggle="modal" data-target="#assign_leader"><i class="fa fa-plus"></i> Add</button></h6>
-									<ul class="list-box">
-										<li>
-											<a href="profile.html">
-												<div class="list-item">
-													<div class="list-left">
-														<span class="avatar"><img alt="" src="assets/img/profiles/avatar-11.jpg"></span>
-													</div>
-													<div class="list-body">
-														<span class="message-author">Wilmer Deluna</span>
-														<div class="clearfix"></div>
-														<span class="message-content">Team Leader</span>
-													</div>
-												</div>
-											</a>
-										</li>
-										<li>
-											<a href="profile.html">
-												<div class="list-item">
-													<div class="list-left">
-														<span class="avatar"><img alt="" src="assets/img/profiles/avatar-01.jpg"></span>
-													</div>
-													<div class="list-body">
-														<span class="message-author">Lesley Grauer</span>
-														<div class="clearfix"></div>
-														<span class="message-content">Team Leader</span>
-													</div>
-												</div>
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-							<div class="card project-user">
-								<div class="card-body">
-									<h6 class="card-title m-b-20">
-										Assigned users 
-										<button type="button" class="float-right btn btn-primary btn-sm" data-toggle="modal" data-target="#assign_user"><i class="fa fa-plus"></i> Add</button>
-									</h6>
-									<ul class="list-box">
-										<li>
-											<a href="profile.html">
-												<div class="list-item">
-													<div class="list-left">
-														<span class="avatar"><img alt="" src="assets/img/profiles/avatar-02.jpg"></span>
-													</div>
-													<div class="list-body">
-														<span class="message-author">John Doe</span>
-														<div class="clearfix"></div>
-														<span class="message-content">Web Designer</span>
-													</div>
-												</div>
-											</a>
-										</li>
-										<li>
-											<a href="profile.html">
-												<div class="list-item">
-													<div class="list-left">
-														<span class="avatar"><img alt="" src="assets/img/profiles/avatar-09.jpg"></span>
-													</div>
-													<div class="list-body">
-														<span class="message-author">Richard Miles</span>
-														<div class="clearfix"></div>
-														<span class="message-content">Web Developer</span>
-													</div>
-												</div>
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
+				</div>
+			</li>
+			<!-- /Notifications -->
+
+			<!-- Message Notifications -->
+			<li class="nav-item dropdown">
+				<a href="/#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+					<i class="fa fa-comment-o"></i> <span class="badge badge-pill">8</span>
+				</a>
+				<div class="dropdown-menu notifications">
+					<div class="topnav-dropdown-header">
+						<span class="notification-title">Messages</span>
+						<a href="/javascript:void(0)" class="clear-noti"> Clear All </a>
 					</div>
-                </div>
-				<!-- /Page Content -->
-				
-				<!-- Assign Leader Modal -->
-				<div id="assign_leader" class="modal custom-modal fade" role="dialog">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title">Assign Leader to this project</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<div class="input-group m-b-30">
-									<input placeholder="Search to add a leader" class="form-control search-input" type="text">
-									<span class="input-group-append">
-										<button class="btn btn-primary">Search</button>
-									</span>
-								</div>
-								<div>
-									<ul class="chat-user-list">
-										<li>
-											<a href="#">
-												<div class="media">
-													<span class="avatar"><img alt="" src="assets/img/profiles/avatar-09.jpg"></span>
-													<div class="media-body align-self-center text-nowrap">
-														<div class="user-name">Richard Miles</div>
-														<span class="designation">Web Developer</span>
-													</div>
-												</div>
-											</a>
-										</li>
-										<li>
-											<a href="#">
-												<div class="media">
-													<span class="avatar"><img alt="" src="assets/img/profiles/avatar-10.jpg"></span>
-													<div class="media-body align-self-center text-nowrap">
-														<div class="user-name">John Smith</div>
-														<span class="designation">Android Developer</span>
-													</div>
-												</div>
-											</a>
-										</li>
-										<li>
-											<a href="#">
-												<div class="media">
+					<div class="noti-content">
+						<ul class="notification-list">
+							<li class="notification-message">
+								<a href="/chat.html">
+									<div class="list-item">
+										<div class="list-left">
 													<span class="avatar">
-														<img alt="" src="assets/img/profiles/avatar-16.jpg">
+														<img alt="" src="/assets/img/profiles/avatar-09.jpg">
 													</span>
-													<div class="media-body align-self-center text-nowrap">
-														<div class="user-name">Jeffery Lalor</div>
-														<span class="designation">Team Leader</span>
-													</div>
-												</div>
-											</a>
-										</li>
-									</ul>
-								</div>
-								<div class="submit-section">
-									<button class="btn btn-primary submit-btn">Submit</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Assign Leader Modal -->
-				
-				<!-- Assign User Modal -->
-				<div id="assign_user" class="modal custom-modal fade" role="dialog">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title">Assign the user to this project</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<div class="input-group m-b-30">
-									<input placeholder="Search a user to assign" class="form-control search-input" type="text">
-									<span class="input-group-append">
-										<button class="btn btn-primary">Search</button>
-									</span>
-								</div>
-								<div>
-									<ul class="chat-user-list">
-										<li>
-											<a href="#">
-												<div class="media">
-													<span class="avatar"><img alt="" src="assets/img/profiles/avatar-09.jpg"></span>
-													<div class="media-body align-self-center text-nowrap">
-														<div class="user-name">Richard Miles</div>
-														<span class="designation">Web Developer</span>
-													</div>
-												</div>
-											</a>
-										</li>
-										<li>
-											<a href="#">
-												<div class="media">
-													<span class="avatar"><img alt="" src="assets/img/profiles/avatar-10.jpg"></span>
-													<div class="media-body align-self-center text-nowrap">
-														<div class="user-name">John Smith</div>
-														<span class="designation">Android Developer</span>
-													</div>
-												</div>
-											</a>
-										</li>
-										<li>
-											<a href="#">
-												<div class="media">
+										</div>
+										<div class="list-body">
+											<span class="message-author">Richard Miles </span>
+											<span class="message-time">12:28 AM</span>
+											<div class="clearfix"></div>
+											<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li class="notification-message">
+								<a href="/chat.html">
+									<div class="list-item">
+										<div class="list-left">
 													<span class="avatar">
-														<img alt="" src="assets/img/profiles/avatar-16.jpg">
+														<img alt="" src="/assets/img/profiles/avatar-02.jpg">
 													</span>
-													<div class="media-body align-self-center text-nowrap">
-														<div class="user-name">Jeffery Lalor</div>
-														<span class="designation">Team Leader</span>
+										</div>
+										<div class="list-body">
+											<span class="message-author">John Doe</span>
+											<span class="message-time">6 Mar</span>
+											<div class="clearfix"></div>
+											<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li class="notification-message">
+								<a href="/chat.html">
+									<div class="list-item">
+										<div class="list-left">
+													<span class="avatar">
+														<img alt="" src="/assets/img/profiles/avatar-03.jpg">
+													</span>
+										</div>
+										<div class="list-body">
+											<span class="message-author"> Tarah Shropshire </span>
+											<span class="message-time">5 Mar</span>
+											<div class="clearfix"></div>
+											<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li class="notification-message">
+								<a href="/chat.html">
+									<div class="list-item">
+										<div class="list-left">
+													<span class="avatar">
+														<img alt="" src="/assets/img/profiles/avatar-05.jpg">
+													</span>
+										</div>
+										<div class="list-body">
+											<span class="message-author">Mike Litorus</span>
+											<span class="message-time">3 Mar</span>
+											<div class="clearfix"></div>
+											<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li class="notification-message">
+								<a href="/chat.html">
+									<div class="list-item">
+										<div class="list-left">
+													<span class="avatar">
+														<img alt="" src="/assets/img/profiles/avatar-08.jpg">
+													</span>
+										</div>
+										<div class="list-body">
+											<span class="message-author"> Catherine Manseau </span>
+											<span class="message-time">27 Feb</span>
+											<div class="clearfix"></div>
+											<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="topnav-dropdown-footer">
+						<a href="/chat.html">View all Messages</a>
+					</div>
+				</div>
+			</li>
+			<!-- /Message Notifications -->
+
+			<li class="nav-item dropdown has-arrow main-drop">
+				<a href="/#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+							<span class="user-img"><img src="/assets/img/profiles/avatar-21.jpg" alt="">
+							<span class="status online"></span></span>
+					<span>Admin</span>
+				</a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="/profile.html">My Profile</a>
+					<a class="dropdown-item" href="/settings.html">Settings</a>
+					<a class="dropdown-item" href="/login.html">Logout</a>
+				</div>
+			</li>
+		</ul>
+		<!-- /Header Menu -->
+
+		<!-- Mobile Menu -->
+		<div class="dropdown mobile-user-menu">
+			<a href="/#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+			<div class="dropdown-menu dropdown-menu-right">
+				<a class="dropdown-item" href="/profile.html">My Profile</a>
+				<a class="dropdown-item" href="/settings.html">Settings</a>
+				<a class="dropdown-item" href="/login.html">Logout</a>
+			</div>
+		</div>
+		<!-- /Mobile Menu -->
+
+	</div>
+	<!-- /Header -->
+
+	<!-- Sidebar -->
+	<div class="sidebar" id="sidebar">
+		<div class="sidebar-inner slimscroll">
+			<div id="sidebar-menu" class="sidebar-menu">
+				<ul>
+					<li class="menu-title">
+						<span>Main</span>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/index.html">Admin Dashboard</a></li>
+							<li><a href="/employee-dashboard.html">Employee Dashboard</a></li>
+						</ul>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-cube"></i> <span> Apps</span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/chat.html">Chat</a></li>
+							<li class="submenu">
+								<a href="/#"><span> Calls</span> <span class="menu-arrow"></span></a>
+								<ul style="display: none;">
+									<li><a href="/voice-call.html">Voice Call</a></li>
+									<li><a href="/video-call.html">Video Call</a></li>
+									<li><a href="/outgoing-call.html">Outgoing Call</a></li>
+									<li><a href="/incoming-call.html">Incoming Call</a></li>
+								</ul>
+							</li>
+							<li><a href="/events.html">Calendar</a></li>
+							<li><a href="/contacts.html">Contacts</a></li>
+							<li><a href="/inbox.html">Email</a></li>
+							<li><a href="/file-manager.html">File Manager</a></li>
+						</ul>
+					</li>
+					<li class="menu-title">
+						<span>Employees</span>
+					</li>
+					<li class="submenu">
+						<a href="/#" class="noti-dot"><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/employees.html">All Employees</a></li>
+							<li><a href="/holidays.html">Holidays</a></li>
+							<li><a href="/leaves.html">Leaves (Admin) <span class="badge badge-pill bg-primary float-right">1</span></a></li>
+							<li><a href="/leaves-employee.html">Leaves (Employee)</a></li>
+							<li><a href="/leave-settings.html">Leave Settings</a></li>
+							<li><a href="/attendance.html">Attendance (Admin)</a></li>
+							<li><a href="/attendance-employee.html">Attendance (Employee)</a></li>
+							<li><a href="/departments.html">Departments</a></li>
+							<li><a href="/designations.html">Designations</a></li>
+							<li><a href="/timesheet.html">Timesheet</a></li>
+							<li><a href="/overtime.html">Overtime</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="/clients.html"><i class="la la-users"></i> <span>Clients</span></a>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-rocket"></i> <span> Projects</span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a class="active" href="/projects.html">Projects</a></li>
+							<li><a href="/tasks.html">Tasks</a></li>
+							<li><a href="/task-board.html">Task Board</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="/leads.html"><i class="la la-user-secret"></i> <span>Leads</span></a>
+					</li>
+					<li>
+						<a href="/tickets.html"><i class="la la-ticket"></i> <span>Tickets</span></a>
+					</li>
+					<li class="menu-title">
+						<span>HR</span>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-files-o"></i> <span> Accounts </span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/estimates.html">Estimates</a></li>
+							<li><a href="/invoices.html">Invoices</a></li>
+							<li><a href="/payments.html">Payments</a></li>
+							<li><a href="/expenses.html">Expenses</a></li>
+							<li><a href="/provident-fund.html">Provident Fund</a></li>
+							<li><a href="/taxes.html">Taxes</a></li>
+						</ul>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-money"></i> <span> Payroll </span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/salary.html"> Employee Salary </a></li>
+							<li><a href="/salary-view.html"> Payslip </a></li>
+							<li><a href="/payroll-items.html"> Payroll Items </a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="/policies.html"><i class="la la-file-pdf-o"></i> <span>Policies</span></a>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-pie-chart"></i> <span> Reports </span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/expense-reports.html"> Expense Report </a></li>
+							<li><a href="/invoice-reports.html"> Invoice Report </a></li>
+						</ul>
+					</li>
+					<li class="menu-title">
+						<span>Performance</span>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-graduation-cap"></i> <span> Performance </span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/performance-indicator.html"> Performance Indicator </a></li>
+							<li><a href="/performance.html"> Performance Review </a></li>
+							<li><a href="/performance-appraisal.html"> Performance Appraisal </a></li>
+						</ul>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-crosshairs"></i> <span> Goals </span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/goal-tracking.html"> Goal List </a></li>
+							<li><a href="/goal-type.html"> Goal Type </a></li>
+						</ul>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-edit"></i> <span> Training </span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/training.html"> Training List </a></li>
+							<li><a href="/trainers.html"> Trainers</a></li>
+							<li><a href="/training-type.html"> Training Type </a></li>
+						</ul>
+					</li>
+					<li><a href="/promotion.html"><i class="la la-bullhorn"></i> <span>Promotion</span></a></li>
+					<li><a href="/resignation.html"><i class="la la-external-link-square"></i> <span>Resignation</span></a></li>
+					<li><a href="/termination.html"><i class="la la-times-circle"></i> <span>Termination</span></a></li>
+					<li class="menu-title">
+						<span>Administration</span>
+					</li>
+					<li>
+						<a href="/assets.html"><i class="la la-object-ungroup"></i> <span>Assets</span></a>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-briefcase"></i> <span> Jobs </span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/jobs.html"> Manage Jobs </a></li>
+							<li><a href="/job-applicants.html"> Applied Candidates </a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="/knowledgebase.html"><i class="la la-question"></i> <span>Knowledgebase</span></a>
+					</li>
+					<li>
+						<a href="/activities.html"><i class="la la-bell"></i> <span>Activities</span></a>
+					</li>
+					<li>
+						<a href="/users.html"><i class="la la-user-plus"></i> <span>Users</span></a>
+					</li>
+					<li>
+						<a href="/settings.html"><i class="la la-cog"></i> <span>Settings</span></a>
+					</li>
+					<li class="menu-title">
+						<span>Pages</span>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-user"></i> <span> Profile </span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/profile.html"> Employee Profile </a></li>
+							<li><a href="/client-profile.html"> Client Profile </a></li>
+						</ul>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-key"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/login.html"> Login </a></li>
+							<li><a href="/register.html"> Register </a></li>
+							<li><a href="/forgot-password.html"> Forgot Password </a></li>
+							<li><a href="/otp.html"> OTP </a></li>
+							<li><a href="/lock-screen.html"> Lock Screen </a></li>
+						</ul>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-exclamation-triangle"></i> <span> Error Pages </span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/error-404.html">404 Error </a></li>
+							<li><a href="/error-500.html">500 Error </a></li>
+						</ul>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-hand-o-up"></i> <span> Subscriptions </span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/subscriptions.html"> Subscriptions (Admin) </a></li>
+							<li><a href="/subscriptions-company.html"> Subscriptions (Company) </a></li>
+							<li><a href="/subscribed-companies.html"> Subscribed Companies</a></li>
+						</ul>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-columns"></i> <span> Pages </span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/search.html"> Search </a></li>
+							<li><a href="/faq.html"> FAQ </a></li>
+							<li><a href="/terms.html"> Terms </a></li>
+							<li><a href="/privacy-policy.html"> Privacy Policy </a></li>
+							<li><a href="/blank-page.html"> Blank Page </a></li>
+						</ul>
+					</li>
+					<li class="menu-title">
+						<span>UI Interface</span>
+					</li>
+					<li>
+						<a href="/components.html"><i class="la la-puzzle-piece"></i> <span>Components</span></a>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-object-group"></i> <span> Forms </span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/form-basic-inputs.html">Basic Inputs </a></li>
+							<li><a href="/form-input-groups.html">Input Groups </a></li>
+							<li><a href="/form-horizontal.html">Horizontal Form </a></li>
+							<li><a href="/form-vertical.html"> Vertical Form </a></li>
+							<li><a href="/form-mask.html"> Form Mask </a></li>
+							<li><a href="/form-validation.html"> Form Validation </a></li>
+						</ul>
+					</li>
+					<li class="submenu">
+						<a href="/#"><i class="la la-table"></i> <span> Tables </span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li><a href="/tables-basic.html">Basic Tables </a></li>
+							<li><a href="/data-tables.html">Data Table </a></li>
+						</ul>
+					</li>
+					<li class="menu-title">
+						<span>Extras</span>
+					</li>
+					<li>
+						<a href="/#"><i class="la la-file-text"></i> <span>Documentation</span></a>
+					</li>
+					<li>
+						<a href="/javascript:void(0);"><i class="la la-info"></i> <span>Change Log</span> <span class="badge badge-primary ml-auto">v3.4</span></a>
+					</li>
+					<li class="submenu">
+						<a href="/javascript:void(0);"><i class="la la-share-alt"></i> <span>Multi Level</span> <span class="menu-arrow"></span></a>
+						<ul style="display: none;">
+							<li class="submenu">
+								<a href="/javascript:void(0);"> <span>Level 1</span> <span class="menu-arrow"></span></a>
+								<ul style="display: none;">
+									<li><a href="/javascript:void(0);"><span>Level 2</span></a></li>
+									<li class="submenu">
+										<a href="/javascript:void(0);"> <span> Level 2</span> <span class="menu-arrow"></span></a>
+										<ul style="display: none;">
+											<li><a href="/javascript:void(0);">Level 3</a></li>
+											<li><a href="/javascript:void(0);">Level 3</a></li>
+										</ul>
+									</li>
+									<li><a href="/javascript:void(0);"> <span>Level 2</span></a></li>
+								</ul>
+							</li>
+							<li>
+								<a href="/javascript:void(0);"> <span>Level 1</span></a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- /Sidebar -->
+
+	<!-- Page Wrapper -->
+	<div class="page-wrapper">
+
+		<!-- Page Content -->
+		<div class="content container-fluid">
+
+			<!-- Page Header -->
+			<div class="page-header">
+				<div class="row align-items-center">
+					<div class="col">
+						<h3 class="page-title" th:text="${project.getProject_Name()}">Hospital Admin</h3>
+						<ul class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/index.html">Dashboard</a></li>
+							<li class="breadcrumb-item active">Project</li>
+						</ul>
+					</div>
+					<div class="col-auto float-right ml-auto">
+						<a id="editProjectLink" class="btn add-btn edit-link" th:href="@{/project/{id}(id=${project.getProjectID()})}" th:data-project-id="${project.getProjectID()}" data-toggle="modal" data-target="#edit_project"><i class="fa fa-plus"></i> Edit Project</a>
+						<a th:href="@{/task-board.html/{id}(id=${project.getProjectID()})}" class="btn btn-white float-right m-r-10" data-toggle="tooltip" title="Task Board"><i class="fa fa-bars"></i></a>
+						<a th:href="@{/tasks.html/{id}(id=${project.getProjectID()})}" class="btn btn-white float-right m-r-10" data-toggle="tooltip" title="Tasks"><i class="fa fa-bars"></i></a>
+					</div>
+				</div>
+			</div>
+			<!-- /Page Header -->
+
+			<div class="row">
+				<div class="col-lg-8 col-xl-9">
+					<div class="card">
+						<div class="card-body">
+							<div class="project-title">
+								<h5 class="card-title" th:text="${project.getCompany_Name()}">Hospital Administration</h5>
+								<small class="block text-ellipsis m-b-15"><span class="text-xs">2</span> <span class="text-muted">open tasks, </span><span class="text-xs">5</span> <span class="text-muted">tasks completed</span></small>
+							</div>
+							<p th:text="${project.getDescription()}"></p>
+							</div>
+					</div>
+
+					<div class="card">
+						<div class="card-body">
+							<div class="row align-items-center">
+								<h5 class="card-title m-b-20" style="margin-left: 15px;">Uploaded image</h5>
+								<div class="card-title m-b-20 col-auto float-right ml-auto">
+									<a class="btn add-btn" data-toggle="modal" data-target="#add_image"><i class="fa fa-plus"></i> Add Image</a>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3 col-sm-4 col-lg-4 col-xl-3" th:each="imageProject: ${imageProjects}">
+									<div class="profile-widget">
+										<br>
+										<div class="uploaded-img">
+											<img th:src="@{'/assets/img/projects/' + ${imageProject.getImageName()}}" alt="" class="img-fluid">
+										</div>
+										<div class="dropdown profile-action">
+											<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+											<div class="dropdown-menu dropdown-menu-right">
+												<a class="dropdown-item" href="#" onclick="captureImageProjectId(event)" th:data-imageProject-id="${imageProject.getImageProjectID()}"  data-toggle="modal" data-target="#delete_imageProject"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+											</div>
+										</div>
+										<br>
+										<div class="uploaded-img-name">
+											<a target="_blank" th:href="@{'/assets/img/projects/' + ${imageProject.getImageName()}}" th:text="${imageProject.getOriginalName()}"></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="card">
+						<div class="card-body">
+							<div class="row align-items-center">
+								<h5 class="card-title m-b-20" style="margin-left: 15px;">Uploaded files</h5>
+								<div class="card-title m-b-20 col-auto float-right ml-auto">
+									<a class="btn add-btn" data-toggle="modal" data-target="#add_file"><i class="fa fa-plus"></i> Add File</a>
+								</div>
+							</div>
+							<ul class="files-list">
+								<li th:each="fileProject: ${fileProjects}">
+									<div class="files-cont">
+										<div class="file-type">
+											<span class="files-icon"><i class="fa fa-file-pdf-o"></i></span>
+										</div>
+										<div class="files-info">
+											<span class="file-name text-ellipsis"><a target="_blank" th:href="@{'/assets/img/projects/' + ${fileProject.getFileName()}}"  th:text="${fileProject.getOriginalName()}"></a></span>
+											</span> <span class="file-date" th:text="${fileProject.getDateCreation()}"></span>
+										</div>
+										<ul class="files-action">
+											<li class="dropdown dropdown-action">
+												<a href="#" class="dropdown-toggle btn btn-link" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_horiz</i></a>
+												<div class="dropdown-menu dropdown-menu-right">
+													<a class="dropdown-item" href="#" onclick="captureFileProjectId(event)" th:data-fileProject-id="${fileProject.getFileProjectID()}"  data-toggle="modal" data-target="#delete_fileProject"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="project-task">
+						<ul class="nav nav-tabs nav-tabs-top nav-justified mb-0">
+							<li class="nav-item"><a class="nav-link active" href="/#all_tasks" data-toggle="tab" aria-expanded="true">All Tasks</a></li>
+							<li class="nav-item"><a class="nav-link" href="/#pending_tasks" data-toggle="tab" aria-expanded="false">Pending Tasks</a></li>
+							<li class="nav-item"><a class="nav-link" href="/#completed_tasks" data-toggle="tab" aria-expanded="false">Completed Tasks</a></li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane show active" id="all_tasks">
+								<div class="task-wrapper">
+									<div class="task-list-container">
+										<div class="task-list-body">
+											<ul id="task-list" class="task-list">
+
+												<li class="task" th:each="task: ${tasks}">
+													<div class="task-container" th:data-task-id="${task.getTaskID()}">
+																		<span class="task-action-btn task-check">
+																			<span class="action-circle large complete-btn" title="Mark Complete">
+																				<i class="material-icons">check</i>
+																			</span>
+																		</span>
+														<span class="task-label" contenteditable="false" th:text="${task.getTask_Name()}">Task Name</span>
 													</div>
-												</div>
-											</a>
-										</li>
-									</ul>
+												</li>
+
+											</ul>
+										</div>
+
+									</div>
 								</div>
-								<div class="submit-section">
-									<button class="btn btn-primary submit-btn">Submit</button>
+							</div>
+							<div class="tab-pane" id="pending_tasks"></div>
+							<div class="tab-pane" id="completed_tasks"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-xl-3">
+					<div class="card">
+						<div class="card-body">
+							<h6 class="card-title m-b-15">Project details</h6>
+							<table class="table table-striped table-border">
+								<tbody>
+								<tr>
+									<td>Cost:</td>
+									<td class="text-right" th:text="${project.getRate()}">$1200</td>
+								</tr>
+								<tr>
+									<td>Total Hours:</td>
+									<td class="text-right" th:text="${project.getTotal_Hours()}">100 Hours</td>
+								</tr>
+								<tr>
+									<td>Starting Line:</td>
+									<td class="text-right" th:text="${project.getStart_Date()}">25 Feb, 2019</td>
+								</tr>
+								<tr>
+									<td>Deadline:</td>
+									<td class="text-right" th:text="${project.getEnd_Date()}">12 Jun, 2019</td>
+								</tr>
+								<tr>
+									<td>Priority:</td>
+									<td class="text-right">
+										<div class="btn-group">
+											<p class="badge badge-danger" th:text="${project.getPriority()}">Highest </p>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>Created by:</td>
+									<td class="text-right"><a href="/profile.html" th:text="${project.getCreated_By()}">Barry Cuda</a></td>
+								</tr>
+								<tr>
+									<td>Status:</td>
+									<td class="text-right" th:text="${project.getStatus()}">Working</td>
+								</tr>
+								</tbody>
+							</table>
+							<p class="m-b-5">Progress <span class="text-success float-right" th:text="${project.getProgress() ?: '80%'}">40%</span></p>
+							<div class="progress progress-xs mb-0">
+								<div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="40%" style="width: 40%"></div>
+							</div>
+						</div>
+					</div>
+					<div class="card project-user">
+						<div class="card-body">
+							<h6 class="card-title m-b-20">Assigned Leader
+								<button type="button" class="float-right btn btn-primary btn-sm" data-toggle="modal" data-target="#assign_leader"><i class="fa fa-plus"></i> Add</button>
+							</h6>
+							<ul class="list-box">
+								<li th:each="leaderProject: ${leaderProjects}">
+									<div class="media">
+										<span class="avatar"><img alt="" th:src="@{'/assets/img/profiles/' + ${leaderProject.getImageName()}}"></span>
+										<div class="media-body align-self-center text-nowrap">
+											<div class="user-name" th:text="${leaderProject.getFirst_Name()+' '+leaderProject.getLast_Name()}"></div>
+											<span class="designation" th:text="${leaderProject.getDesignation()}"></span>
+										</div>
+										<ul style="list-style: none; padding-left: 0;">
+											<li class="dropdown dropdown-action">
+												<a href="#" class="dropdown-toggle btn btn-link" data-toggle="dropdown"><i class="material-icons">more_horiz</i></a>
+												<div class="dropdown-menu dropdown-menu-right">
+													<a class="dropdown-item" href="#" onclick="captureLeaderProjectId(event)" th:data-leaderProject-id="${leaderProject.getLeaderProjectID()}"  data-toggle="modal" data-target="#delete_leaderProject"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="card project-user">
+						<div class="card-body">
+							<h6 class="card-title m-b-20">
+								Assigned users
+								<button type="button" class="float-right btn btn-primary btn-sm" data-toggle="modal" data-target="#assign_user"><i class="fa fa-plus"></i> Add</button>
+							</h6>
+							<ul class="list-box">
+								<li th:each="employeeProject: ${employeeProjects}">
+                                    <div class="media">
+                                        <span class="avatar"><img alt="" th:src="@{'/assets/img/profiles/' + ${employeeProject.getImageName()}}"></span>
+                                        <div class="media-body align-self-center text-nowrap">
+                                            <div class="user-name" th:text="${employeeProject.getFirst_Name()+' '+employeeProject.getLast_Name()}"></div>
+                                            <span class="designation" th:text="${employeeProject.getDesignation()}"></span>
+                                        </div>
+                                        <ul style="list-style: none; padding-left: 0;">
+                                            <li class="dropdown dropdown-action">
+                                                <a href="#" class="dropdown-toggle btn btn-link" data-toggle="dropdown"><i class="material-icons">more_horiz</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+													<a class="dropdown-item" href="#" onclick="captureEmployeeProjectId(event)" th:data-employeeProject-id="${employeeProject.getEmployeeProjectID()}"  data-toggle="modal" data-target="#delete_employeeProject"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Page Content -->
+
+		<!-- Assign Leader Modal -->
+		<div id="assign_leader" class="modal custom-modal fade" role="dialog">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Assign Leader to this project</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="input-group m-b-30">
+							<input id="searchInputLeader" placeholder="Search an employee to assign" class="form-control search-input" type="text">
+							<span class="input-group-append">
+                                <button id="searchButtonLeader" class="btn btn-primary">Search</button>
+                            </span>
+						</div>
+						<div>
+							<ul id="leaderList" class="chat-user-list">
+
+							</ul>
+						</div>
+						<div class="submit-section">
+							<button id="submitButtonLeader" class="btn btn-primary submit-btn">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Assign Leader Modal -->
+
+		<!-- Assign User Modal -->
+		<div id="assign_user" class="modal custom-modal fade" role="dialog">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Assign the user to this project</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="input-group m-b-30">
+							<input id="searchInput" placeholder="Search an employee to assign" class="form-control search-input" type="text">
+							<span class="input-group-append">
+                                <button id="searchButton" class="btn btn-primary">Search</button>
+                            </span>
+						</div>
+						<div>
+							<ul id="employeeList" class="chat-user-list">
+
+							</ul>
+						</div>
+						<div class="submit-section">
+							<button id="submitButton" class="btn btn-primary submit-btn">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Assign User Modal -->
+
+		<!-- Edit Project Modal -->
+		<div id="edit_project" class="modal custom-modal fade" role="dialog">
+			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Edit Project</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form th:action="@{/project/updateProject}" method="POST" id="editForm">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>Project ID</label>
+										<input type="text" readonly class="form-control floating" name="projectID">
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>Created by</label>
+										<input class="form-control floating" type="text" name="created_By" readonly>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>Project Name</label>
+										<input class="form-control" type="text" name="project_Name">
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>Client</label>
+										<select class="select" placeholder="Choose client" name="company_Name">
+											<option>Global Technologies</option>
+											<option>Delta Infotech</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>Start Date</label>
+										<div class="cal-icon">
+											<input class="form-control datetimepicker" type="text" name="start_Date">
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>End Date</label>
+										<div class="cal-icon">
+											<input class="form-control datetimepicker" type="text" name="end_Date">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label>Rate</label>
+										<input placeholder="$50" class="form-control" type="text" name="rate">
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label>Type</label>
+										<select class="select" name="rate_Type">
+											<option>Hourly</option>
+											<option>Fixed</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>Priority</label>
+										<select class="select" name="priority">
+											<option>High</option>
+											<option>Medium</option>
+											<option>Low</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>Total Hours</label>
+										<input class="form-control" type="text" name="total_Hours">
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>Status</label>
+										<select class="select" name="status">
+											<option>Working</option>
+											<option>Completed</option>
+											<option>Pending</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Description</label>
+								<textarea rows="4" class="form-control" placeholder="Enter your message here" name="description"></textarea>
+							</div>
+
+							<div class="submit-section">
+								<button class="btn btn-primary submit-btn" type="submit">Update</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Edit Project Modal -->
+
+		<!-- Image Modal -->
+		<div id="add_image" class="modal custom-modal fade" role="dialog">
+			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Add Image</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form th:action="@{/imageProject/create}" method="POST" id="editFormImage" enctype="multipart/form-data">
+							<div class="row">
+								<input type="hidden" name="projectID" th:value="${project.getProjectID()}">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Upload Image</label>
+										<input class="form-control" type="file" name="imageFile">
+									</div>
+								</div>
+							</div>
+
+							<div class="submit-section">
+								<button class="btn btn-primary submit-btn">Add</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Image Modal -->
+
+		<!-- Delete ImageProject Modal -->
+		<div class="modal custom-modal fade" id="delete_imageProject" role="dialog">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="form-header">
+							<h3>Delete Image</h3>
+							<p>Are you sure want to delete?</p>
+						</div>
+						<div class="modal-btn delete-action">
+							<div class="row">
+								<div class="col-6">
+									<a href="javascript:void(0);" class="btn btn-primary continue-btn" onclick="deleteImageProject()">Delete</a>
+								</div>
+								<div class="col-6">
+									<a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- /Assign User Modal -->
-				
-				<!-- Edit Project Modal -->
-				<div id="edit_project" class="modal custom-modal fade" role="dialog">
-					<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title">Edit Project</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
+			</div>
+		</div>
+		<!-- /Delete ImageProject Modal -->
+
+
+		<!-- File Modal -->
+		<div id="add_file" class="modal custom-modal fade" role="dialog">
+			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Add File</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form th:action="@{/fileProject/create}" method="POST" id="editFormFile" enctype="multipart/form-data">
+							<div class="row">
+								<input type="hidden" name="projectID" th:value="${project.getProjectID()}">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Upload File</label>
+										<input class="form-control" type="file" name="fileFile">
+									</div>
+								</div>
 							</div>
-							<div class="modal-body">
-								<form>
-									<div class="row">
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label>Project Name</label>
-												<input class="form-control" value="Project Management" type="text">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label>Client</label>
-												<select class="select">
-													<option>Global Technologies</option>
-													<option>Delta Infotech</option>
-												</select>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label>Start Date</label>
-												<div class="cal-icon">
-													<input class="form-control datetimepicker" type="text">
-												</div>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label>End Date</label>
-												<div class="cal-icon">
-													<input class="form-control datetimepicker" type="text">
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-3">
-											<div class="form-group">
-												<label>Rate</label>
-												<input placeholder="$50" class="form-control" value="$5000" type="text">
-											</div>
-										</div>
-										<div class="col-sm-3">
-											<div class="form-group">
-												<label>&nbsp;</label>
-												<select class="select">
-													<option>Hourly</option>
-													<option selected>Fixed</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label>Priority</label>
-												<select class="select">
-													<option selected>High</option>
-													<option>Medium</option>
-													<option>Low</option>
-												</select>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label>Add Project Leader</label>
-												<input class="form-control" type="text">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label>Team Leader</label>
-												<div class="project-members">
-													<a class="avatar" href="#" data-toggle="tooltip" title="Jeffery Lalor">
-														<img alt="" src="assets/img/profiles/avatar-16.jpg">
-													</a>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label>Add Team</label>
-												<input class="form-control" type="text">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label>Team Members</label>
-												<div class="project-members">
-													<a class="avatar" href="#" data-toggle="tooltip" title="John Doe">
-														<img alt="" src="assets/img/profiles/avatar-02.jpg">
-													</a>
-													<a class="avatar" href="#" data-toggle="tooltip" title="Richard Miles">
-														<img alt="" src="assets/img/profiles/avatar-09.jpg">
-													</a>
-													<a class="avatar" href="#" data-toggle="tooltip" title="John Smith">
-														<img alt="" src="assets/img/profiles/avatar-10.jpg">
-													</a>
-													<a class="avatar" href="#" data-toggle="tooltip" title="Mike Litorus">
-														<img alt="" src="assets/img/profiles/avatar-05.jpg">
-													</a>
-													<span class="all-team">+2</span>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label>Description</label>
-										<textarea rows="4" class="form-control" placeholder="Enter your message here"></textarea>
-									</div>
-									<div class="form-group">
-										<label>Upload Files</label>
-										<input class="form-control" type="file">
-									</div>
-									<div class="submit-section">
-										<button class="btn btn-primary submit-btn">Save</button>
-									</div>
-								</form>
+
+							<div class="submit-section">
+								<button class="btn btn-primary submit-btn">Add</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /File Modal -->
+
+		<!-- Delete FileProject Modal -->
+		<div class="modal custom-modal fade" id="delete_fileProject" role="dialog">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="form-header">
+							<h3>Delete File</h3>
+							<p>Are you sure want to delete?</p>
+						</div>
+						<div class="modal-btn delete-action">
+							<div class="row">
+								<div class="col-6">
+									<a href="javascript:void(0);" class="btn btn-primary continue-btn" onclick="deleteFileProject()">Delete</a>
+								</div>
+								<div class="col-6">
+									<a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- /Edit Project Modal -->
-				
-            </div>
-			<!-- /Page Wrapper -->
+			</div>
+		</div>
+		<!-- /Delete FileProject Modal -->
 
-        </div>
-		<!-- /Main Wrapper -->
+		<!-- Delete EmployeeProject Modal -->
+		<div class="modal custom-modal fade" id="delete_employeeProject" role="dialog">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="form-header">
+							<h3>Delete Employee From Project</h3>
+							<p>Are you sure want to delete?</p>
+						</div>
+						<div class="modal-btn delete-action">
+							<div class="row">
+								<div class="col-6">
+									<a href="javascript:void(0);" class="btn btn-primary continue-btn" onclick="deleteEmployeeProject()">Delete</a>
+								</div>
+								<div class="col-6">
+									<a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Delete EmployeeProject Modal -->
 
-		<!-- jQuery -->
-        <script src="assets/js/jquery-3.2.1.min.js"></script>
+		<!-- Delete LeaderProject Modal -->
+		<div class="modal custom-modal fade" id="delete_leaderProject" role="dialog">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="form-header">
+							<h3>Delete Leader From Project</h3>
+							<p>Are you sure want to delete?</p>
+						</div>
+						<div class="modal-btn delete-action">
+							<div class="row">
+								<div class="col-6">
+									<a href="javascript:void(0);" class="btn btn-primary continue-btn" onclick="deleteLeaderProject()">Delete</a>
+								</div>
+								<div class="col-6">
+									<a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Delete LeaderProject Modal -->
 
-		<!-- Bootstrap Core JS -->
-        <script src="assets/js/popper.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
+	</div>
+	<!-- /Page Wrapper -->
 
-		<!-- Slimscroll JS -->
-		<script src="assets/js/jquery.slimscroll.min.js"></script>
-		
-		<!-- Select2 JS -->
-		<script src="assets/js/select2.min.js"></script>
-		
-		<!-- Datetimepicker JS -->
-		<script src="assets/js/moment.min.js"></script>
-		<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
-		
-		<!-- Task JS -->
-		<script src="assets/js/task.js"></script>
+</div>
+<!-- /Main Wrapper -->
 
-		<!-- Custom JS -->
-		<script src="assets/js/app.js"></script>
+<!-- jQuery -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
 
-    </body>
+<!-- Bootstrap Core JS -->
+<script src="/assets/js/popper.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+
+<!-- Slimscroll JS -->
+<script src="/assets/js/jquery.slimscroll.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="/assets/js/select2.min.js"></script>
+
+<!-- Datetimepicker JS -->
+<script src="/assets/js/moment.min.js"></script>
+<script src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+<!-- Task JS -->
+<script src="/assets/js/task.js"></script>
+
+<!-- Custom JS -->
+<script src="/assets/js/app.js"></script>
+
+<script th:inline="javascript">
+	// Capture the project ID
+	var projectID = document.getElementById("editProjectLink").getAttribute("data-project-id");
+	// Edit Project
+	// JavaScript to handle the AJAX call and pre-fill the form
+	var editForm = document.getElementById("editForm");
+
+	function populateFormWithData(project) {
+		editForm.querySelector('[name=projectID]').value = project.projectID;
+		editForm.querySelector('[name=created_By]').value = project.created_By;
+		editForm.querySelector('[name=project_Name]').value = project.project_Name;
+		editForm.querySelector('[name=company_Name]').value = project.company_Name;
+		editForm.querySelector('[name=start_Date]').value = project.start_Date;
+		editForm.querySelector('[name=end_Date]').value = project.end_Date;
+		editForm.querySelector('[name=rate]').value = project.rate;
+		editForm.querySelector('[name=rate_Type]').value = project.rate_Type;
+		editForm.querySelector('[name=priority]').value = project.priority;
+		editForm.querySelector('[name=total_Hours]').value = project.total_Hours;
+		editForm.querySelector('[name=status]').value = project.status;
+		editForm.querySelector('[name=description]').value = project.description;
+	}
+
+	document.querySelectorAll(".edit-link").forEach(link => {
+		link.addEventListener("click", function(event) {
+			event.preventDefault();
+			var projectID = link.getAttribute("data-project-id");
+			fetch('/project/' + projectID)
+					.then(response => response.json())
+					.then(data => populateFormWithData(data))
+					.catch(error => console.error(error));
+		});
+	});
+
+	// JavaScript to handle the form submission and page reload
+	editForm.addEventListener('submit', function(event) {
+		event.preventDefault();
+
+		// Serialize the form data
+		const formData = new URLSearchParams(new FormData(editForm));
+
+		fetch(editForm.action, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded' // Set the Content-Type to form data
+			},
+			body: formData
+		})
+				.then(response => {
+					if (response.ok) {
+						window.location.reload(); // Reload the page after successful update
+					} else {
+						console.error('Error updating project data.');
+					}
+				})
+				.catch(error => console.error(error));
+	});
+</script>
+
+<script th:inline="javascript">
+	// Add Image Project
+	// JavaScript to handle the AJAX call and pre-fill the form
+	var editFormImage = document.getElementById("editFormImage");
+
+
+	// Function to handle the file upload
+	function handleFileUpload(fileInput) {
+		const file = fileInput.files[0];
+		if (file) {
+			formDataImage.append('imageFile', file);
+		}
+	}
+
+	// Add event listener to handle file selection
+	editFormImage.querySelector('[name=imageFile]').addEventListener('change', function(event) {
+		handleFileUpload(event.target);
+	});
+
+	// JavaScript to handle the form submission and page reload
+	editFormImage.addEventListener('submit', function(event) {
+		event.preventDefault();
+
+		// Serialize the form data and file upload
+		const formDataImage = new FormData(editFormImage);
+
+		fetch(editFormImage.action, {
+			method: 'POST',
+			body: formDataImage
+		})
+				.then(response => {
+					if (response.ok) {
+						window.location.reload(); // Reload the page after successful update
+					} else {
+						console.error('Error updating imageProject data.');
+					}
+				})
+				.catch(error => console.error(error));
+	});
+</script>
+
+<script th:inline="javascript">
+	// Delete ImageProject
+	var imageProjectId; // Variable to store the imageProject ID
+
+	function captureImageProjectId(event) {
+		event.preventDefault();
+		imageProjectId = event.target.getAttribute("data-imageProject-id");
+	}
+
+	// Function to handle the deletion
+	function deleteImageProject() {
+		// Check if imageProjectId is set
+		if (!imageProjectId) {
+			console.error("ImageProject ID not captured.");
+			return;
+		}
+
+		// Send a POST request to delete the imageProject
+		fetch('/imageProject/delete/' + imageProjectId, {
+			method: 'POST'
+		})
+				.then(response => {
+					if (response.ok) {
+						// Reload the page after successful deletion
+						window.location.reload();
+					} else {
+						console.error('Error deleting imageProject.');
+					}
+				})
+				.catch(error => console.error(error));
+	}
+</script>
+
+
+<script th:inline="javascript">
+	// Add File Project
+	// JavaScript to handle the AJAX call and pre-fill the form
+	var editFormFile = document.getElementById("editFormFile");
+
+
+	// Function to handle the file upload
+	function handleFileUpload(fileInput) {
+		const file = fileInput.files[0];
+		if (file) {
+			formDataFile.append('fileFile', file);
+		}
+	}
+
+	// Add event listener to handle file selection
+	editFormFile.querySelector('[name=fileFile]').addEventListener('change', function(event) {
+		handleFileUpload(event.target);
+	});
+
+	// JavaScript to handle the form submission and page reload
+	editFormFile.addEventListener('submit', function(event) {
+		event.preventDefault();
+
+		// Serialize the form data and file upload
+		const formDataFile = new FormData(editFormFile);
+
+		fetch(editFormFile.action, {
+			method: 'POST',
+			body: formDataFile
+		})
+				.then(response => {
+					if (response.ok) {
+						window.location.reload(); // Reload the page after successful update
+					} else {
+						console.error('Error updating fileProject data.');
+					}
+				})
+				.catch(error => console.error(error));
+	});
+</script>
+
+<script th:inline="javascript">
+	// Delete FileProject
+	var fileProjectId; // Variable to store the fileProject ID
+
+	function captureFileProjectId(event) {
+		event.preventDefault();
+		fileProjectId = event.target.getAttribute("data-fileProject-id");
+	}
+
+	// Function to handle the deletion
+	function deleteFileProject() {
+		// Check if fileProjectId is set
+		if (!fileProjectId) {
+			console.error("FileProject ID not captured.");
+			return;
+		}
+
+		// Send a POST request to delete the fileProject
+		fetch('/fileProject/delete/' + fileProjectId, {
+			method: 'POST'
+		})
+				.then(response => {
+					if (response.ok) {
+						// Reload the page after successful deletion
+						window.location.reload();
+					} else {
+						console.error('Error deleting fileProject.');
+					}
+				})
+				.catch(error => console.error(error));
+	}
+</script>
+
+
+<script>
+	// Store the selected employee data for submission
+	let selectedEmployee = null;
+
+	// Function to update the employee list based on the JSON data
+	function updateEmployeeList(employees) {
+		const employeeList = document.getElementById('employeeList');
+		employeeList.innerHTML = ''; // Clear the previous list
+		employees.forEach((employee) => {
+			const li = document.createElement('li');
+			li.innerHTML = `
+                <div class="media" data-employee='${JSON.stringify(employee)}'>
+                    <span class="avatar"><img alt="" data-image="${employee.imageName}"/></span>
+                    <div class="media-body align-self-center text-nowrap">
+                        <div class="user-name">${employee.first_Name} ${employee.last_Name}</div>
+                        <span class="designation">${employee.designation}</span>
+                    </div>
+                </div>`;
+			li.addEventListener('click', function () {
+				// Remove the "selected-employee" class from all list items
+				const allListItems = document.querySelectorAll('.chat-user-list li');
+				allListItems.forEach(item => item.classList.remove('selected-employee'));
+
+				// Add the "selected-employee" class to the clicked employee
+				li.classList.add('selected-employee');
+
+				selectedEmployee = employee;
+			});
+			employeeList.appendChild(li);
+
+			// Set the image source using Thymeleaf data attribute
+			const imgElement = li.querySelector('img[data-image]');
+			imgElement.src = `/assets/img/profiles/${imgElement.getAttribute('data-image')}`;
+		});
+	}
+
+	// Function to handle the search button click event
+	function searchEmployees() {
+		const searchInput = document.getElementById('searchInput').value;
+		fetch('/employee/searchEmployees/' + searchInput)
+				.then((response) => response.json())
+				.then((data) => {
+					updateEmployeeList(data); // Update the list with fetched data
+				})
+				.catch((error) => {
+					console.error('Error fetching employees:', error);
+				});
+	}
+
+	// Function to handle the "Submit" button click event
+	function submitEmployeeProject() {
+		if (selectedEmployee) {
+			// Create a new FormData object and append the selectedEmployee data to it
+			const formData = new FormData();
+			formData.append("projectID", projectID);
+			formData.append("employeeID", selectedEmployee.employeeID);
+			formData.append("first_Name", selectedEmployee.first_Name);
+			formData.append("last_Name", selectedEmployee.last_Name);
+			formData.append("designation", selectedEmployee.designation);
+			formData.append("imageName", selectedEmployee.imageName);
+
+			// Make the API call to check if the EmployeeProject already exists
+			fetch('/employeeProject/ByEmployeeIDAndProjectID?employeeID=' + selectedEmployee.employeeID + '&projectID=' + projectID, {
+				method: 'GET',
+			})
+					.then(response => {
+						if (response.status === 404) {
+							// EmployeeProject does not exist: Make the API call to create the EmployeeProject
+							return fetch('/employeeProject/create', {
+								method: 'POST',
+								body: formData
+							});
+						} else if (response.ok) {
+							// EmployeeProject already exists: Show an error alert
+							alert('Employee already affected for this project, try again!');
+							throw new Error('Employee already affected for this project');
+						} else {
+							// Handle other response errors
+							throw new Error('Request failed: ' + response.statusText);
+						}
+					})
+					.then(response => {
+						if (response.ok) {
+							// Successful submission: Reload the page
+							window.location.reload();
+						} else {
+							// Submission failed: Show an error alert
+							alert('Failed to create EmployeeProject. Please try again.');
+						}
+
+						// Clear the selectedEmployee after submission (optional)
+						selectedEmployee = null;
+					})
+					.catch(error => {
+						console.error('Error creating EmployeeProject:', error);
+						// Handle the error
+					});
+		}
+
+		// Remove the "selected-employee" class from all list items
+		const allListItems = document.querySelectorAll('.chat-user-list li');
+		allListItems.forEach(item => item.classList.remove('selected-employee'));
+	}
+
+
+
+	// Attach the search function to the search button
+	document.getElementById('searchButton').addEventListener('click', searchEmployees);
+	// Attach the submit function to the submit button
+	document.getElementById('submitButton').addEventListener('click', submitEmployeeProject);
+</script>
+
+<script th:inline="javascript">
+	// Delete EmployeeProject
+	var employeeProjectId; // Variable to store the employeeProject ID
+
+	function captureEmployeeProjectId(event) {
+		event.preventDefault();
+		employeeProjectId = event.target.getAttribute("data-employeeProject-id");
+	}
+
+	// Function to handle the deletion
+	function deleteEmployeeProject() {
+		// Check if employeeProjectId is set
+		if (!employeeProjectId) {
+			console.error("EmployeeProject ID not captured.");
+			return;
+		}
+
+		// Send a POST request to delete the employeeProject
+		fetch('/employeeProject/delete/' + employeeProjectId, {
+			method: 'POST'
+		})
+				.then(response => {
+					if (response.ok) {
+						// Reload the page after successful deletion
+						window.location.reload();
+					} else {
+						console.error('Error deleting employeeProject.');
+					}
+				})
+				.catch(error => console.error(error));
+	}
+</script>
+
+
+<script>
+	// Store the selected leader data for submission
+	let selectedLeader = null;
+
+	// Function to update the leader list based on the JSON data
+	function updateLeaderList(leaders) {
+		const leaderList = document.getElementById('leaderList');
+		leaderList.innerHTML = ''; // Clear the previous list
+		leaders.forEach((leader) => {
+			const li = document.createElement('li');
+			li.innerHTML = `
+                <div class="media" data-leader='${JSON.stringify(leader)}'>
+                    <span class="avatar"><img alt="" data-image="${leader.imageName}"/></span>
+                    <div class="media-body align-self-center text-nowrap">
+                        <div class="user-name">${leader.first_Name} ${leader.last_Name}</div>
+                        <span class="designation">${leader.designation}</span>
+                    </div>
+                </div>`;
+			li.addEventListener('click', function () {
+				// Remove the "selected-employee" class from all list items
+				const allListItems = document.querySelectorAll('.chat-user-list li');
+				allListItems.forEach(item => item.classList.remove('selected-employee'));
+
+				// Add the "selected-employee" class to the clicked leader
+				li.classList.add('selected-employee');
+
+				selectedLeader = leader;
+			});
+			leaderList.appendChild(li);
+
+			// Set the image source using Thymeleaf data attribute
+			const imgElement = li.querySelector('img[data-image]');
+			imgElement.src = `/assets/img/profiles/${imgElement.getAttribute('data-image')}`;
+		});
+	}
+
+	// Function to handle the search button click event
+	function searchLeaders() {
+		const searchInputLeader = document.getElementById('searchInputLeader').value;
+		fetch('/employee/searchEmployees/' + searchInputLeader)
+				.then((response) => response.json())
+				.then((data) => {
+					updateLeaderList(data); // Update the list with fetched data
+				})
+				.catch((error) => {
+					console.error('Error fetching leaders:', error);
+				});
+	}
+
+	// Function to handle the "Submit" button click event
+	function submitLeaderProject() {
+		if (selectedLeader) {
+			// Create a new FormData object and append the selectedLeader data to it
+			const formData = new FormData();
+			formData.append("projectID", projectID);
+			formData.append("leaderID", selectedLeader.employeeID);
+			formData.append("first_Name", selectedLeader.first_Name);
+			formData.append("last_Name", selectedLeader.last_Name);
+			formData.append("designation", selectedLeader.designation);
+			formData.append("imageName", selectedLeader.imageName);
+
+			// Make the API call to check if the LeaderProject already exists
+			fetch('/leaderProject/ByLeaderIDAndProjectID?leaderID=' + selectedLeader.employeeID + '&projectID=' + projectID, {
+				method: 'GET',
+			})
+					.then(response => {
+						if (response.status === 404) {
+							// LeaderProject does not exist: Make the API call to create the LeaderProject
+							return fetch('/leaderProject/create', {
+								method: 'POST',
+								body: formData
+							});
+						} else if (response.ok) {
+							// LeaderProject already exists: Show an error alert
+							alert('Leader already affected for this project, try again!');
+							throw new Error('Leader already affected for this project');
+						} else {
+							// Handle other response errors
+							throw new Error('Request failed: ' + response.statusText);
+						}
+					})
+					.then(response => {
+						if (response.ok) {
+							// Successful submission: Reload the page
+							window.location.reload();
+						} else {
+							// Submission failed: Show an error alert
+							alert('Failed to create LeaderProject. Please try again.');
+						}
+
+						// Clear the selectedLeader after submission (optional)
+						selectedLeader = null;
+					})
+					.catch(error => {
+						console.error('Error creating LeaderProject:', error);
+						// Handle the error
+					});
+		}
+
+		// Remove the "selected-employee" class from all list items
+		const allListItems = document.querySelectorAll('.chat-user-list li');
+		allListItems.forEach(item => item.classList.remove('selected-employee'));
+	}
+
+
+
+	// Attach the search function to the search button
+	document.getElementById('searchButtonLeader').addEventListener('click', searchLeaders);
+	// Attach the submit function to the submit button
+	document.getElementById('submitButtonLeader').addEventListener('click', submitLeaderProject);
+</script>
+
+<script th:inline="javascript">
+	// Delete LeaderProject
+	var leaderProjectId; // Variable to store the leaderProject ID
+
+	function captureLeaderProjectId(event) {
+		event.preventDefault();
+		leaderProjectId = event.target.getAttribute("data-leaderProject-id");
+	}
+
+	// Function to handle the deletion
+	function deleteLeaderProject() {
+		// Check if leaderProjectId is set
+		if (!leaderProjectId) {
+			console.error("LeaderProject ID not captured.");
+			return;
+		}
+
+		// Send a POST request to delete the leaderProject
+		fetch('/leaderProject/delete/' + leaderProjectId, {
+			method: 'POST'
+		})
+				.then(response => {
+					if (response.ok) {
+						// Reload the page after successful deletion
+						window.location.reload();
+					} else {
+						console.error('Error deleting leaderProject.');
+					}
+				})
+				.catch(error => console.error(error));
+	}
+</script>
+
+</body>
 </html>
