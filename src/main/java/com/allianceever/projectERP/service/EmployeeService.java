@@ -1,7 +1,6 @@
 package com.allianceever.projectERP.service;
 
 import com.allianceever.projectERP.model.dto.EmployeeDto;
-import com.allianceever.projectERP.model.dto.ImageProjectDto;
 
 import java.util.List;
 
@@ -13,4 +12,6 @@ public interface EmployeeService {
     EmployeeDto getByEmail(String Email);
     void delete(Long EmployeeID);
     List<EmployeeDto> findByFirst_Name(String first_Name);
+
+    String isRegistred(String email,String password);
 }

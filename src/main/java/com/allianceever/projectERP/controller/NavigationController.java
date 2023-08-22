@@ -1,6 +1,5 @@
 package com.allianceever.projectERP.controller;
 
-import com.allianceever.projectERP.model.dto.EmployeeDto;
 import com.allianceever.projectERP.model.entity.Expenses;
 import com.allianceever.projectERP.model.entity.Leaves;
 import com.allianceever.projectERP.service.*;
@@ -43,12 +42,10 @@ public class NavigationController {
         return "index";
     }
 
-    @RequestMapping("/login")
-        public String login(Model model,EmployeeDto employeeDto){
-        model.addAttribute("employee", employeeDto);
-
+    @RequestMapping("/login.html")
+    public String getLogin(){
         return "login";
-        }
+    }
 
 
     //**** Part Ayoub Ighachen:

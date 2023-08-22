@@ -1,6 +1,7 @@
 package com.allianceever.projectERP.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,6 @@ public class MessageTask {
     private String last_Name;
     private String imageName;
     private String date;
+    @Size(max = 500)
     private String message;
 }

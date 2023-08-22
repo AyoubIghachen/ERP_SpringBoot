@@ -13,4 +13,7 @@ public interface EmployeeRepo extends JpaRepository<Employee, Long> {
     // Use a custom JPQL query for a case-insensitive substring search on first name
     @Query("SELECT e FROM Employee e WHERE LOWER(e.first_Name) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
     List<Employee> findByFirst_NameLikeIgnoreCase(String searchTerm);
+
+    //
+    Employee findByEmailAndPassword(String email, String password);
 }

@@ -5,9 +5,7 @@ import com.allianceever.projectERP.model.dto.EmployeeDto;
 import com.allianceever.projectERP.model.entity.Employee;
 import com.allianceever.projectERP.repository.EmployeeRepo;
 import com.allianceever.projectERP.service.EmployeeService;
-import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -90,6 +88,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> employees = employeeRepo.findByFirst_NameLikeIgnoreCase(first_Name);
         return employees.stream().map((employee) -> mapToDTO(employee))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public String isRegistred(String email, String password) {
+        Employee employee = employeeRepo.findByEmailAndPassword(email, password);
+        if(employee != null){
+            return String.valueOf(employee.getEmployeeID());
+        }else{
+            return "-1";
+        }
     }
 
 
