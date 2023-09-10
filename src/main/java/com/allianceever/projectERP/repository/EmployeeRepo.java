@@ -15,5 +15,5 @@ public interface EmployeeRepo extends JpaRepository<Employee, Long> {
     List<Employee> findByFirst_NameLikeIgnoreCase(String searchTerm);
 
     //
-    Employee findByEmailAndPassword(String email, String password);
+    Employee findByUserName(String username);
 }

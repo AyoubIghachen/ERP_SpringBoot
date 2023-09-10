@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import static com.allianceever.projectERP.controller.EmployeeController.getStrings;
 import static org.springframework.http.HttpStatus.CREATED;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/createEstimateInvoice")
 @ComponentScan(basePackages = "com.allianceever.projectERP")

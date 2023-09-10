@@ -6,8 +6,6 @@ import com.allianceever.projectERP.model.entity.Employee;
 import com.allianceever.projectERP.repository.EmployeeRepo;
 import com.allianceever.projectERP.service.EmployeeService;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,22 +16,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepo employeeRepo;
     private ModelMapper mapper;
 
-    public EmployeeServiceImpl(EmployeeRepo employeeRepo, ModelMapper mapper, PasswordEncoder passwordEncoder) {
+    public EmployeeServiceImpl(EmployeeRepo employeeRepo, ModelMapper mapper) {
         this.employeeRepo = employeeRepo;
         this.mapper = mapper;
-        this.passwordEncoder = passwordEncoder;
     }
-    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public EmployeeDto create(EmployeeDto employeeDto) {
-
-
         // convert DTO to entity
         Employee employee = mapToEntity(employeeDto);
-        // Encode the password
-        String encodedPassword = passwordEncoder.encode(employee.getPassword());
-        employee.setPassword(encodedPassword);
 
         Employee newEmployee = employeeRepo.save(employee);
 
@@ -91,13 +82,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public String isRegistred(String email, String password) {
-        Employee employee = employeeRepo.findByEmailAndPassword(email, password);
-        if(employee != null){
-            return String.valueOf(employee.getEmployeeID());
-        }else{
-            return "-1";
-        }
+    public EmployeeDto getByUsername(String username) {
+        Employee employee = employeeRepo.findByUserName(username);
+        return mapToDTO(employee);
     }
 
 

@@ -19,8 +19,8 @@ public class Employee {
     private Long employeeID;
     private String first_Name;
     private String last_Name;
-    private String userName;
     @Column(unique = true)
+    private String userName;
     private String email;
     private String password;
     @Column(name = "joinDate")

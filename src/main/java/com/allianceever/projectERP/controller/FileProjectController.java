@@ -25,6 +25,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @RequestMapping("/fileProject")
 @AllArgsConstructor
+@CrossOrigin("*")
 public class FileProjectController {
     private FileProjectService fileProjectService;
 

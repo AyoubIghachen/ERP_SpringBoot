@@ -8,19 +8,19 @@
         <meta name="author" content="Dreamguys - Bootstrap Admin Template">
         <meta name="robots" content="noindex, nofollow">
         <title>Login - HRMS admin template</title>
-		
+
 		<!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-		
+
 		<!-- Bootstrap CSS -->
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-		
+
 		<!-- Fontawesome CSS -->
         <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-		
+
 		<!-- Main CSS -->
         <link rel="stylesheet" href="assets/css/style.css">
-		
+
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 			<script src="assets/js/html5shiv.min.js"></script>
@@ -28,29 +28,29 @@
 		<![endif]-->
     </head>
     <body class="account-page">
-	
+
 		<!-- Main Wrapper -->
         <div class="main-wrapper">
 			<div class="account-content">
 				<a href="job-list.html" class="btn btn-primary apply-btn">Apply Job</a>
 				<div class="container">
-				
+
 					<!-- Account Logo -->
 					<div class="account-logo">
 						<a href="index.html"><img src="assets/img/logo2.png" alt="Dreamguy's Technologies"></a>
 					</div>
 					<!-- /Account Logo -->
-					
+
 					<div class="account-box">
 						<div class="account-wrapper">
 							<h3 class="account-title">Login</h3>
 							<p class="account-subtitle">Access to our dashboard</p>
-							
+
 							<!-- Account Form -->
 							<form id="login-form">
 								<div class="form-group">
-									<label>Email Address</label>
-									<input class="form-control" type="text" id="email">
+									<label>Username</label>
+									<input class="form-control" type="text" id="username">
 								</div>
 								<div class="form-group">
 									<div class="row">
@@ -66,47 +66,46 @@
 									<input class="form-control" type="password" id="password">
 								</div>
 								<div class="form-group text-center">
-									<button class="btn btn-primary account-btn" type="submit" id="login-button">Login</button>
+									<button class="btn btn-primary account-btn" type="submit">Login</button>
 								</div>
 								<div class="account-footer">
 									<p>Don't have an account yet? <a href="register.html">Register</a></p>
 								</div>
 							</form>
 							<!-- /Account Form -->
-							
+
 						</div>
 					</div>
 				</div>
 			</div>
         </div>
 		<!-- /Main Wrapper -->
-		
+
 		<!-- jQuery -->
         <script src="assets/js/jquery-3.2.1.min.js"></script>
-		
+
 		<!-- Bootstrap Core JS -->
         <script src="assets/js/popper.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
-		
+
 		<!-- Custom JS -->
 		<script src="assets/js/app.js"></script>
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
 			const loginForm = document.getElementById('login-form');
-			const loginButton = document.getElementById('login-button');
 
 			loginForm.addEventListener('submit', function(event) {
 				event.preventDefault(); // Prevent the default form submission
 
-				const email = document.getElementById('email').value;
+				const username = document.getElementById('username').value;
 				const password = document.getElementById('password').value;
 
 				const formData = new FormData();
-				formData.append('email', email);
+				formData.append('username', username);
 				formData.append('password', password);
 
-				fetch('/login/', {
+				fetch('/auth/login', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/x-www-form-urlencoded'
@@ -124,8 +123,21 @@
 							// Handle successful login
 							console.log('Login successful:', data);
 
-							// Redirect to the index.html endpoint
-							window.location.href = '/index.html';
+							//*****************************************************
+							// Get the token
+							const token = data.jwt;
+							// Store the token in local storage
+							localStorage.setItem("jwtToken", token);
+							//*****************************************************
+
+							// Check if there's a previous page in the user's history
+							if (document.referrer && document.referrer !== window.location.href) {
+								// Redirect to the previous page
+								window.history.back();
+							} else {
+								// If there's no previous page, redirect to index.html
+								window.location.href = '/index.html';
+							}
 						})
 						.catch(error => {
 							// Handle login failure

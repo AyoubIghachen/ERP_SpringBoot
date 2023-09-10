@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import static com.allianceever.projectERP.controller.EmployeeController.getStrings;
 import static org.springframework.http.HttpStatus.CREATED;
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/leaves")
 @ComponentScan(basePackages = "com.allianceever.projectERP")

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @AllArgsConstructor
+@CrossOrigin("*")
 
 public class NavigationController {
     private EmployeeService employeeService;

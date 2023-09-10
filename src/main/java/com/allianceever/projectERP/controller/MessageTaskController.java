@@ -4,9 +4,10 @@ import com.allianceever.projectERP.model.dto.EmployeeDto;
 import com.allianceever.projectERP.model.dto.MessageTaskDto;
 import com.allianceever.projectERP.service.EmployeeService;
 import com.allianceever.projectERP.service.MessageTaskService;
-import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
@@ -17,6 +18,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.CREATED;
 
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/messageTask")
 @AllArgsConstructor
@@ -44,27 +46,31 @@ public class MessageTaskController {
 
     // Build Add MessageTask REST API
     @PostMapping("/create")
-    public ResponseEntity<MessageTaskDto> createMessageTask(@ModelAttribute MessageTaskDto messageTaskDto, HttpSession session){
-        // Retrieve employeeID from the session
-        String employeeID = (String) session.getAttribute("employeeID");
-        // Get employee by ID
-        EmployeeDto employeeDto = employeeService.getById(Long.parseLong(employeeID));
+    public ResponseEntity<MessageTaskDto> createMessageTask(@ModelAttribute MessageTaskDto messageTaskDto, @AuthenticationPrincipal Jwt jwt){
+        // Retrieve username from the jwt
+        String username = jwt.getClaimAsString("sub");
+        // Get employee by username
+        EmployeeDto employeeDto = employeeService.getByUsername(username);
 
-        // Generate date for file:
-        DateFormat date_format1 = new SimpleDateFormat("dd/MM/yyyy");
-        DateFormat date_format2 = new SimpleDateFormat("HH:mm");
-        Date dateFile = new Date();
-        String messageDate = date_format1.format(dateFile) + " at " + date_format2.format(dateFile);
+        if (employeeDto != null) {
+            // Generate date for file:
+            DateFormat date_format1 = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat date_format2 = new SimpleDateFormat("HH:mm");
+            Date dateFile = new Date();
+            String messageDate = date_format1.format(dateFile) + " at " + date_format2.format(dateFile);
 
-        // Set messageTaskDto
-        messageTaskDto.setEmployeeID(employeeID);
-        messageTaskDto.setFirst_Name(employeeDto.getFirst_Name());
-        messageTaskDto.setLast_Name(employeeDto.getLast_Name());
-        messageTaskDto.setImageName(employeeDto.getImageName());
-        messageTaskDto.setDate(messageDate);
+            // Set messageTaskDto
+            messageTaskDto.setEmployeeID(String.valueOf(employeeDto.getEmployeeID()));
+            messageTaskDto.setFirst_Name(employeeDto.getFirst_Name());
+            messageTaskDto.setLast_Name(employeeDto.getLast_Name());
+            messageTaskDto.setImageName(employeeDto.getImageName());
+            messageTaskDto.setDate(messageDate);
 
-        MessageTaskDto createdMessageTask = messageTaskService.create(messageTaskDto);
-        return new ResponseEntity<>(createdMessageTask, CREATED);
+            MessageTaskDto createdMessageTask = messageTaskService.create(messageTaskDto);
+            return new ResponseEntity<>(createdMessageTask, CREATED);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 

@@ -13,5 +13,5 @@ public interface EmployeeService {
     void delete(Long EmployeeID);
     List<EmployeeDto> findByFirst_Name(String first_Name);
 
-    String isRegistred(String email,String password);
+    EmployeeDto getByUsername(String username);
 }

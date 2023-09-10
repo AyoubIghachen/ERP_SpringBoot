@@ -308,7 +308,7 @@
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="profile.html">My Profile</a>
                     <a class="dropdown-item" href="settings.html">Settings</a>
-                    <a class="dropdown-item" href="login.html">Logout</a>
+                    <a class="dropdown-item logout-link" href="login.html">Logout</a>
                 </div>
             </li>
         </ul>
@@ -320,7 +320,7 @@
             <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" href="profile.html">My Profile</a>
                 <a class="dropdown-item" href="settings.html">Settings</a>
-                <a class="dropdown-item" href="login.html">Logout</a>
+                <a class="dropdown-item logout-link" href="login.html">Logout</a>
             </div>
         </div>
         <!-- /Mobile Menu -->
@@ -722,12 +722,6 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
                                         <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
                                         <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="joinDate"></div>
                                     </div>
@@ -742,8 +736,8 @@
                                     <div class="form-group">
                                         <label class="col-form-label">Company</label>
                                         <select class="select" name="company">
-                                            <option value="">Global Technologies</option>
-                                            <option value="1">Delta Infotech</option>
+                                            <option>Global Technologies</option>
+                                            <option>Delta Infotech</option>
                                         </select>
                                     </div>
                                 </div>
@@ -769,191 +763,17 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="table-responsive m-t-15">
-                                <table class="table table-striped custom-table">
-                                    <thead>
-                                    <tr>
-                                        <th>Module Permission</th>
-                                        <th class="text-center">Read</th>
-                                        <th class="text-center">Write</th>
-                                        <th class="text-center">Create</th>
-                                        <th class="text-center">Delete</th>
-                                        <th class="text-center">Import</th>
-                                        <th class="text-center">Export</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>Holidays</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Leaves</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Clients</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Projects</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tasks</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Chats</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Assets</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Timing Sheets</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Role <span class="text-danger">*</span></label>
+                                        <select class="select" name="role">
+                                            <option>USER</option>
+                                            <option>SALES</option>
+                                            <option>ADMIN</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="submit-section">
                                 <button class="btn btn-primary submit-btn" type="submit">Submit</button>
@@ -1020,7 +840,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" name="userName">
+                                        <input class="form-control" readonly type="text" name="userName">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -1065,7 +885,7 @@
                                         <select class="select" name="company">
                                             <option>Global Technologies</option>
                                             <option>Delta Infotech</option>
-                                            <option selected>International Software Inc</option>
+                                            <option>International Software Inc</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1091,191 +911,17 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="table-responsive m-t-15">
-                                <table class="table table-striped custom-table">
-                                    <thead>
-                                    <tr>
-                                        <th>Module Permission</th>
-                                        <th class="text-center">Read</th>
-                                        <th class="text-center">Write</th>
-                                        <th class="text-center">Create</th>
-                                        <th class="text-center">Delete</th>
-                                        <th class="text-center">Import</th>
-                                        <th class="text-center">Export</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>Holidays</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Leaves</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Clients</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Projects</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tasks</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Chats</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Assets</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Timing Sheets</td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input checked="" type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox">
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Role <span class="text-danger">*</span></label>
+                                        <select class="select" name="role">
+                                            <option>USER</option>
+                                            <option>SALES</option>
+                                            <option>ADMIN</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="submit-section">
                                 <button class="btn btn-primary submit-btn" type="submit">Update</button>
@@ -1313,6 +959,53 @@
 <!-- Custom JS -->
 <script src="assets/js/app.js"></script>
 
+<script>
+    // Retrieve the token from local storage
+    const token = localStorage.getItem("jwtToken");
+
+    // Before making authenticated requests, check if the token has expired
+    function isTokenExpired(token) {
+        if (!token) {
+            return true; // Token is missing or empty
+        }
+
+        const decodedToken = parseJwt(token);
+        const expirationTime = decodedToken.exp * 1000; // Convert to milliseconds
+
+        // Check if the current time is greater than or equal to the token's expiration time
+        return Date.now() >= expirationTime;
+    }
+
+    function parseJwt(token) {
+        // Decode the JWT token (assuming it's in the correct format)
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        return JSON.parse(atob(base64));
+    }
+
+    // Verify Token expiration
+    if (isTokenExpired(token)) {
+        // Token has expired, display an alert message and redirect to the login page
+        alert("Your session has expired. Please log in again.");
+        window.location.href = "/login.html";
+    } else {
+        // Token is still valid, proceed with the authenticated request
+
+        console.log("Token is valid.");
+    }
+
+    // Create headers object with the Authorization header
+    const headersAuth = {
+        'Authorization': `Bearer ${token}`
+    };
+    // Create headers object with the Content-Type and Authorization headers
+    const headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Bearer ${token}`
+    };
+</script>
+
+
 <script th:inline="javascript">
     // Edit Employee
     // JavaScript to handle the AJAX call and pre-fill the form
@@ -1326,16 +1019,33 @@
         editForm.querySelector('[name=phone]').value = employee.phone;
         editForm.querySelector('[name=email]').value = employee.email;
         editForm.querySelector('[name=userName]').value = employee.userName;
+        editForm.querySelector('[name=company]').value = employee.company;
+        editForm.querySelector('[name=departement]').value = employee.departement;
+        editForm.querySelector('[name=designation]').value = employee.designation;
+        editForm.querySelector('[name=role]').value = employee.role;
     }
 
     document.querySelectorAll(".edit-link").forEach(link => {
         link.addEventListener("click", function(event) {
             event.preventDefault();
             var employeeId = link.getAttribute("data-employee-id");
-            fetch('/employee/' + employeeId)
-                .then(response => response.json())
-                .then(data => populateFormWithData(data))
-                .catch(error => console.error(error));
+
+            // Verify Token expiration
+            if (isTokenExpired(token)) {
+                // Token has expired, display an alert message and redirect to the login page
+                alert("Your session has expired. Please log in again.");
+                window.location.href = "/login.html";
+            } else {
+                // Token is still valid, proceed with the authenticated request
+                fetch('/employee/' + employeeId,{
+                    headers: headersAuth
+                })
+                    .then(response => response.json())
+                    .then(data => populateFormWithData(data))
+                    .catch(error => console.error(error));
+
+                console.log("Token is valid. Include it in the request headers for authenticated requests.");
+            }
         });
     });
 
@@ -1346,21 +1056,50 @@
         // Serialize the form data
         const formData = new URLSearchParams(new FormData(editForm));
 
-        fetch(editForm.action, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded' // Set the Content-Type to form data
-            },
-            body: formData
-        })
-            .then(response => {
-                if (response.ok) {
-                    window.location.reload(); // Reload the page after successful update
-                } else {
-                    console.error('Error updating employee data.');
-                }
+        // Verify Token expiration
+        if (isTokenExpired(token)) {
+            // Token has expired, display an alert message and redirect to the login page
+            alert("Your session has expired. Please log in again.");
+            window.location.href = "/login.html";
+        } else {
+            // Token is still valid, proceed with the authenticated request
+            fetch(editForm.action, {
+                method: 'POST',
+                headers: headers,
+                body: formData
             })
-            .catch(error => console.error(error));
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload(); // Reload the page after successful update
+                    } else {
+                        console.error('Error updating employee data.');
+                    }
+                })
+                .catch(error => console.error(error));
+
+
+            // Create a new FormData object containing only 'username,' 'password,' and 'role'
+            const formDataForUpdateAuth = new FormData();
+            formDataForUpdateAuth.append('username', editForm.querySelector('[name="userName"]').value);
+            formDataForUpdateAuth.append('password', editForm.querySelector('[name="password"]').value);
+            formDataForUpdateAuth.append('role', editForm.querySelector('[name="role"]').value);
+
+            fetch("/auth/update", {
+                method: 'POST',
+                headers: headers,
+                body: new URLSearchParams(formDataForUpdateAuth).toString()
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // Handle success response
+                    } else {
+                        console.error('Error adding user authentication data.');
+                    }
+                })
+                .catch(error => console.error(error));
+
+            console.log("Token is valid. Include it in the request headers for authenticated requests.");
+        }
     });
 </script>
 
@@ -1375,22 +1114,51 @@
 
         // Serialize the form data
         const formData = new URLSearchParams(new FormData(addForm));
+        formData.delete('password');
 
-        fetch(addForm.action, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded' // Set the Content-Type to form data
-            },
-            body: formData
-        })
-            .then(response => {
-                if (response.ok) {
-                    window.location.reload(); // Reload the page after successful update
-                } else {
-                    console.error('Error updating employee data.');
-                }
+        // Verify Token expiration
+        if (isTokenExpired(token)) {
+            // Token has expired, display an alert message and redirect to the login page
+            alert("Your session has expired. Please log in again.");
+            window.location.href = "/login.html";
+        } else {
+            fetch(addForm.action, {
+                method: 'POST',
+                headers: headers,
+                body: formData
             })
-            .catch(error => console.error(error));
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload(); // Reload the page after successful update
+                    } else {
+                        console.error('Error adding employee data.');
+                    }
+                })
+                .catch(error => console.error(error));
+
+
+            // Create a new FormData object containing only 'username,' 'password,' and 'role'
+            const formDataForAuth = new FormData();
+            formDataForAuth.append('username', addForm.querySelector('[name="userName"]').value);
+            formDataForAuth.append('password', addForm.querySelector('[name="password"]').value);
+            formDataForAuth.append('role', addForm.querySelector('[name="role"]').value);
+
+            fetch("/auth/register", {
+                method: 'POST',
+                headers: headers,
+                body: new URLSearchParams(formDataForAuth).toString()
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // Handle success response
+                    } else {
+                        console.error('Error adding user authentication data.');
+                    }
+                })
+                .catch(error => console.error(error));
+
+            console.log("Token is valid.");
+        }
     });
 </script>
 
@@ -1411,20 +1179,76 @@
             return;
         }
 
-        // Send a POST request to delete the employee
-        fetch('/employee/delete/' + deleteEmployeeId, {
-            method: 'POST'
-        })
-            .then(response => {
-                if (response.ok) {
-                    // Reload the page after successful deletion
-                    window.location.reload();
-                } else {
-                    console.error('Error deleting employee.');
-                }
+        // Verify Token expiration
+        if (isTokenExpired(token)) {
+            // Token has expired, display an alert message and redirect to the login page
+            alert("Your session has expired. Please log in again.");
+            window.location.href = "/login.html";
+        } else {
+            // Send a POST request to delete the employee
+            fetch('/employee/delete/' + deleteEmployeeId, {
+                method: 'POST',
+                headers: headersAuth
             })
-            .catch(error => console.error(error));
+                .then(response => {
+                    if (response.ok) {
+                        // Reload the page after successful deletion
+                        window.location.reload();
+                    } else {
+                        console.error('Error deleting employee.');
+                    }
+                })
+                .catch(error => console.error(error));
+
+            // Send a POST request to delete the user
+            fetch('/auth/delete/' + deleteEmployeeId, {
+                method: 'POST',
+                headers: headersAuth
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // Handle success response
+                    } else {
+                        console.error('Error deleting user.');
+                    }
+                })
+                .catch(error => console.error(error));
+
+            console.log("Token is valid.");
+        }
     }
+</script>
+
+
+<script>
+    // Select all elements with the class "logout-link" and attach the click event listener to each of them
+    const logoutLinks = document.querySelectorAll(".logout-link");
+
+    logoutLinks.forEach((logoutLink) => {
+        logoutLink.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent the link from navigating immediately
+
+            fetch("/logout/", {
+                method: "POST",
+                headers: headersAuth
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        // Logout was successful, perform any additional client-side cleanup
+                        localStorage.removeItem("jwtToken");
+                        alert("Logout successful"); // Display a message to the user
+                        window.location.href = '/login.html'; // Redirect to the login page
+                    } else {
+                        // Handle logout error
+                        console.error("Logout failed");
+                    }
+                })
+                .catch((error) => {
+                    // Handle fetch or network error
+                    console.error("Logout error:", error);
+                });
+        });
+    });
 </script>
 </body>
 </html>
