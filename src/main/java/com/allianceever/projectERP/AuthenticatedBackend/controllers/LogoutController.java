@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/logout")
-@CrossOrigin("*")
 public class LogoutController {
 
     private final TokenBlacklistRepository blacklistRepository;

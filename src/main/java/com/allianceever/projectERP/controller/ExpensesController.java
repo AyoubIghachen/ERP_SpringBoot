@@ -19,7 +19,6 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequestMapping("/expenses")
-@CrossOrigin("*")
 public class ExpensesController {
 
     private ExpensesService expensesService;

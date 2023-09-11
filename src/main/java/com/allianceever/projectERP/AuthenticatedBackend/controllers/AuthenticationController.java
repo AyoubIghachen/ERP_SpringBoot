@@ -1,9 +1,12 @@
 package com.allianceever.projectERP.AuthenticatedBackend.controllers;
 
+import com.allianceever.projectERP.AuthenticatedBackend.models.ChangePasswordDTO;
 import com.allianceever.projectERP.model.dto.EmployeeDto;
 import com.allianceever.projectERP.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import com.allianceever.projectERP.AuthenticatedBackend.models.ApplicationUser;
@@ -13,7 +16,6 @@ import com.allianceever.projectERP.AuthenticatedBackend.services.AuthenticationS
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin("*")
 public class AuthenticationController {
 
     @Autowired
@@ -49,6 +51,25 @@ public class AuthenticationController {
             String username = employeeDto.getUserName();
             authenticationService.delete(username);
             return ResponseEntity.ok("User deleted successfully!");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/changePassword")
+    public ResponseEntity<String> changePassword(@ModelAttribute ChangePasswordDTO body, @AuthenticationPrincipal Jwt jwt){
+        // Retrieve username from the jwt
+        String username = jwt.getClaimAsString("sub");
+        String role = jwt.getClaimAsString("roles");
+        // verify username and password
+        LoginResponseDTO loginResponseDTO = authenticationService.loginUser(username, body.getOldPassword());
+        if (loginResponseDTO.getUser() != null && !body.getNewPassword().equals("")) {
+            ApplicationUser applicationUser = authenticationService.updateUser(username, body.getNewPassword(), role);
+            if(applicationUser != null){
+                return ResponseEntity.ok("Password changed successfully!");
+            }else{
+                return ResponseEntity.notFound().build();
+            }
         } else {
             return ResponseEntity.notFound().build();
         }

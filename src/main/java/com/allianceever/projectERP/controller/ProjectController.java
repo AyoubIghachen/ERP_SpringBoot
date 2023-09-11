@@ -14,7 +14,7 @@ import java.util.Set;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
-@CrossOrigin("*")
+
 @RestController
 @RequestMapping("/project")
 @AllArgsConstructor

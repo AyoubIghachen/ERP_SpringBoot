@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @AllArgsConstructor
-@CrossOrigin("*")
 
 public class NavigationController {
     private EmployeeService employeeService;
@@ -46,6 +45,16 @@ public class NavigationController {
     @RequestMapping("/login.html")
     public String getLogin(){
         return "login";
+    }
+
+    @RequestMapping("/change-password.html")
+    public String getChangePassword(){
+        return "change-password";
+    }
+
+    @RequestMapping("/settings.html")
+    public String getSettings(){
+        return "settings";
     }
 
 

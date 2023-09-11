@@ -2,7 +2,6 @@ package com.allianceever.projectERP.controller;
 
 import com.allianceever.projectERP.model.dto.LeaveTypeDto;
 import com.allianceever.projectERP.service.LeaveTypeService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.allianceever.projectERP.controller.EmployeeController.getStrings;
 import static org.springframework.http.HttpStatus.CREATED;
-@CrossOrigin("*")
+
 @RestController
 @RequestMapping("/leaveType")
 @ComponentScan(basePackages = "com.allianceever.projectERP")

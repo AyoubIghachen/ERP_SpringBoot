@@ -18,7 +18,6 @@ package com.allianceever.projectERP.controller;
 @RestController
 @RequestMapping("/department")
 @AllArgsConstructor
-@CrossOrigin("*")
 public class DepartmentController {
     private DepartmentService departmentService;
 

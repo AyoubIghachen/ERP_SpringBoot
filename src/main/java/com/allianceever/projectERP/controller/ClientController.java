@@ -27,7 +27,6 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @RequestMapping("/client")
 @AllArgsConstructor
-@CrossOrigin("*")
 public class ClientController {
     private ClientService clientService;
 

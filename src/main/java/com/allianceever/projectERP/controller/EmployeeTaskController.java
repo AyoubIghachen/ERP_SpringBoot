@@ -14,7 +14,6 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @RequestMapping("/employeeTask")
 @AllArgsConstructor
-@CrossOrigin("*")
 public class EmployeeTaskController {
     private EmployeeTaskService employeeTaskService;
 

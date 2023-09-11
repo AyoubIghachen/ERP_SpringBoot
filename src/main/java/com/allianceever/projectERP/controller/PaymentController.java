@@ -1,15 +1,12 @@
 package com.allianceever.projectERP.controller;
 
-
-import com.allianceever.projectERP.model.dto.EstimatesInvoicesDto;
-import com.allianceever.projectERP.model.dto.HolidayDto;
 import com.allianceever.projectERP.model.dto.PaymentDto;
 import com.allianceever.projectERP.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-@CrossOrigin("*")
+
 @RestController
 @RequestMapping("/payment")
 @ComponentScan(basePackages = "com.allianceever.projectERP")

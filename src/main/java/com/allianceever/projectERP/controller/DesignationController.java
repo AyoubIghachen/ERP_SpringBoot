@@ -18,7 +18,6 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @RequestMapping("/designation")
 @AllArgsConstructor
-@CrossOrigin("*")
 public class DesignationController {
     private DesignationService designationService;
 

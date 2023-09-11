@@ -10,7 +10,6 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/leaderProject")
 @AllArgsConstructor

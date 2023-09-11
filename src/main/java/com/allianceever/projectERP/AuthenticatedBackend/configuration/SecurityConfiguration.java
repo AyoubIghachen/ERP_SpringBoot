@@ -69,10 +69,13 @@ public class SecurityConfiguration {
 
                 auth.requestMatchers("/auth/register").hasRole("ADMIN");
                 auth.requestMatchers("/auth/update").hasRole("ADMIN");
+                auth.requestMatchers("/auth/changePassword").authenticated();
 
                 auth.requestMatchers("/").permitAll();
                 auth.requestMatchers("/index.html").permitAll();
                 auth.requestMatchers("/employees.html").permitAll();
+                auth.requestMatchers("/settings.html").permitAll();
+                auth.requestMatchers("/change-password.html").permitAll();
 
                 auth.requestMatchers("/employee/**").hasRole("ADMIN");
                 // Permit access to any URL for users with role "ADMIN"
