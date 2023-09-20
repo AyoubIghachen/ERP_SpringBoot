@@ -1,15 +1,24 @@
 package com.allianceever.projectERP.service.implementation;
 
 import com.allianceever.projectERP.exception.ResourceNotFoundException;
+import com.allianceever.projectERP.model.dto.EmployeeDto;
+import com.allianceever.projectERP.model.dto.EmployeeProjectDto;
+import com.allianceever.projectERP.model.dto.LeaderProjectDto;
 import com.allianceever.projectERP.model.dto.ProjectDto;
 import com.allianceever.projectERP.model.entity.Project;
 import com.allianceever.projectERP.repository.ProjectRepo;
+import com.allianceever.projectERP.service.EmployeeProjectService;
+import com.allianceever.projectERP.service.EmployeeService;
+import com.allianceever.projectERP.service.LeaderProjectService;
 import com.allianceever.projectERP.service.ProjectService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,6 +26,9 @@ import java.util.stream.Collectors;
 public class ProjectServiceImpl implements ProjectService {
     private ProjectRepo projectRepo;
     private ModelMapper mapper;
+    private EmployeeService employeeService;
+    private EmployeeProjectService employeeProjectService;
+    private LeaderProjectService leaderProjectService;
     @Override
     public ProjectDto create(ProjectDto projectDto) {
         // convert DTO to entity
@@ -43,6 +55,37 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectDto> getAll() {
         List<Project> projects = projectRepo.findAll();
+        return projects.stream().map((project) -> mapToDTO(project))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProjectDto> getAllByUsername(String username) {
+        EmployeeDto employeeDto = employeeService.getByUsername(username);
+        Long employeeID = employeeDto.getEmployeeID();
+        List<EmployeeProjectDto> employeeProjectDtoList = employeeProjectService.findAllByEmployeeID(employeeID);
+        List<LeaderProjectDto> leaderProjectDtoList = leaderProjectService.findAllByLeaderID(String.valueOf(employeeID));
+
+        // Create a Set to store unique project IDs
+        Set<String> uniqueProjectIDs = new HashSet<>();
+        // Iterate through the employeeProjectDtoList and add project IDs to the set
+        for (EmployeeProjectDto employeeProjectDto : employeeProjectDtoList) {
+            uniqueProjectIDs.add(employeeProjectDto.getProjectID());
+        }
+        // Iterate through the leaderProjectDtoList and add project IDs to the set
+        for (LeaderProjectDto leaderProjectDto : leaderProjectDtoList) {
+            uniqueProjectIDs.add(leaderProjectDto.getProjectID());
+        }
+        // Convert the set back to a list if needed
+        List<String> uniqueProjectIDList = new ArrayList<>(uniqueProjectIDs);
+        // Now, uniqueProjectIDList contains the unique project IDs from both lists
+
+        List<Project> projects = new ArrayList<>();
+        for (String projectID : uniqueProjectIDList) {
+            projects.add(projectRepo.findById(Long.valueOf(projectID)).orElseThrow(
+                    () -> new ResourceNotFoundException("Project is not exist with given id : " + projectID)));
+        }
+
         return projects.stream().map((project) -> mapToDTO(project))
                 .collect(Collectors.toList());
     }

@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 public class LeaveTypeDto {
     private Integer leaveTypeId;
 
+    private String  username;
+
     private String leaveName;
 
     private String days;

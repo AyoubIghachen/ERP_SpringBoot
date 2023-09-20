@@ -316,7 +316,7 @@
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="/profile.html">My Profile</a>
 					<a class="dropdown-item" href="/settings.html">Settings</a>
-					<a class="dropdown-item" href="/login.html">Logout</a>
+					<a class="dropdown-item logout-link" href="/login.html">Logout</a>
 				</div>
 			</li>
 		</ul>
@@ -328,7 +328,7 @@
 			<div class="dropdown-menu dropdown-menu-right">
 				<a class="dropdown-item" href="/profile.html">My Profile</a>
 				<a class="dropdown-item" href="/settings.html">Settings</a>
-				<a class="dropdown-item" href="/login.html">Logout</a>
+				<a class="dropdown-item logout-link" href="/login.html">Logout</a>
 			</div>
 		</div>
 		<!-- /Mobile Menu -->
@@ -833,6 +833,52 @@
 <!-- Custom JS -->
 <script src="/assets/js/app.js"></script>
 
+<script>
+	// Retrieve the token from local storage
+	const token = localStorage.getItem("jwtToken");
+
+	// Before making authenticated requests, check if the token has expired
+	function isTokenExpired(token) {
+		if (!token) {
+			return true; // Token is missing or empty
+		}
+
+		const decodedToken = parseJwt(token);
+		const expirationTime = decodedToken.exp * 1000; // Convert to milliseconds
+
+		// Check if the current time is greater than or equal to the token's expiration time
+		return Date.now() >= expirationTime;
+	}
+
+	function parseJwt(token) {
+		// Decode the JWT token (assuming it's in the correct format)
+		const base64Url = token.split(".")[1];
+		const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+		return JSON.parse(atob(base64));
+	}
+
+	// Verify Token expiration
+	if (isTokenExpired(token)) {
+		// Token has expired, display an alert message and redirect to the login page
+		alert("Your session has expired. Please log in again.");
+		window.location.href = "/login.html";
+	} else {
+		// Token is still valid, proceed with the authenticated request
+
+		console.log("Token is valid.");
+	}
+
+	// Create headers object with the Authorization header
+	const headersAuth = {
+		'Authorization': `Bearer ${token}`
+	};
+	// Create headers object with the Content-Type and Authorization headers
+	const headers = {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		'Authorization': `Bearer ${token}`
+	};
+</script>
+
 <script th:inline="javascript">
 	// Add Project
 	// JavaScript to handle the AJAX call and pre-fill the form
@@ -847,9 +893,7 @@
 
 		fetch(addForm.action, {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded' // Set the Content-Type to form data
-			},
+			headers: headers,
 			body: formData
 		})
 				.then(response => {
@@ -877,9 +921,7 @@
 
 		fetch(addFormTask.action, {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded' // Set the Content-Type to form data
-			},
+			headers: headers,
 			body: formData
 		})
 				.then(response => {
@@ -912,7 +954,8 @@
 
 		// Send a POST request to delete the task
 		fetch('/task/delete/' + deleteTaskId, {
-			method: 'POST'
+			method: 'POST',
+			headers: headersAuth
 		})
 				.then(response => {
 					if (response.ok) {
@@ -963,7 +1006,9 @@
 				selectedTaskID = taskID;
 
 				// Send a request to your API to fetch task-related data
-				fetch(`/task/${taskID}`)
+				fetch(`/task/${taskID}`, {
+					headers: headersAuth
+				})
 						.then(response => response.json())
 						.then(task => {
 							// Update the element
@@ -983,7 +1028,9 @@
 							console.error("Error fetching data:", error);
 						});
 
-				fetch(`/employeeTask/ByTaskID/${taskID}`)
+				fetch(`/employeeTask/ByTaskID/${taskID}`, {
+					headers: headersAuth
+				})
 						.then(response => response.json())
 						.then(employeeTasks => {
 							const followersContainer = document.querySelector('.project-members.task-followers');
@@ -1036,7 +1083,9 @@
 							console.error("Error fetching data:", error);
 						});
 
-				fetch(`/messageTask/ByTaskID/${taskID}`)
+				fetch(`/messageTask/ByTaskID/${taskID}`, {
+					headers: headersAuth
+				})
 						.then(response => response.json())
 						.then(messages => {
 							const chatContainer = document.querySelector('.chat.chat-left');
@@ -1147,14 +1196,14 @@
 					// Send request to API endpoint
 					fetch('/messageTask/create', {
 						method: 'POST',
-						headers: {
-							'Content-Type': 'application/x-www-form-urlencoded'
-						},
+						headers: headers,
 						body: formData.toString() // Serialize form data
 					})
 							.then(response => {
 								if (response.ok) {
-									fetch(`/messageTask/ByTaskID/${taskID}`)
+									fetch(`/messageTask/ByTaskID/${taskID}`, {
+										headers: headersAuth
+									})
 											.then(response => response.json())
 											.then(messages => {
 												const chatContainer = document.querySelector('.chat.chat-left');
@@ -1293,7 +1342,9 @@
 	// Function to handle the search button click event
 	function searchEmployees() {
 		const searchInput = document.getElementById('searchInput').value;
-		fetch('/employee/searchEmployees/' + searchInput)
+		fetch('/employee/searchEmployees/' + searchInput, {
+			headers: headersAuth
+		})
 				.then((response) => response.json())
 				.then((data) => {
 					updateEmployeeList(data); // Update the list with fetched data
@@ -1318,12 +1369,14 @@
 			// Make the API call to check if the EmployeeTask already exists
 			fetch('/employeeTask/ByEmployeeIDAndTaskID?employeeID=' + selectedEmployee.employeeID + '&taskID=' + selectedTaskID, {
 				method: 'GET',
+				headers: headersAuth
 			})
 					.then(response => {
 						if (response.status === 404) {
 							// EmployeeTask does not exist: Make the API call to create the EmployeeTask
 							return fetch('/employeeTask/create', {
 								method: 'POST',
+								headers: headersAuth,
 								body: formData
 							});
 						} else if (response.ok) {
@@ -1364,6 +1417,38 @@
 	document.getElementById('searchButton').addEventListener('click', searchEmployees);
 	// Attach the submit function to the submit button
 	document.getElementById('submitButton').addEventListener('click', submitEmployeeTask);
+</script>
+
+
+<script>
+	// Select all elements with the class "logout-link" and attach the click event listener to each of them
+	const logoutLinks = document.querySelectorAll(".logout-link");
+
+	logoutLinks.forEach((logoutLink) => {
+		logoutLink.addEventListener("click", (event) => {
+			event.preventDefault(); // Prevent the link from navigating immediately
+
+			fetch("/logout/", {
+				method: "POST",
+				headers: headersAuth
+			})
+					.then((response) => {
+						if (response.ok) {
+							// Logout was successful, perform any additional client-side cleanup
+							localStorage.removeItem("jwtToken");
+							alert("Logout successful"); // Display a message to the user
+							window.location.href = '/login.html'; // Redirect to the login page
+						} else {
+							// Handle logout error
+							console.error("Logout failed");
+						}
+					})
+					.catch((error) => {
+						// Handle fetch or network error
+						console.error("Logout error:", error);
+					});
+		});
+	});
 </script>
 
 </body>

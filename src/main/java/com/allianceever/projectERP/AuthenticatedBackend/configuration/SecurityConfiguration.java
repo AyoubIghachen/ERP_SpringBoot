@@ -63,26 +63,164 @@ public class SecurityConfiguration {
             .addFilterBefore(tokenValidationFilter, UsernamePasswordAuthenticationFilter.class) // Add the filter
             .authorizeHttpRequests(auth -> {
                 auth.requestMatchers("/assets/**").permitAll();
+                auth.requestMatchers("/error-404.html").permitAll();
+                // Authentication
                 auth.requestMatchers("/login.html").permitAll();
                 auth.requestMatchers("/auth/login").permitAll();
                 auth.requestMatchers("/logout/").permitAll();
 
-                auth.requestMatchers("/auth/register").hasRole("ADMIN");
-                auth.requestMatchers("/auth/update").hasRole("ADMIN");
-                auth.requestMatchers("/auth/changePassword").authenticated();
-
+                auth.requestMatchers("/settings.html").permitAll();// See again
+                auth.requestMatchers("/change-password.html").permitAll();// See again
+                auth.requestMatchers("/auth/changePassword").authenticated();// See again
+                // Dashboard
                 auth.requestMatchers("/").permitAll();
                 auth.requestMatchers("/index.html").permitAll();
+                auth.requestMatchers("/employee-dashboard.html").permitAll();
+
+
+                // All Employees Functions
                 auth.requestMatchers("/employees.html").permitAll();
-                auth.requestMatchers("/settings.html").permitAll();
-                auth.requestMatchers("/change-password.html").permitAll();
+                auth.requestMatchers("/auth/register").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/auth/update").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/employee/all").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/employee/{id}").authenticated();
+                auth.requestMatchers("/employee/create").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/employee/updateEmployeeMultipart").authenticated();
+                auth.requestMatchers("/employee/updateEmployee").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/employee/delete/{id}").hasRole("ADMIN");
+                auth.requestMatchers("/auth/delete/{id}").hasRole("ADMIN");
+                auth.requestMatchers("/employee/searchEmployees/{search}").authenticated(); // See again(change)
 
-                auth.requestMatchers("/employee/**").hasRole("ADMIN");
-                // Permit access to any URL for users with role "ADMIN"
-                auth.requestMatchers("/**").hasRole("ADMIN");
+                auth.requestMatchers("/profile.html/**").permitAll();
 
-                auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
-                auth.requestMatchers("/sales/**").hasAnyRole("ADMIN", "SALES");
+                auth.requestMatchers("/holidays.html").permitAll();
+                auth.requestMatchers("/holiday/create").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/holiday/{holidayName}").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/holiday/updateHoliday").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/holiday/delete/{HolidayName}").hasAnyRole("ADMIN", "Human_Capital");
+
+                auth.requestMatchers("/leave-type.html").permitAll();
+                auth.requestMatchers("/leaveType/create").authenticated();
+                auth.requestMatchers("/leaveType/{leaveTypeName}").authenticated();
+                auth.requestMatchers("/leaveType/updateLeaveType").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/leaveType/delete/{LeaveTypeName}").authenticated();
+
+                auth.requestMatchers("/leaves-employee.html").permitAll();
+                auth.requestMatchers("/leaves/create").permitAll();
+                auth.requestMatchers("/leaves/{Leaves}").permitAll();
+                auth.requestMatchers("/leaves/updateLeaves").authenticated();
+                auth.requestMatchers("/leaves/delete/{LeavesID}").authenticated();
+
+                auth.requestMatchers("/leaves.html").permitAll();
+
+                auth.requestMatchers("/departments.html").permitAll();
+                auth.requestMatchers("/department/all").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/department/{id}").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/department/create").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/department/updateDepartment").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/department/delete/{id}").hasAnyRole("ADMIN", "Human_Capital");
+
+
+                auth.requestMatchers("/designations.html").permitAll();
+                auth.requestMatchers("/designation/all").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/designation/{id}").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/designation/create").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/designation/updateDesignation").hasAnyRole("ADMIN", "Human_Capital");
+                auth.requestMatchers("/designation/delete/{id}").hasAnyRole("ADMIN", "Human_Capital");
+
+
+                // Clients
+                auth.requestMatchers("/clients.html").permitAll();
+                auth.requestMatchers("/client-profile.html/**").permitAll();
+                auth.requestMatchers("/client/all").hasAnyRole("ADMIN", "Marketing", "Business_Development");
+                auth.requestMatchers("/client/{id}").hasAnyRole("ADMIN", "Marketing", "Business_Development");
+                auth.requestMatchers("/client/create").hasAnyRole("ADMIN", "Marketing", "Business_Development");
+                auth.requestMatchers("/client/updateClientMultipart").hasAnyRole("ADMIN", "Marketing", "Business_Development");
+                auth.requestMatchers("/client/updateClient").hasAnyRole("ADMIN", "Marketing", "Business_Development");
+                auth.requestMatchers("/client/delete/{id}").hasAnyRole("ADMIN", "Marketing", "Business_Development");
+
+
+                // All Sales Functions
+                auth.requestMatchers("/estimates.html").permitAll();
+                auth.requestMatchers("/createEstimateInvoice/create").hasAnyRole("ADMIN", "Marketing", "Business_Development");
+                auth.requestMatchers("/createEstimateInvoice/view/{id}").permitAll();
+                auth.requestMatchers("/createEstimateInvoice/delete/{id}").hasAnyRole("ADMIN", "Marketing", "Business_Development");
+                auth.requestMatchers("/createEstimateInvoice/edit/{id}").permitAll();
+                auth.requestMatchers("/createEstimateInvoice/updateEstimatesInvoices").hasAnyRole("ADMIN", "Marketing", "Business_Development");
+
+                auth.requestMatchers("/create-estimate.html").permitAll();
+                auth.requestMatchers("/edit-estimate.html").permitAll();
+                auth.requestMatchers("/estimate-view.html").permitAll();
+
+                auth.requestMatchers("/invoices.html").permitAll();
+                auth.requestMatchers("/create-invoice.html").permitAll();
+                auth.requestMatchers("/edit-invoice.html").permitAll();
+                auth.requestMatchers("/invoice-view.html").permitAll();
+
+                auth.requestMatchers("/payments.html").permitAll();
+                auth.requestMatchers("/payment/addPayment").hasAnyRole("ADMIN", "Marketing", "Business_Development");
+                auth.requestMatchers("/payment/delete/{id}").hasAnyRole("ADMIN", "Marketing", "Business_Development");
+
+                auth.requestMatchers("/expenses.html").permitAll();
+                auth.requestMatchers("/expenses/create").hasAnyRole("ADMIN", "Marketing", "Business_Development");
+                auth.requestMatchers("/expenses/delete/{id}").hasAnyRole("ADMIN", "Marketing", "Business_Development");
+                auth.requestMatchers("/expenses/getExpense/{expenseId}").hasAnyRole("ADMIN", "Marketing", "Business_Development");
+
+
+                // Projects
+                auth.requestMatchers("/projects.html").permitAll();
+                auth.requestMatchers("/project/all").hasAnyRole("ADMIN", "Business_Development");
+                auth.requestMatchers("/project/{id}").hasAnyRole("ADMIN", "Business_Development");
+                auth.requestMatchers("/project/create").hasAnyRole("ADMIN", "Business_Development");
+                auth.requestMatchers("/project/updateProject").hasAnyRole("ADMIN", "Business_Development");
+                auth.requestMatchers("/project/delete/{id}").hasAnyRole("ADMIN");
+
+                auth.requestMatchers("/project-view.html/**").permitAll();
+                auth.requestMatchers("/tasks.html/**").permitAll();
+                //**
+                auth.requestMatchers("/task/all").hasAnyRole("ADMIN", "Business_Development");
+                auth.requestMatchers("/task/{id}").permitAll();
+                auth.requestMatchers("/task/create").permitAll();
+                auth.requestMatchers("/task/updateTask").permitAll();
+                auth.requestMatchers("/task/delete/{id}").permitAll();
+
+                auth.requestMatchers("/employeeProject/all").hasAnyRole("ADMIN", "Business_Development");
+                auth.requestMatchers("/employeeProject/{id}").permitAll();
+                auth.requestMatchers("/employeeProject/create").permitAll();
+                auth.requestMatchers("/employeeProject/ByEmployeeIDAndProjectID").permitAll();
+                auth.requestMatchers("/employeeProject/delete/{id}").permitAll();
+
+                auth.requestMatchers("/employeeTask/all").hasAnyRole("ADMIN", "Business_Development");
+                auth.requestMatchers("/employeeTask/{id}").permitAll();
+                auth.requestMatchers("/employeeTask/create").permitAll();
+                auth.requestMatchers("/employeeTask/ByEmployeeIDAndTaskID").permitAll();
+                auth.requestMatchers("/employeeTask/delete/{id}").permitAll();
+                auth.requestMatchers("/employeeTask/ByTaskID/{taskID}").permitAll();
+
+                auth.requestMatchers("/leaderProject/all").hasAnyRole("ADMIN", "Business_Development");
+                auth.requestMatchers("/leaderProject/{id}").hasAnyRole("ADMIN", "Business_Development");
+                auth.requestMatchers("/leaderProject/create").hasAnyRole("ADMIN", "Business_Development");
+                auth.requestMatchers("/leaderProject/ByLeaderIDAndProjectID").hasAnyRole("ADMIN", "Business_Development");
+                auth.requestMatchers("/leaderProject/delete/{id}").hasAnyRole("ADMIN", "Business_Development");
+
+                auth.requestMatchers("/messageTask/all").hasAnyRole("ADMIN", "Business_Development");
+                auth.requestMatchers("/messageTask/{id}").permitAll();
+                auth.requestMatchers("/messageTask/create").permitAll();
+                auth.requestMatchers("/messageTask/ByTaskID/{taskID}").permitAll();
+                auth.requestMatchers("/messageTask/delete/{id}").permitAll();
+
+                auth.requestMatchers("/fileProject/all").hasAnyRole("ADMIN", "Business_Development");
+                auth.requestMatchers("/fileProject/{id}").permitAll();
+                auth.requestMatchers("/fileProject/create").permitAll();
+                auth.requestMatchers("/fileProject/delete/{id}").permitAll();
+
+                auth.requestMatchers("/imageProject/all").hasAnyRole("ADMIN", "Business_Development");
+                auth.requestMatchers("/imageProject/{id}").permitAll();
+                auth.requestMatchers("/imageProject/create").permitAll();
+                auth.requestMatchers("/imageProject/delete/{id}").permitAll();
+                //**
+
+
                 auth.anyRequest().authenticated();
             });
 

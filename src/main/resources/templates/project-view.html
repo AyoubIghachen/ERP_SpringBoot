@@ -315,7 +315,7 @@
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="/profile.html">My Profile</a>
 					<a class="dropdown-item" href="/settings.html">Settings</a>
-					<a class="dropdown-item" href="/login.html">Logout</a>
+					<a class="dropdown-item logout-link" href="/login.html">Logout</a>
 				</div>
 			</li>
 		</ul>
@@ -327,7 +327,7 @@
 			<div class="dropdown-menu dropdown-menu-right">
 				<a class="dropdown-item" href="/profile.html">My Profile</a>
 				<a class="dropdown-item" href="/settings.html">Settings</a>
-				<a class="dropdown-item" href="/login.html">Logout</a>
+				<a class="dropdown-item logout-link" href="/login.html">Logout</a>
 			</div>
 		</div>
 		<!-- /Mobile Menu -->
@@ -1212,6 +1212,52 @@
 <!-- Custom JS -->
 <script src="/assets/js/app.js"></script>
 
+<script>
+	// Retrieve the token from local storage
+	const token = localStorage.getItem("jwtToken");
+
+	// Before making authenticated requests, check if the token has expired
+	function isTokenExpired(token) {
+		if (!token) {
+			return true; // Token is missing or empty
+		}
+
+		const decodedToken = parseJwt(token);
+		const expirationTime = decodedToken.exp * 1000; // Convert to milliseconds
+
+		// Check if the current time is greater than or equal to the token's expiration time
+		return Date.now() >= expirationTime;
+	}
+
+	function parseJwt(token) {
+		// Decode the JWT token (assuming it's in the correct format)
+		const base64Url = token.split(".")[1];
+		const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+		return JSON.parse(atob(base64));
+	}
+
+	// Verify Token expiration
+	if (isTokenExpired(token)) {
+		// Token has expired, display an alert message and redirect to the login page
+		alert("Your session has expired. Please log in again.");
+		window.location.href = "/login.html";
+	} else {
+		// Token is still valid, proceed with the authenticated request
+
+		console.log("Token is valid.");
+	}
+
+	// Create headers object with the Authorization header
+	const headersAuth = {
+		'Authorization': `Bearer ${token}`
+	};
+	// Create headers object with the Content-Type and Authorization headers
+	const headers = {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		'Authorization': `Bearer ${token}`
+	};
+</script>
+
 <script th:inline="javascript">
 	// Capture the project ID
 	var projectID = document.getElementById("editProjectLink").getAttribute("data-project-id");
@@ -1238,7 +1284,9 @@
 		link.addEventListener("click", function(event) {
 			event.preventDefault();
 			var projectID = link.getAttribute("data-project-id");
-			fetch('/project/' + projectID)
+			fetch('/project/' + projectID, {
+				headers: headersAuth
+			})
 					.then(response => response.json())
 					.then(data => populateFormWithData(data))
 					.catch(error => console.error(error));
@@ -1254,9 +1302,7 @@
 
 		fetch(editForm.action, {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded' // Set the Content-Type to form data
-			},
+			headers: headers,
 			body: formData
 		})
 				.then(response => {
@@ -1298,6 +1344,7 @@
 
 		fetch(editFormImage.action, {
 			method: 'POST',
+			headers: headersAuth,
 			body: formDataImage
 		})
 				.then(response => {
@@ -1330,7 +1377,8 @@
 
 		// Send a POST request to delete the imageProject
 		fetch('/imageProject/delete/' + imageProjectId, {
-			method: 'POST'
+			method: 'POST',
+			headers: headersAuth
 		})
 				.then(response => {
 					if (response.ok) {
@@ -1373,6 +1421,7 @@
 
 		fetch(editFormFile.action, {
 			method: 'POST',
+			headers: headersAuth,
 			body: formDataFile
 		})
 				.then(response => {
@@ -1405,7 +1454,8 @@
 
 		// Send a POST request to delete the fileProject
 		fetch('/fileProject/delete/' + fileProjectId, {
-			method: 'POST'
+			method: 'POST',
+			headers: headersAuth
 		})
 				.then(response => {
 					if (response.ok) {
@@ -1459,7 +1509,9 @@
 	// Function to handle the search button click event
 	function searchEmployees() {
 		const searchInput = document.getElementById('searchInput').value;
-		fetch('/employee/searchEmployees/' + searchInput)
+		fetch('/employee/searchEmployees/' + searchInput, {
+			headers: headersAuth
+		})
 				.then((response) => response.json())
 				.then((data) => {
 					updateEmployeeList(data); // Update the list with fetched data
@@ -1484,12 +1536,14 @@
 			// Make the API call to check if the EmployeeProject already exists
 			fetch('/employeeProject/ByEmployeeIDAndProjectID?employeeID=' + selectedEmployee.employeeID + '&projectID=' + projectID, {
 				method: 'GET',
+				headers: headersAuth
 			})
 					.then(response => {
 						if (response.status === 404) {
 							// EmployeeProject does not exist: Make the API call to create the EmployeeProject
 							return fetch('/employeeProject/create', {
 								method: 'POST',
+								headers: headersAuth,
 								body: formData
 							});
 						} else if (response.ok) {
@@ -1551,7 +1605,8 @@
 
 		// Send a POST request to delete the employeeProject
 		fetch('/employeeProject/delete/' + employeeProjectId, {
-			method: 'POST'
+			method: 'POST',
+			headers: headersAuth
 		})
 				.then(response => {
 					if (response.ok) {
@@ -1605,7 +1660,9 @@
 	// Function to handle the search button click event
 	function searchLeaders() {
 		const searchInputLeader = document.getElementById('searchInputLeader').value;
-		fetch('/employee/searchEmployees/' + searchInputLeader)
+		fetch('/employee/searchEmployees/' + searchInputLeader, {
+			headers: headersAuth
+		})
 				.then((response) => response.json())
 				.then((data) => {
 					updateLeaderList(data); // Update the list with fetched data
@@ -1630,12 +1687,14 @@
 			// Make the API call to check if the LeaderProject already exists
 			fetch('/leaderProject/ByLeaderIDAndProjectID?leaderID=' + selectedLeader.employeeID + '&projectID=' + projectID, {
 				method: 'GET',
+				headers: headersAuth
 			})
 					.then(response => {
 						if (response.status === 404) {
 							// LeaderProject does not exist: Make the API call to create the LeaderProject
 							return fetch('/leaderProject/create', {
 								method: 'POST',
+								headers: headersAuth,
 								body: formData
 							});
 						} else if (response.ok) {
@@ -1697,7 +1756,8 @@
 
 		// Send a POST request to delete the leaderProject
 		fetch('/leaderProject/delete/' + leaderProjectId, {
-			method: 'POST'
+			method: 'POST',
+			headers: headersAuth
 		})
 				.then(response => {
 					if (response.ok) {
@@ -1709,6 +1769,38 @@
 				})
 				.catch(error => console.error(error));
 	}
+</script>
+
+
+<script>
+	// Select all elements with the class "logout-link" and attach the click event listener to each of them
+	const logoutLinks = document.querySelectorAll(".logout-link");
+
+	logoutLinks.forEach((logoutLink) => {
+		logoutLink.addEventListener("click", (event) => {
+			event.preventDefault(); // Prevent the link from navigating immediately
+
+			fetch("/logout/", {
+				method: "POST",
+				headers: headersAuth
+			})
+					.then((response) => {
+						if (response.ok) {
+							// Logout was successful, perform any additional client-side cleanup
+							localStorage.removeItem("jwtToken");
+							alert("Logout successful"); // Display a message to the user
+							window.location.href = '/login.html'; // Redirect to the login page
+						} else {
+							// Handle logout error
+							console.error("Logout failed");
+						}
+					})
+					.catch((error) => {
+						// Handle fetch or network error
+						console.error("Logout error:", error);
+					});
+		});
+	});
 </script>
 
 </body>

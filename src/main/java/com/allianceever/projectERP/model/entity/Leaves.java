@@ -13,11 +13,11 @@ import lombok.ToString;
 @ToString
 @Table(name="Leaves")
 public class Leaves {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer leavesID;
+
+    private String  username;
 
     private String  EmployeeName;
 
@@ -35,8 +35,5 @@ public class Leaves {
     private String ApprovedBy;
 
     private String Status;
-
-
-
 
 }

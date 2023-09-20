@@ -1,12 +1,16 @@
 package com.allianceever.projectERP.controller;
 
+import com.allianceever.projectERP.model.dto.EmployeeDto;
 import com.allianceever.projectERP.model.dto.ProjectDto;
+import com.allianceever.projectERP.service.EmployeeService;
 import com.allianceever.projectERP.service.ProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashSet;
 import java.util.List;
@@ -20,6 +24,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @AllArgsConstructor
 public class ProjectController {
     private ProjectService projectService;
+    private EmployeeService employeeService;
 
     // Build Get All Project REST API
     @GetMapping("/all")
@@ -41,7 +46,19 @@ public class ProjectController {
 
     // Build Add Project REST API
     @PostMapping("/create")
-    public ResponseEntity<ProjectDto> createProject(@ModelAttribute ProjectDto projectDto){
+    public ResponseEntity<ProjectDto> createProject(@ModelAttribute ProjectDto projectDto, @AuthenticationPrincipal Jwt jwt){
+        // Retrieve username and role from the jwt Token
+        String username = jwt.getClaimAsString("sub");
+        String role = jwt.getClaimAsString("roles");
+
+        if(role.equals("ADMIN")){
+            projectDto.setCreated_By("ADMIN");
+        }else{
+            EmployeeDto employeeDto = employeeService.getByUsername(username);
+            String employeeName = employeeDto.getFirst_Name() + " " + employeeDto.getLast_Name();
+            projectDto.setCreated_By(employeeName);
+        }
+
         ProjectDto createdProject = projectService.create(projectDto);
         return new ResponseEntity<>(createdProject, CREATED);
     }

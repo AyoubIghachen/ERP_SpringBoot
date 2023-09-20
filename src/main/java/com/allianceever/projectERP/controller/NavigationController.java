@@ -1,17 +1,26 @@
 package com.allianceever.projectERP.controller;
 
+import com.allianceever.projectERP.AuthenticatedBackend.utils.RSAKeyProperties;
+import com.allianceever.projectERP.model.dto.EmployeeDto;
+import com.allianceever.projectERP.model.dto.ProjectDto;
 import com.allianceever.projectERP.model.entity.Expenses;
 import com.allianceever.projectERP.model.entity.Leaves;
 import com.allianceever.projectERP.service.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @AllArgsConstructor
 
 public class NavigationController {
+    private final RSAKeyProperties rsaKeyProperties;
+
     private EmployeeService employeeService;
     private HolidayService holidayService;
     private LeavesService leavesService;
@@ -31,15 +40,31 @@ public class NavigationController {
     private TaskService taskService;
 
 
+    @RequestMapping(value = {"/index.html", "/"})
+    public String getIndex(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
 
-    @RequestMapping("/")
-    public String index(){
-        return "index";
-    }
+            role = (String) claims.get("roles");
 
-    @RequestMapping("/index.html")
-    public String getIndex(){
-        return "index";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(!role.equals("")){
+            if(role.equals("ADMIN")){
+                return "index";
+            }else{
+                return "error-404";// 401 unauthorized
+            }
+        }else{
+            return "login";
+        }
     }
 
     @RequestMapping("/login.html")
@@ -57,92 +82,329 @@ public class NavigationController {
         return "settings";
     }
 
+    @RequestMapping("/employee-dashboard.html")
+    public String getEmployeeDashboard(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(!role.equals("")){
+            if(!role.equals("ADMIN")){
+                return "employee-dashboard";
+            }else{
+                return "error-404";// 401 unauthorized
+            }
+        }else{
+            return "login";
+        }
+    }
+
+    @RequestMapping("/error-404.html")
+    public String getError404(){
+        return "error-404";
+    }
+
 
     //**** Part Ayoub Ighachen:
     //
     @GetMapping("/employees.html")
-    public String ListEmployees(Model model){
-        model.addAttribute("employees", employeeService.getAll());
-        return "employees";
+    public String ListEmployees(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(!role.equals("")){
+            if(role.equals("ADMIN") || role.equals("Human_Capital")){
+                model.addAttribute("employees", employeeService.getAll());
+                return "employees";
+            }else{
+                return "error-404";// 401 unauthorized
+            }
+        }else{
+            return "login";
+        }
     }
 
-    @RequestMapping("/profile.html")
-    public String Profile(){
-        return "profile";
-    }
 
     @GetMapping("/profile.html/{id}")
-    public String getProfile(@PathVariable("id") Long employeeID, Model model){
-        model.addAttribute("employee", employeeService.getById(employeeID));
-        return "profile";
+    public String getProfile(@PathVariable("id") Long employeeID, Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(!role.equals("")){
+            EmployeeDto employeeDto = employeeService.getById(employeeID);
+            if(employeeDto.getUserName().equals(username) || role.equals("ADMIN") || role.equals("Human_Capital")){
+                model.addAttribute("employee", employeeService.getById(employeeID));
+                return "profile";
+            }else{
+                return "error-404";// 401 unauthorized
+            }
+        }else{
+            return "login";
+        }
     }
 
     //
     @GetMapping("/departments.html")
-    public String ListDepartments(Model model){
-        model.addAttribute("departments", departmentService.getAll());
-        return "departments";
+    public String ListDepartments(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+
+            // Retrieve role from the jwt
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(role.equals("ADMIN") || role.equals("Human_Capital")){
+            model.addAttribute("departments", departmentService.getAll());
+            return "departments";
+        }else {
+            return "error-404";
+        }
     }
 
     //
     @GetMapping("/designations.html")
-    public String ListDesignations(Model model){
-        model.addAttribute("designations", designationService.getAll());
-        return "designations";
+    public String ListDesignations(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+
+            // Retrieve role from the jwt
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(role.equals("ADMIN") || role.equals("Human_Capital")){
+            model.addAttribute("designations", designationService.getAll());
+            return "designations";
+        }else {
+            return "error-404";
+        }
     }
 
     //
     @GetMapping("/clients.html")
-    public String ListClients(Model model){
-        model.addAttribute("clients", clientService.getAll());
-        return "clients";
-    }
+    public String ListClients(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
 
-    @RequestMapping("/client-profile.html")
-    public String ClientProfile(){
-        return "client-profile";
+            // Retrieve role from the jwt
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(role.equals("ADMIN") || role.equals("Marketing") || role.equals("Business_Development")){
+            model.addAttribute("clients", clientService.getAll());
+            return "clients";
+        }else {
+            return "error-404";
+        }
     }
 
     @GetMapping("/client-profile.html/{id}")
-    public String getClientProfile(@PathVariable("id") Long clientID, Model model){
-        model.addAttribute("client", clientService.getById(clientID));
-        return "client-profile";
+    public String getClientProfile(@PathVariable("id") Long clientID, Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+
+            // Retrieve role from the jwt
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(role.equals("ADMIN") || role.equals("Marketing") || role.equals("Business_Development")){
+            model.addAttribute("client", clientService.getById(clientID));
+            return "client-profile";
+        }else {
+            return "error-404";
+        }
     }
 
     //
     @GetMapping("/projects.html")
-    public String ListProjects(Model model){
-        model.addAttribute("projects", projectService.getAll());
-        return "projects";
-    }
+    public String ListProjects(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
 
-    @RequestMapping("/project-view.html")
-    public String ViewProject(){
-        return "project-view";
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(!role.equals("")){
+            if(role.equals("ADMIN") || role.equals("Business_Development")){
+                model.addAttribute("projects", projectService.getAll());
+                return "projects";
+            }else {
+                //Return the projects assigned for this username like a Leader or an Employee
+                model.addAttribute("projects", projectService.getAllByUsername(username));
+                return "projects";
+            }
+        }else{
+            return "login";
+        }
     }
 
     @GetMapping("/project-view.html/{id}")
-    public String getViewProject(@PathVariable("id") Long projectID, Model model){
-        model.addAttribute("project", projectService.getById(projectID));
-        model.addAttribute("imageProjects", imageProjectService.findAll(String.valueOf(projectID)));
-        model.addAttribute("fileProjects", fileProjectService.findAll(String.valueOf(projectID)));
-        model.addAttribute("employeeProjects", employeeProjectService.findAll(String.valueOf(projectID)));
-        model.addAttribute("leaderProjects", leaderProjectService.findAll(String.valueOf(projectID)));
-        model.addAttribute("tasks", taskService.findAll(String.valueOf(projectID)));
-        return "project-view";
-    }
+    public String getViewProject(@PathVariable("id") Long projectID, Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
 
-    @RequestMapping("/tasks.html")
-    public String Tasks(){
-        return "tasks";
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(!role.equals("")){
+            if(role.equals("ADMIN") || role.equals("Business_Development")){
+                model.addAttribute("project", projectService.getById(projectID));
+                model.addAttribute("imageProjects", imageProjectService.findAll(String.valueOf(projectID)));
+                model.addAttribute("fileProjects", fileProjectService.findAll(String.valueOf(projectID)));
+                model.addAttribute("employeeProjects", employeeProjectService.findAll(String.valueOf(projectID)));
+                model.addAttribute("leaderProjects", leaderProjectService.findAll(String.valueOf(projectID)));
+                model.addAttribute("tasks", taskService.findAll(String.valueOf(projectID)));
+                return "project-view";
+            }else {
+                // We check if the project is affected for this username
+                List<ProjectDto> projectDtoList = projectService.getAllByUsername(username);
+                for(ProjectDto projectDto : projectDtoList){
+                    if(projectDto.getProjectID() == projectID){
+                        model.addAttribute("project", projectService.getById(projectID));
+                        model.addAttribute("imageProjects", imageProjectService.findAll(String.valueOf(projectID)));
+                        model.addAttribute("fileProjects", fileProjectService.findAll(String.valueOf(projectID)));
+                        model.addAttribute("employeeProjects", employeeProjectService.findAll(String.valueOf(projectID)));
+                        model.addAttribute("leaderProjects", leaderProjectService.findAll(String.valueOf(projectID)));
+                        model.addAttribute("tasks", taskService.findAll(String.valueOf(projectID)));
+                        return "project-view";
+                    }
+                }
+                return "error-404";
+            }
+        }else{
+            return "login";
+        }
     }
 
     @GetMapping("/tasks.html/{id}")
-    public String getTasks(@PathVariable("id") Long projectID, Model model){
-        model.addAttribute("projects", projectService.getAll());
-        model.addAttribute("projectTasks", projectService.getById(projectID));
-        model.addAttribute("tasks", taskService.findAll(String.valueOf(projectID)));
-        return "tasks";
+    public String getTasks(@PathVariable("id") Long projectID, Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(!role.equals("")){
+            if(role.equals("ADMIN") || role.equals("Business_Development")){
+                model.addAttribute("projects", projectService.getAll());
+                model.addAttribute("projectTasks", projectService.getById(projectID));
+                model.addAttribute("tasks", taskService.findAll(String.valueOf(projectID)));
+                return "tasks";
+            }else {
+                // We check if the project is affected for this username
+                List<ProjectDto> projectDtoList = projectService.getAllByUsername(username);
+                for(ProjectDto projectDto : projectDtoList){
+                    if(projectDto.getProjectID() == projectID){
+                        model.addAttribute("projects", projectDtoList);
+                        model.addAttribute("projectTasks", projectService.getById(projectID));
+                        model.addAttribute("tasks", taskService.findAll(String.valueOf(projectID)));
+                        return "tasks";
+                    }
+                }
+                return "error-404";
+            }
+        }else{
+            return "login";
+        }
     }
 
     //************************
@@ -151,120 +413,377 @@ public class NavigationController {
 
 
     @GetMapping("/holidays.html")
-    public String ListHolidays(Model model){
-        model.addAttribute("holidays", holidayService.getAllHolidaysOrderedByDate());
-        return "holidays";
+    public String ListHolidays(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(!role.equals("")){
+            model.addAttribute("holidays", holidayService.getAllHolidaysOrderedByDate());
+            return "holidays";
+        }else{
+            return "login";
+        }
     }
 
 
     @GetMapping("/leave-type.html")
-    public String ListLeaveTypes(Model model){
-        model.addAttribute("leaveTypes", leaveTypeService.getAllLeaveType());
-        return "leave-type";
+    public String ListLeaveTypes(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+
+            username = (String) claims.get("sub");
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(!role.equals("")){
+            if(role.equals("ADMIN") || role.equals("Human_Capital")){
+                model.addAttribute("leaveTypes", leaveTypeService.getAllLeaveType());
+            }else{
+                model.addAttribute("leaveTypes", leaveTypeService.getAllLeaveTypeByUsername(username));
+            }
+            return "leave-type";
+        }
+        return "login";
     }
 
 
     @GetMapping("/leaves-employee.html")
-    public String ListLeaves(Model model){
+    public String ListLeaves(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
 
-        model.addAttribute("leaves", leavesService.getAllLeavesOrderedByDate());
-        Leaves leave = new Leaves();
-        model.addAttribute("oneLeave", leave);
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
+            role = (String) claims.get("roles");
 
-        model.addAttribute("leavesTypes",leaveTypeService.getAllLeaveType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        return "leaves-employee";
+        if(!role.equals("")){
+            model.addAttribute("leaves", leavesService.getAllLeavesByUsernameOrderedByDate(username));
+            model.addAttribute("oneLeave", new Leaves());
+            model.addAttribute("leavesTypes",leaveTypeService.getAllLeaveTypeByUsername(username));
 
+            return "leaves-employee";
+        }else{
+            return "login";
+        }
     }
 
 
     @GetMapping("/leaves.html")
-    public String Leaves(Model model){
+    public String Leaves(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
 
-        model.addAttribute("leaves", leavesService.getAllLeavesOrderedByDate());
-        Leaves leave = new Leaves();
-        model.addAttribute("oneLeave", leave);
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
+            role = (String) claims.get("roles");
 
-        model.addAttribute("leavesTypes",leaveTypeService.getAllLeaveType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        return "leaves";
+        if(!role.equals("")){
+            if(role.equals("ADMIN") || role.equals("Human_Capital")){
+                model.addAttribute("leaves", leavesService.getAllLeavesOrderedByDate());
+                model.addAttribute("oneLeave", new Leaves());
+                model.addAttribute("leavesTypes",leaveTypeService.getAllLeaveTypeByUsername(username));
 
+                return "leaves";
+            }else{
+                return "error-404";
+            }
+        }else{
+            return "login";
+        }
+    }
+
+
+    //////////////////////////////////////// Estimate
+
+    @GetMapping("/estimates.html")
+    public String estimates(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+
+            // Retrieve role from the jwt
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(role.equals("ADMIN") || role.equals("Marketing") || role.equals("Business_Development")){
+            model.addAttribute("estimates", estimatesInvoicesService.getAllEstimates());
+            return "estimates";
+        }else {
+            return "error-404";
+        }
     }
 
     @GetMapping("/create-estimate.html")
-    public String create_estimate(Model model){
+    public String create_estimate(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
 
-        return "create-estimate";
+            // Retrieve role from the jwt
+            role = (String) claims.get("roles");
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(role.equals("ADMIN") || role.equals("Marketing") || role.equals("Business_Development")){
+            return "create-estimate";
+        }else {
+            return "error-404";
+        }
     }
-
-    @GetMapping("/estimates.html")
-    public String estimates(Model model){
-        model.addAttribute("estimates", estimatesInvoicesService.getAllEstimates());
-
-        return "estimates";
-
-    }
-
-
 
     @GetMapping("/edit-estimate.html")
-    public String editEstimates(Model model){
-        return "edit-estimate";
-    }
+    public String editEstimates(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
 
+            // Retrieve role from the jwt
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(role.equals("ADMIN") || role.equals("Marketing") || role.equals("Business_Development")){
+            return "edit-estimate";
+        }else {
+            return "error-404";
+        }
+    }
 
     @GetMapping("/estimate-view.html")
-    public String viewEstimates(Model model){
-        return "estimate-view";
+    public String viewEstimates(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+
+            // Retrieve role from the jwt
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(role.equals("ADMIN") || role.equals("Marketing") || role.equals("Business_Development")){
+            return "estimate-view";
+        }else {
+            return "error-404";
+        }
     }
+
     ////////////////
-    @GetMapping("/create-invoice.html")
-    public String create_invoice(Model model){
-
-        return "create-invoice";
-
-    }
 
     @GetMapping("/invoices.html")
-    public String invoices(Model model){
-        model.addAttribute("estimates", estimatesInvoicesService.getAllInvoices());
-        return "invoices";
+    public String invoices(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
 
+            // Retrieve role from the jwt
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(role.equals("ADMIN") || role.equals("Marketing") || role.equals("Business_Development")){
+            model.addAttribute("estimates", estimatesInvoicesService.getAllInvoices());
+            return "invoices";
+        }else {
+            return "error-404";
+        }
+    }
+
+    @GetMapping("/create-invoice.html")
+    public String create_invoice(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+
+            // Retrieve role from the jwt
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(role.equals("ADMIN") || role.equals("Marketing") || role.equals("Business_Development")){
+            return "create-invoice";
+        }else {
+            return "error-404";
+        }
     }
 
     @GetMapping("/edit-invoice.html")
-    public String editInvoices(Model model){
-        return "edit-invoice";
+    public String editInvoices(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+
+            // Retrieve role from the jwt
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(role.equals("ADMIN") || role.equals("Marketing") || role.equals("Business_Development")){
+            return "edit-invoice";
+        }else {
+            return "error-404";
+        }
     }
 
     @GetMapping("/invoice-view.html")
-    public String viewInvoices(Model model){
-        return "invoice-view";
+    public String viewInvoices(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+
+            // Retrieve role from the jwt
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(role.equals("ADMIN") || role.equals("Marketing") || role.equals("Business_Development")){
+            return "invoice-view";
+        }else {
+            return "error-404";
+        }
     }
 
 
     ////////////payment
 
     @GetMapping("/payments.html")
-    public String payments(Model model){
+    public String payments(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
 
-        model.addAttribute("payments", paymentService.getAll());
+            // Retrieve role from the jwt
+            role = (String) claims.get("roles");
 
-        return "payments";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(role.equals("ADMIN") || role.equals("Marketing") || role.equals("Business_Development")){
+            model.addAttribute("payments", paymentService.getAll());
+            return "payments";
+        }else {
+            return "error-404";
+        }
     }
 
     ///////Expenses
 
     @GetMapping("/expenses.html")
-    public String expenses(Model model){
-        Expenses expense = new Expenses();
-        model.addAttribute("oneExpense", expense);
-        model.addAttribute("expenses", expensesService.getAllExpensesOrderedByDate());
+    public String expenses(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
 
-        return "expenses";
+            // Retrieve role from the jwt
+            role = (String) claims.get("roles");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(role.equals("ADMIN") || role.equals("Marketing") || role.equals("Business_Development")){
+            model.addAttribute("oneExpense", new Expenses());
+            model.addAttribute("expenses", expensesService.getAllExpensesOrderedByDate());
+            return "expenses";
+        }else {
+            return "error-404";
+        }
     }
-
-
 
 }

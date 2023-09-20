@@ -17,5 +17,7 @@ public interface LeaveTypeService {
 
     List<LeaveTypeDto> getAllLeaveType();
 
+    List<LeaveTypeDto> getAllLeaveTypeByUsername(String username);
+
     void delete(String LeaveName);
 }

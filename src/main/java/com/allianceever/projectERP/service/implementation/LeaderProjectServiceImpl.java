@@ -42,6 +42,13 @@ public class LeaderProjectServiceImpl implements LeaderProjectService {
     }
 
     @Override
+    public List<LeaderProjectDto> findAllByLeaderID(String leaderID) {
+        List<LeaderProject> leaderProjects = leaderProjectRepo.findByLeaderID(leaderID);
+        return leaderProjects.stream().map((leaderProject) -> mapToDTO(leaderProject))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public LeaderProjectDto getById(Long LeaderProjectID) {
         LeaderProject leaderProject = leaderProjectRepo.findById(LeaderProjectID).orElseThrow(
                 () -> new ResourceNotFoundException("LeaderProject is not exist with given id : " + LeaderProjectID));

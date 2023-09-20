@@ -11,6 +11,8 @@ public class LeavesDto {
 
     private Integer LeavesID;
 
+    private String  username;
+
     private String  EmployeeName;
 
     private String LeaveType;

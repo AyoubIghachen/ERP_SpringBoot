@@ -25,19 +25,18 @@ public class ProjectErpApplication  {
 		return args ->{
 			if(roleRepository.findByAuthority("ADMIN").isPresent()) return;
 			Role adminRole = roleRepository.save(new Role("ADMIN"));
-			roleRepository.save(new Role("USER"));
-			roleRepository.save(new Role("SALES"));
+			roleRepository.save(new Role("Employee"));
+			roleRepository.save(new Role("Marketing"));
+			roleRepository.save(new Role("IT"));
+			roleRepository.save(new Role("Human_Capital"));
+			roleRepository.save(new Role("Business_Development"));
 
 			Set<Role> roles = new HashSet<>();
 			roles.add(adminRole);
 
-			ApplicationUser admin1 = new ApplicationUser(1, "admin1", passwordEncode.encode("password1"), roles);
-			ApplicationUser admin2 = new ApplicationUser(2, "admin2", passwordEncode.encode("password2"), roles);
-			ApplicationUser admin3 = new ApplicationUser(3, "admin3", passwordEncode.encode("password3"), roles);
-
-			userRepository.save(admin1);
-			userRepository.save(admin2);
-			userRepository.save(admin3);
+			userRepository.save(new ApplicationUser(1, "admin1", passwordEncode.encode("password1"), roles));
+			userRepository.save(new ApplicationUser(2, "admin2", passwordEncode.encode("password2"), roles));
+			userRepository.save(new ApplicationUser(3, "admin3", passwordEncode.encode("password3"), roles));
 		};
 	}
 }

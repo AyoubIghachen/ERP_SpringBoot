@@ -107,4 +107,13 @@ public class LeavesServiceImpl implements LeavesService {
             throw new ResourceNotFoundException("Leaves is not exist with given ID: " + LeavesID);
         }
     }
+
+    @Override
+    public List<LeavesDto> getAllLeavesByUsernameOrderedByDate(String username) {
+        List<Leaves> leavesList = leavesRepo.getAllLeavesByUsernameOrderedByDate(username);
+
+        return leavesList.stream()
+                .map(leaves -> mapper.map(leaves, LeavesDto.class))
+                .collect(Collectors.toList());
+    }
 }

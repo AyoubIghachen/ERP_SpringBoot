@@ -3,6 +3,8 @@ package com.allianceever.projectERP.AuthenticatedBackend.controllers;
 import com.allianceever.projectERP.AuthenticatedBackend.models.ChangePasswordDTO;
 import com.allianceever.projectERP.model.dto.EmployeeDto;
 import com.allianceever.projectERP.service.EmployeeService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,9 +32,16 @@ public class AuthenticationController {
     }
     
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> loginUser(@ModelAttribute RegistrationDTO body){
+    public ResponseEntity<LoginResponseDTO> loginUser(@ModelAttribute RegistrationDTO body, HttpServletResponse response){
         LoginResponseDTO loginResponseDTO = authenticationService.loginUser(body.getUsername(), body.getPassword());
         if (loginResponseDTO.getUser() != null) {
+            String jwtToken = loginResponseDTO.getJwt();
+            // Set the JWT token in an HTTP-only cookie
+            Cookie cookie = new Cookie("jwtToken", jwtToken);
+            cookie.setHttpOnly(true);
+            cookie.setPath("/"); // Set the path to "/" to make the cookie accessible everywhere on your website
+            response.addCookie(cookie);
+
             return ResponseEntity.ok(loginResponseDTO);
         } else {
             return ResponseEntity.notFound().build();

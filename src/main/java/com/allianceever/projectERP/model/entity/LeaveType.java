@@ -16,8 +16,10 @@ public class LeaveType {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Integer leaveTypeId;
-    @Column(unique = true)
 
+    private String  username;
+
+    @Column(unique = true)
     private String leaveName;
 
     private String days;

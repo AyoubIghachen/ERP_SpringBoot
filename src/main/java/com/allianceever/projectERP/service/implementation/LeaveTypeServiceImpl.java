@@ -84,4 +84,13 @@ public class LeaveTypeServiceImpl implements LeaveTypeService {
             throw new ResourceNotFoundException("Leave type is not exist with given name: " + LeaveName);
         }
     }
+
+    @Override
+    public List<LeaveTypeDto> getAllLeaveTypeByUsername(String username) {
+        List<LeaveType> leaveTypes = leaveTypeRepo.getAllLeaveTypeByUsername(username);
+
+        return leaveTypes.stream()
+                .map(leaveType -> mapper.map(leaveType, LeaveTypeDto.class))
+                .collect(Collectors.toList());
+    }
 }

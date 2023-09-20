@@ -42,6 +42,13 @@ public class EmployeeProjectServiceImpl implements EmployeeProjectService {
     }
 
     @Override
+    public List<EmployeeProjectDto> findAllByEmployeeID(Long employeeID) {
+        List<EmployeeProject> employeeProjects = employeeProjectRepo.findByEmployeeID(employeeID);
+        return employeeProjects.stream().map((employeeProject) -> mapToDTO(employeeProject))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public EmployeeProjectDto getById(Long EmployeeProjectID) {
         EmployeeProject employeeProject = employeeProjectRepo.findById(EmployeeProjectID).orElseThrow(
                 () -> new ResourceNotFoundException("EmployeeProject is not exist with given id : " + EmployeeProjectID));

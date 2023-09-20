@@ -311,7 +311,7 @@
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="/profile.html">My Profile</a>
 					<a class="dropdown-item" href="/settings.html">Settings</a>
-					<a class="dropdown-item" href="/login.html">Logout</a>
+					<a class="dropdown-item logout-link" href="/login.html">Logout</a>
 				</div>
 			</li>
 		</ul>
@@ -323,7 +323,7 @@
 			<div class="dropdown-menu dropdown-menu-right">
 				<a class="dropdown-item" href="/profile.html">My Profile</a>
 				<a class="dropdown-item" href="/settings.html">Settings</a>
-				<a class="dropdown-item" href="/login.html">Logout</a>
+				<a class="dropdown-item logout-link" href="/login.html">Logout</a>
 			</div>
 		</div>
 		<!-- /Mobile Menu -->
@@ -2046,6 +2046,47 @@
 <!-- Custom JS -->
 <script src="/assets/js/app.js"></script>
 
+<script>
+	// Retrieve the token from local storage
+	const token = localStorage.getItem("jwtToken");
+
+	// Before making authenticated requests, check if the token has expired
+	function isTokenExpired(token) {
+		if (!token) {
+			return true; // Token is missing or empty
+		}
+
+		const decodedToken = parseJwt(token);
+		const expirationTime = decodedToken.exp * 1000; // Convert to milliseconds
+
+		// Check if the current time is greater than or equal to the token's expiration time
+		return Date.now() >= expirationTime;
+	}
+
+	function parseJwt(token) {
+		// Decode the JWT token (assuming it's in the correct format)
+		const base64Url = token.split(".")[1];
+		const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+		return JSON.parse(atob(base64));
+	}
+
+	// Verify Token expiration
+	if (isTokenExpired(token)) {
+		// Token has expired, display an alert message and redirect to the login page
+		alert("Your session has expired. Please log in again.");
+		window.location.href = "/login.html";
+	} else {
+		// Token is still valid, proceed with the authenticated request
+
+		console.log("Token is valid.");
+	}
+
+	// Create headers object with the Authorization header
+	const headersAuth = {
+		'Authorization': `Bearer ${token}`
+	};
+</script>
+
 
 <script th:inline="javascript">
 	// Edit Profile
@@ -2068,7 +2109,9 @@
 		link.addEventListener("click", function(event) {
 			event.preventDefault();
 			var employeeId = link.getAttribute("data-employee-id");
-			fetch('/employee/' + employeeId)
+			fetch('/employee/' + employeeId, {
+				headers: headersAuth
+			})
 					.then(response => response.json())
 					.then(data => populateFormWithData(data))
 					.catch(error => console.error(error));
@@ -2092,11 +2135,29 @@
 	editForm.addEventListener('submit', function(event) {
 		event.preventDefault();
 
+		/*
+		// Serialize the form data and file upload
+		formData.append('employeeID', editForm.querySelector('[name=employeeID]').value);
+		formData.append('first_Name', editForm.querySelector('[name=first_Name]').value);
+		formData.append('last_Name', editForm.querySelector('[name=last_Name]').value);
+		formData.append('birthday', editForm.querySelector('[name=birthday]').value);
+		formData.append('gender', editForm.querySelector('[name=gender]').value);
+		formData.append('address', editForm.querySelector('[name=address]').value);
+		formData.append('state', editForm.querySelector('[name=state]').value);
+		formData.append('country', editForm.querySelector('[name=country]').value);
+		formData.append('pinCode', editForm.querySelector('[name=pinCode]').value);
+		formData.append('phone', editForm.querySelector('[name=phone]').value);
+		formData.append('departement', editForm.querySelector('[name=departement]').value);
+		formData.append('designation', editForm.querySelector('[name=designation]').value);
+		formData.append('reportTo', editForm.querySelector('[name=reportTo]').value);
+		 */
+
 		// Serialize the form data and file upload
 		const formData = new FormData(editForm);
 
 		fetch(editForm.action, {
 			method: 'POST',
+			headers: headersAuth,
 			body: formData
 		})
 				.then(response => {
@@ -2107,6 +2168,38 @@
 					}
 				})
 				.catch(error => console.error(error));
+	});
+</script>
+
+
+<script>
+	// Select all elements with the class "logout-link" and attach the click event listener to each of them
+	const logoutLinks = document.querySelectorAll(".logout-link");
+
+	logoutLinks.forEach((logoutLink) => {
+		logoutLink.addEventListener("click", (event) => {
+			event.preventDefault(); // Prevent the link from navigating immediately
+
+			fetch("/logout/", {
+				method: "POST",
+				headers: headersAuth
+			})
+					.then((response) => {
+						if (response.ok) {
+							// Logout was successful, perform any additional client-side cleanup
+							localStorage.removeItem("jwtToken");
+							alert("Logout successful"); // Display a message to the user
+							window.location.href = '/login.html'; // Redirect to the login page
+						} else {
+							// Handle logout error
+							console.error("Logout failed");
+						}
+					})
+					.catch((error) => {
+						// Handle fetch or network error
+						console.error("Logout error:", error);
+					});
+		});
 	});
 </script>
 </body>

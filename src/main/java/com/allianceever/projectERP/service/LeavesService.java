@@ -19,5 +19,7 @@ public interface LeavesService {
 
     List<LeavesDto> getAllLeavesOrderedByDate();
 
+    List<LeavesDto> getAllLeavesByUsernameOrderedByDate(String username);
+
     void delete(Integer leavesID);
 }
