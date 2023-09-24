@@ -1,18 +1,18 @@
 package com.allianceever.projectERP.controller;
 
-        import com.allianceever.projectERP.model.dto.DepartmentDto;
-        import com.allianceever.projectERP.service.DepartmentService;
-        import lombok.AllArgsConstructor;
-        import org.springframework.beans.BeanUtils;
-        import org.springframework.beans.BeanWrapper;
-        import org.springframework.beans.BeanWrapperImpl;
-        import org.springframework.http.ResponseEntity;
-        import org.springframework.web.bind.annotation.*;
-        import java.util.HashSet;
-        import java.util.List;
-        import java.util.Set;
+import com.allianceever.projectERP.model.dto.DepartmentDto;
+import com.allianceever.projectERP.service.DepartmentService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-        import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.CREATED;
 
 
 @RestController

@@ -735,31 +735,22 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Company</label>
-                                        <select class="select" name="company">
-                                            <option>Global Technologies</option>
-                                            <option>Delta Infotech</option>
-                                        </select>
+                                        <input class="form-control" type="text" name="company">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Department <span class="text-danger">*</span></label>
-                                        <select class="select" name="departement">
-                                            <option>Select Department</option>
-                                            <option>Web Development</option>
-                                            <option>IT Management</option>
-                                            <option>Marketing</option>
+                                        <select class="select" name="departement" id="departmentSelect1">
+                                            <option value="">Select a department</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Designation <span class="text-danger">*</span></label>
-                                        <select class="select" name="designation">
-                                            <option>Select Designation</option>
-                                            <option>Web Designer</option>
-                                            <option>Web Developer</option>
-                                            <option>Android Developer</option>
+                                        <select class="select" name="designation" id="designationSelect1">
+                                            <option value="">Select a designation</option>
                                         </select>
                                     </div>
                                 </div>
@@ -884,32 +875,22 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Company</label>
-                                        <select class="select" name="company">
-                                            <option>Global Technologies</option>
-                                            <option>Delta Infotech</option>
-                                            <option>International Software Inc</option>
-                                        </select>
+                                        <input class="form-control" type="text" name="company">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Department <span class="text-danger">*</span></label>
-                                        <select class="select" name="departement">
-                                            <option>Select Department</option>
-                                            <option>Web Development</option>
-                                            <option>IT Management</option>
-                                            <option>Marketing</option>
+                                        <select class="select" name="departement" id="departmentSelect2">
+                                            <option value="">Select a department</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Designation <span class="text-danger">*</span></label>
-                                        <select class="select" name="designation">
-                                            <option>Select Designation</option>
-                                            <option>Web Designer</option>
-                                            <option>Web Developer</option>
-                                            <option>Android Developer</option>
+                                        <select class="select" name="designation" id="designationSelect2">
+                                            <option value="">Select a designation</option>
                                         </select>
                                     </div>
                                 </div>
@@ -918,9 +899,12 @@
                                     <div class="form-group">
                                         <label>Role <span class="text-danger">*</span></label>
                                         <select class="select" name="role">
-                                            <option>USER</option>
-                                            <option>SALES</option>
-                                            <option>ADMIN</option>
+                                            <option value="">Select a role</option>
+                                            <option>Employee</option>
+                                            <option>Marketing</option>
+                                            <option>IT</option>
+                                            <option>Human_Capital</option>
+                                            <option>Business_Development</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1007,6 +991,76 @@
     };
 </script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Wait for the DOM to be fully loaded
+
+        // Select the <select> element
+        const departmentSelect1 = document.getElementById("departmentSelect1");
+        const departmentSelect2 = document.getElementById("departmentSelect2");
+        const designationSelect1 = document.getElementById("designationSelect1");
+        const designationSelect2 = document.getElementById("designationSelect2");
+
+        // Send a GET request to the endpoint
+        fetch('/department/all',{
+            headers: headersAuth
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                // Iterate through the fetched data and populate the <select> element
+                data.forEach((department) => {
+                    const option1 = document.createElement("option");
+                    option1.value = department.departmentName;
+                    option1.textContent = department.departmentName;
+
+                    const option2 = document.createElement("option");
+                    option2.value = department.departmentName;
+                    option2.textContent = department.departmentName;
+
+                    departmentSelect1.appendChild(option1);
+                    departmentSelect2.appendChild(option2);
+                });
+            })
+            .catch((error) => {
+                console.error("Fetch error:", error);
+            });
+
+        // Send a GET request to the endpoint
+        fetch('/designation/all',{
+            headers: headersAuth
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                // Iterate through the fetched data and populate the <select> element
+                data.forEach((designation) => {
+                    const option1 = document.createElement("option");
+                    option1.value = designation.designationName;
+                    option1.textContent = designation.designationName;
+
+                    const option2 = document.createElement("option");
+                    option2.value = designation.designationName;
+                    option2.textContent = designation.designationName;
+
+                    designationSelect1.appendChild(option1);
+                    designationSelect2.appendChild(option2);
+                });
+            })
+            .catch((error) => {
+                console.error("Fetch error:", error);
+            });
+    });
+</script>
+
 
 <script th:inline="javascript">
     // Edit Employee
@@ -1025,6 +1079,42 @@
         editForm.querySelector('[name=departement]').value = employee.departement;
         editForm.querySelector('[name=designation]').value = employee.designation;
         editForm.querySelector('[name=role]').value = employee.role;
+
+        // Select the <select> element for department
+        var departmentSelect = editForm.querySelector('[name=departement]');
+        // Loop through the <select> options and set the selected attribute for the matching option
+        for (var i = 0; i < departmentSelect.options.length; i++) {
+            if (departmentSelect.options[i].value === employee.departement) {
+                departmentSelect.options[i].selected = true;
+                // Remove the default "Select a department" option
+                departmentSelect.querySelector('option[value=""]').remove();
+                break;
+            }
+        }
+
+        //
+        var designationSelect = editForm.querySelector('[name=designation]');
+        // Loop through the <select> options and set the selected attribute for the matching option
+        for (var i = 0; i < designationSelect.options.length; i++) {
+            if (designationSelect.options[i].value === employee.designation) {
+                designationSelect.options[i].selected = true;
+                // Remove the default "Select a department" option
+                designationSelect.querySelector('option[value=""]').remove();
+                break;
+            }
+        }
+
+        //
+        var roleSelect = editForm.querySelector('[name=role]');
+        // Loop through the <select> options and set the selected attribute for the matching option
+        for (var i = 0; i < roleSelect.options.length; i++) {
+            if (roleSelect.options[i].value === employee.role) {
+                roleSelect.options[i].selected = true;
+                // Remove the default "Select a department" option
+                roleSelect.querySelector('option[value=""]').remove();
+                break;
+            }
+        }
     }
 
     document.querySelectorAll(".edit-link").forEach(link => {

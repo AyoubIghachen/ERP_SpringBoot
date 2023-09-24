@@ -1447,8 +1447,9 @@
 											<div class="form-group">
 												<label>Gender</label>
 												<select class="select form-control" name="gender">
-													<option value="male selected">Male</option>
-													<option value="female">Female</option>
+													<option value="">Select a gender</option>
+													<option value="Male">Male</option>
+													<option value="Female">Female</option>
 												</select>
 											</div>
 										</div>
@@ -1489,22 +1490,16 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Department <span class="text-danger">*</span></label>
-										<select class="select" name="departement">
-											<option>Select Department</option>
-											<option>Web Development</option>
-											<option>IT Management</option>
-											<option>Marketing</option>
+										<select class="select" name="departement" id="departmentSelect1">
+											<option value="">Select a department</option>
 										</select>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Designation <span class="text-danger">*</span></label>
-										<select class="select" name="designation">
-											<option>Select Designation</option>
-											<option>Web Designer</option>
-											<option>Web Developer</option>
-											<option>Android Developer</option>
+										<select class="select" name="designation" id="designationSelect1">
+											<option value="">Select a designation</option>
 										</select>
 									</div>
 								</div>
@@ -2087,6 +2082,65 @@
 	};
 </script>
 
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		// Wait for the DOM to be fully loaded
+
+		// Select the <select> element
+		const departmentSelect1 = document.getElementById("departmentSelect1");
+		const designationSelect1 = document.getElementById("designationSelect1");
+
+		// Send a GET request to the endpoint
+		fetch('/department/all',{
+			headers: headersAuth
+		})
+				.then((response) => {
+					if (!response.ok) {
+						throw new Error("Network response was not ok");
+					}
+					return response.json();
+				})
+				.then((data) => {
+					// Iterate through the fetched data and populate the <select> element
+					data.forEach((department) => {
+						const option1 = document.createElement("option");
+						option1.value = department.departmentName;
+						option1.textContent = department.departmentName;
+
+						departmentSelect1.appendChild(option1);
+					});
+				})
+				.catch((error) => {
+					console.error("Fetch error:", error);
+				});
+
+		// Send a GET request to the endpoint
+		fetch('/designation/all',{
+			headers: headersAuth
+		})
+				.then((response) => {
+					if (!response.ok) {
+						throw new Error("Network response was not ok");
+					}
+					return response.json();
+				})
+				.then((data) => {
+					// Iterate through the fetched data and populate the <select> element
+					data.forEach((designation) => {
+						const option1 = document.createElement("option");
+						option1.value = designation.designationName;
+						option1.textContent = designation.designationName;
+
+						designationSelect1.appendChild(option1);
+					});
+				})
+				.catch((error) => {
+					console.error("Fetch error:", error);
+				});
+	});
+</script>
+
+
 
 <script th:inline="javascript">
 	// Edit Profile
@@ -2103,6 +2157,45 @@
 		editForm.querySelector('[name=country]').value = employee.country;
 		editForm.querySelector('[name=pinCode]').value = employee.pinCode;
 		editForm.querySelector('[name=phone]').value = employee.phone;
+		editForm.querySelector('[name=departement]').value = employee.departement;
+		editForm.querySelector('[name=designation]').value = employee.designation;
+		editForm.querySelector('[name=gender]').value = employee.gender;
+
+		// Select the <select> element for department
+		var departmentSelect = editForm.querySelector('[name=departement]');
+		// Loop through the <select> options and set the selected attribute for the matching option
+		for (var i = 0; i < departmentSelect.options.length; i++) {
+			if (departmentSelect.options[i].value === employee.departement) {
+				departmentSelect.options[i].selected = true;
+				// Remove the default "Select a department" option
+				departmentSelect.querySelector('option[value=""]').remove();
+				break;
+			}
+		}
+
+		//
+		var designationSelect = editForm.querySelector('[name=designation]');
+		// Loop through the <select> options and set the selected attribute for the matching option
+		for (var i = 0; i < designationSelect.options.length; i++) {
+			if (designationSelect.options[i].value === employee.designation) {
+				designationSelect.options[i].selected = true;
+				// Remove the default "Select a department" option
+				designationSelect.querySelector('option[value=""]').remove();
+				break;
+			}
+		}
+
+		//
+		var genderSelect = editForm.querySelector('[name=gender]');
+		// Loop through the <select> options and set the selected attribute for the matching option
+		for (var i = 0; i < genderSelect.options.length; i++) {
+			if (genderSelect.options[i].value === employee.gender) {
+				genderSelect.options[i].selected = true;
+				// Remove the default "Select a department" option
+				genderSelect.querySelector('option[value=""]').remove();
+				break;
+			}
+		}
 	}
 
 	document.querySelectorAll(".edit-link").forEach(link => {

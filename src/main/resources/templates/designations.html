@@ -665,11 +665,8 @@
 							</div>
 							<div class="form-group">
 								<label>Department <span class="text-danger">*</span></label>
-								<select class="select" name="departmentName">
-									<option>Select Department</option>
-									<option>Web Development</option>
-									<option>IT Management</option>
-									<option> 	Marketing</option>
+								<select class="select" name="departmentName" id="departmentSelect1">
+									<option value="">Select a department</option>
 								</select>
 							</div>
 							<div class="submit-section">
@@ -704,11 +701,8 @@
 							</div>
 							<div class="form-group">
 								<label>Department <span class="text-danger">*</span></label>
-								<select class="select" name="departmentName">
-									<option>Select Department</option>
-									<option>Web Development</option>
-									<option>Sales</option>
-									<option>Marketing</option>
+								<select class="select" name="departmentName" id="departmentSelect2">
+									<option value="">Select a department</option>
 								</select>
 							</div>
 							<div class="submit-section">
@@ -818,6 +812,46 @@
 	};
 </script>
 
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		// Wait for the DOM to be fully loaded
+
+		// Select the <select> element
+		const departmentSelect1 = document.getElementById("departmentSelect1");
+		const departmentSelect2 = document.getElementById("departmentSelect2");
+
+		// Send a GET request to the endpoint
+		fetch('/department/all',{
+			headers: headersAuth
+		})
+				.then((response) => {
+					if (!response.ok) {
+						throw new Error("Network response was not ok");
+					}
+					return response.json();
+				})
+				.then((data) => {
+					// Iterate through the fetched data and populate the <select> element
+					data.forEach((department) => {
+						const option1 = document.createElement("option");
+						option1.value = department.departmentName;
+						option1.textContent = department.departmentName;
+
+						const option2 = document.createElement("option");
+						option2.value = department.departmentName;
+						option2.textContent = department.departmentName;
+
+						departmentSelect1.appendChild(option1);
+						departmentSelect2.appendChild(option2);
+					});
+				})
+				.catch((error) => {
+					console.error("Fetch error:", error);
+				});
+	});
+</script>
+
+
 <script th:inline="javascript">
 	// Edit Designation
 	// JavaScript to handle the AJAX call and pre-fill the form
@@ -826,6 +860,19 @@
 	function populateFormWithData(designation) {
 		editForm.querySelector('[name=designationID]').value = designation.designationID;
 		editForm.querySelector('[name=designationName]').value = designation.designationName;
+		editForm.querySelector('[name=departmentName]').value = designation.departmentName;
+
+		// Select the <select> element for department
+		var departmentSelect = editForm.querySelector('[name=departmentName]');
+		// Loop through the <select> options and set the selected attribute for the matching option
+		for (var i = 0; i < departmentSelect.options.length; i++) {
+			if (departmentSelect.options[i].value === designation.departmentName) {
+				departmentSelect.options[i].selected = true;
+				// Remove the default "Select a department" option
+				departmentSelect.querySelector('option[value=""]').remove();
+				break;
+			}
+		}
 	}
 
 	document.querySelectorAll(".edit-link").forEach(link => {

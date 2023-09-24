@@ -42,7 +42,7 @@ public class EmployeeProjectServiceImpl implements EmployeeProjectService {
     }
 
     @Override
-    public List<EmployeeProjectDto> findAllByEmployeeID(Long employeeID) {
+    public List<EmployeeProjectDto> findAllByEmployeeID(String employeeID) {
         List<EmployeeProject> employeeProjects = employeeProjectRepo.findByEmployeeID(employeeID);
         return employeeProjects.stream().map((employeeProject) -> mapToDTO(employeeProject))
                 .collect(Collectors.toList());

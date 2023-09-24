@@ -63,7 +63,7 @@ public class ProjectServiceImpl implements ProjectService {
     public List<ProjectDto> getAllByUsername(String username) {
         EmployeeDto employeeDto = employeeService.getByUsername(username);
         Long employeeID = employeeDto.getEmployeeID();
-        List<EmployeeProjectDto> employeeProjectDtoList = employeeProjectService.findAllByEmployeeID(employeeID);
+        List<EmployeeProjectDto> employeeProjectDtoList = employeeProjectService.findAllByEmployeeID(String.valueOf(employeeID));
         List<LeaderProjectDto> leaderProjectDtoList = leaderProjectService.findAllByLeaderID(String.valueOf(employeeID));
 
         // Create a Set to store unique project IDs

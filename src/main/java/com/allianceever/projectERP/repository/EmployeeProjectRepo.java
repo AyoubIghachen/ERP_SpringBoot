@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface EmployeeProjectRepo extends JpaRepository<EmployeeProject, Long> {
     List<EmployeeProject> findByProjectID(String projectID);
-    List<EmployeeProject> findByEmployeeID(Long employeeID);
+    List<EmployeeProject> findByEmployeeID(String employeeID);
     EmployeeProject findByEmployeeIDAndProjectID(String employeeID, String projectID);
 }
