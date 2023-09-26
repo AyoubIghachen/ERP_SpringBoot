@@ -1,9 +1,7 @@
 package com.allianceever.projectERP.controller;
 
 import com.allianceever.projectERP.AuthenticatedBackend.utils.RSAKeyProperties;
-import com.allianceever.projectERP.model.dto.ClientDto;
-import com.allianceever.projectERP.model.dto.EmployeeDto;
-import com.allianceever.projectERP.model.dto.ProjectDto;
+import com.allianceever.projectERP.model.dto.*;
 import com.allianceever.projectERP.model.entity.Employee;
 import com.allianceever.projectERP.model.entity.Expenses;
 import com.allianceever.projectERP.model.entity.Leaves;
@@ -71,6 +69,56 @@ public class NavigationController {
 
         if(!role.equals("")){
             if(role.equals("ADMIN")){
+                // nombre des employees
+                Integer nombre_employees = employeeService.getAll().size();
+                model.addAttribute("nombre_employees", nombre_employees);
+
+                // nombre des tasks
+                Integer nombre_tasks = taskService.getAll().size();
+                model.addAttribute("nombre_tasks", nombre_tasks);
+
+                // 5 dernier Projects + nombre des projects
+                List<ProjectDto> originalList = projectService.getAll();
+                List<ProjectDto> newList = originalList.subList(0, Math.min(originalList.size(), 5));
+                model.addAttribute("projects", newList);
+                model.addAttribute("nombre_projects", originalList.size());
+
+                // 5 dernier clients + nombre des clients
+                List<ClientDto> originalList2 = clientService.getAll();
+                List<ClientDto> newList2 = originalList2.subList(0, Math.min(originalList2.size(), 5));
+                model.addAttribute("clients", newList2);
+                model.addAttribute("nombre_clients", originalList2.size());
+
+                // 3 derniers payments
+                List<PaymentDto> originalList3 = paymentService.getAll();
+                List<PaymentDto> newList3 = originalList3.subList(0, Math.min(originalList3.size(), 3));
+                model.addAttribute("payments", newList3);
+
+                // 3 derniers invoices
+                List<EstimatesInvoicesDto> originalList4 = estimatesInvoicesService.getAllInvoices();
+                List<EstimatesInvoicesDto> newList4 = originalList4.subList(0, Math.min(originalList4.size(), 3));
+                model.addAttribute("invoices", newList4);
+
+                // Sum of expenses :
+                List<ExpensesDto> originalList5 = expensesService.getAllExpensesOrderedByDate();
+                double SumExpenses = 0;
+                for(ExpensesDto expensesDto : originalList5){
+                    SumExpenses = SumExpenses + Double.valueOf(expensesDto.getAmount());
+                }
+                model.addAttribute("SumExpenses", SumExpenses);
+
+                // Earning = Sum payments
+                double SumPayments = 0;
+                for(PaymentDto paymentDto : originalList3){
+                    SumPayments = SumPayments + paymentDto.getPaidAmount().doubleValue();
+                }
+                model.addAttribute("Earning", SumPayments);
+
+                // Profit = Earning - Expenses
+                double Profit = SumPayments - SumExpenses;
+                model.addAttribute("Profit", Profit);
+                
+
                 return "index";
             }else{
                 return "error-404";// 401 unauthorized
