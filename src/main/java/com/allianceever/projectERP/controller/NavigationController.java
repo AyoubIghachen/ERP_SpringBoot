@@ -1,8 +1,10 @@
 package com.allianceever.projectERP.controller;
 
 import com.allianceever.projectERP.AuthenticatedBackend.utils.RSAKeyProperties;
+import com.allianceever.projectERP.model.dto.ClientDto;
 import com.allianceever.projectERP.model.dto.EmployeeDto;
 import com.allianceever.projectERP.model.dto.ProjectDto;
+import com.allianceever.projectERP.model.entity.Employee;
 import com.allianceever.projectERP.model.entity.Expenses;
 import com.allianceever.projectERP.model.entity.Leaves;
 import com.allianceever.projectERP.service.*;
@@ -41,7 +43,8 @@ public class NavigationController {
 
 
     @RequestMapping(value = {"/index.html", "/"})
-    public String getIndex(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+    public String getIndex(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -50,7 +53,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,17 +86,8 @@ public class NavigationController {
     }
 
     @RequestMapping("/change-password.html")
-    public String getChangePassword(){
-        return "change-password";
-    }
-
-    @RequestMapping("/settings.html")
-    public String getSettings(){
-        return "settings";
-    }
-
-    @RequestMapping("/employee-dashboard.html")
-    public String getEmployeeDashboard(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+    public String getChangePassword(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -92,7 +96,51 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(!role.equals("")){
+            return "change-password";
+        }else{
+            return "login";
+        }
+    }
+
+    @RequestMapping("/employee-dashboard.html")
+    public String getEmployeeDashboard(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
+        String role = "";
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
+                    .build()
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
+            role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,6 +167,7 @@ public class NavigationController {
     //
     @GetMapping("/employees.html")
     public String ListEmployees(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -127,7 +176,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -160,6 +219,14 @@ public class NavigationController {
             // Retrieve username and role from the jwt
             username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -169,6 +236,15 @@ public class NavigationController {
             EmployeeDto employeeDto = employeeService.getById(employeeID);
             if(employeeDto.getUserName().equals(username) || role.equals("ADMIN") || role.equals("Human_Capital")){
                 model.addAttribute("employee", employeeService.getById(employeeID));
+                //Return the projects assigned for this employee
+                List<ProjectDto> projectDtoList = projectService.getAllByUsername(employeeDto.getUserName());
+                for(ProjectDto projectDto : projectDtoList){
+                    String projectID = String.valueOf(projectDto.getProjectID());
+                    projectDto.setLeaderProjectDtoList(leaderProjectService.findAll(projectID));
+                    projectDto.setEmployeeProjectDtoList(employeeProjectService.findAll(projectID));
+                }
+                model.addAttribute("projects", projectDtoList);
+
                 return "profile";
             }else{
                 return "error-404";// 401 unauthorized
@@ -181,6 +257,7 @@ public class NavigationController {
     //
     @GetMapping("/departments.html")
     public String ListDepartments(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -189,8 +266,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            // Retrieve role from the jwt
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -207,6 +293,7 @@ public class NavigationController {
     //
     @GetMapping("/designations.html")
     public String ListDesignations(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -215,8 +302,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            // Retrieve role from the jwt
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -233,6 +329,7 @@ public class NavigationController {
     //
     @GetMapping("/clients.html")
     public String ListClients(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -241,8 +338,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            // Retrieve role from the jwt
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -258,6 +364,7 @@ public class NavigationController {
 
     @GetMapping("/client-profile.html/{id}")
     public String getClientProfile(@PathVariable("id") Long clientID, Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -266,8 +373,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            // Retrieve role from the jwt
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -275,6 +391,16 @@ public class NavigationController {
 
         if(role.equals("ADMIN") || role.equals("Marketing") || role.equals("Business_Development")){
             model.addAttribute("client", clientService.getById(clientID));
+            //Return the projects assigned for this client
+            ClientDto clientDto = clientService.getById(clientID);
+            List<ProjectDto> projectDtoList = projectService.getAllByCompany_Name(clientDto.getCompany_Name());
+            for(ProjectDto projectDto : projectDtoList){
+                String projectID = String.valueOf(projectDto.getProjectID());
+                projectDto.setLeaderProjectDtoList(leaderProjectService.findAll(projectID));
+                projectDto.setEmployeeProjectDtoList(employeeProjectService.findAll(projectID));
+            }
+            model.addAttribute("projects", projectDtoList);
+
             return "client-profile";
         }else {
             return "error-404";
@@ -296,6 +422,14 @@ public class NavigationController {
             // Retrieve username and role from the jwt
             username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -303,13 +437,24 @@ public class NavigationController {
 
         if(!role.equals("")){
             if(role.equals("ADMIN") || role.equals("Business_Development")){
-                model.addAttribute("projects", projectService.getAll());
-                return "projects";
+                List<ProjectDto> projectDtoList = projectService.getAll();
+                for(ProjectDto projectDto : projectDtoList){
+                    String projectID = String.valueOf(projectDto.getProjectID());
+                    projectDto.setLeaderProjectDtoList(leaderProjectService.findAll(projectID));
+                    projectDto.setEmployeeProjectDtoList(employeeProjectService.findAll(projectID));
+                }
+                model.addAttribute("projects", projectDtoList);
             }else {
                 //Return the projects assigned for this username like a Leader or an Employee
-                model.addAttribute("projects", projectService.getAllByUsername(username));
-                return "projects";
+                List<ProjectDto> projectDtoList = projectService.getAllByUsername(username);
+                for(ProjectDto projectDto : projectDtoList){
+                    String projectID = String.valueOf(projectDto.getProjectID());
+                    projectDto.setLeaderProjectDtoList(leaderProjectService.findAll(projectID));
+                    projectDto.setEmployeeProjectDtoList(employeeProjectService.findAll(projectID));
+                }
+                model.addAttribute("projects", projectDtoList);
             }
+            return "projects";
         }else{
             return "login";
         }
@@ -329,6 +474,14 @@ public class NavigationController {
             // Retrieve username and role from the jwt
             username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -378,6 +531,14 @@ public class NavigationController {
             // Retrieve username and role from the jwt
             username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -414,6 +575,7 @@ public class NavigationController {
 
     @GetMapping("/holidays.html")
     public String ListHolidays(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -422,7 +584,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -448,8 +620,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
+            // Retrieve username and role from the jwt
             username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -480,6 +661,14 @@ public class NavigationController {
             // Retrieve username and role from the jwt
             username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -511,6 +700,14 @@ public class NavigationController {
             // Retrieve username and role from the jwt
             username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -536,6 +733,7 @@ public class NavigationController {
 
     @GetMapping("/estimates.html")
     public String estimates(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -544,8 +742,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            // Retrieve role from the jwt
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -560,7 +767,8 @@ public class NavigationController {
     }
 
     @GetMapping("/create-estimate.html")
-    public String create_estimate(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+    public String create_estimate(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -569,8 +777,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            // Retrieve role from the jwt
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -584,7 +801,8 @@ public class NavigationController {
     }
 
     @GetMapping("/edit-estimate.html")
-    public String editEstimates(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+    public String editEstimates(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -593,8 +811,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            // Retrieve role from the jwt
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -608,7 +835,8 @@ public class NavigationController {
     }
 
     @GetMapping("/estimate-view.html")
-    public String viewEstimates(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+    public String viewEstimates(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -617,8 +845,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            // Retrieve role from the jwt
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -635,6 +872,7 @@ public class NavigationController {
 
     @GetMapping("/invoices.html")
     public String invoices(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -643,8 +881,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            // Retrieve role from the jwt
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -659,7 +906,8 @@ public class NavigationController {
     }
 
     @GetMapping("/create-invoice.html")
-    public String create_invoice(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+    public String create_invoice(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -668,8 +916,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            // Retrieve role from the jwt
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -683,7 +940,8 @@ public class NavigationController {
     }
 
     @GetMapping("/edit-invoice.html")
-    public String editInvoices(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+    public String editInvoices(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -692,8 +950,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            // Retrieve role from the jwt
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -707,7 +974,8 @@ public class NavigationController {
     }
 
     @GetMapping("/invoice-view.html")
-    public String viewInvoices(@CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+    public String viewInvoices(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -716,8 +984,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            // Retrieve role from the jwt
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -735,6 +1012,7 @@ public class NavigationController {
 
     @GetMapping("/payments.html")
     public String payments(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -743,8 +1021,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            // Retrieve role from the jwt
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -762,6 +1049,7 @@ public class NavigationController {
 
     @GetMapping("/expenses.html")
     public String expenses(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
+        String username = "";
         String role = "";
         try {
             Claims claims = Jwts.parserBuilder()
@@ -770,8 +1058,17 @@ public class NavigationController {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            // Retrieve role from the jwt
+            // Retrieve username and role from the jwt
+            username = (String) claims.get("sub");
             role = (String) claims.get("roles");
+            if(role.equals("ADMIN")){
+                Employee user = new Employee();
+                user.setFirst_Name("ADMIN");
+                user.setImageName("admin.png");
+                model.addAttribute("user", user);
+            }else {
+                model.addAttribute("user", employeeService.getByUsername(username));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

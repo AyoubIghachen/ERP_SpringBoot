@@ -25,6 +25,7 @@ public class Client {
     private String personnel_Phone;
     private String imageName;
 
+    @Column(unique = true)
     private String company_Name;
     private String date_Creation;
     private String address;

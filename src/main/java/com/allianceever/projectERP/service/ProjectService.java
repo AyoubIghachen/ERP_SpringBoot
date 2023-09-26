@@ -9,6 +9,7 @@ public interface ProjectService {
     ProjectDto update(Long projectID, ProjectDto projectDto);
     List<ProjectDto> getAll();
     List<ProjectDto> getAllByUsername(String username);
+    List<ProjectDto> getAllByCompany_Name(String company_Name);
     ProjectDto getById(Long projectID);
     void delete(Long projectID);
 }

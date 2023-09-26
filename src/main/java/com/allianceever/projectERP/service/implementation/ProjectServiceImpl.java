@@ -91,6 +91,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<ProjectDto> getAllByCompany_Name(String company_Name) {
+        List<Project> projects = projectRepo.findByCompany_Name(company_Name);
+        return projects.stream().map((project) -> mapToDTO(project))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public ProjectDto getById(Long ProjectID) {
         Project project = projectRepo.findById(ProjectID).orElseThrow(
                 () -> new ResourceNotFoundException("Project is not exist with given id : " + ProjectID));

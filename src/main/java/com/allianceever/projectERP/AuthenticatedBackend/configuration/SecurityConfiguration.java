@@ -69,7 +69,6 @@ public class SecurityConfiguration {
                 auth.requestMatchers("/auth/login").permitAll();
                 auth.requestMatchers("/logout/").permitAll();
 
-                auth.requestMatchers("/settings.html").permitAll();// See again
                 auth.requestMatchers("/change-password.html").permitAll();// See again
                 auth.requestMatchers("/auth/changePassword").authenticated();// See again
                 // Dashboard
