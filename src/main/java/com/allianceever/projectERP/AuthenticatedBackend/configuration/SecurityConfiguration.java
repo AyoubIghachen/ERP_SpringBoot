@@ -74,7 +74,6 @@ public class SecurityConfiguration {
                 // Dashboard
                 auth.requestMatchers("/").permitAll();
                 auth.requestMatchers("/index.html").permitAll();
-                auth.requestMatchers("/employee-dashboard.html").permitAll();
 
 
                 // All Employees Functions

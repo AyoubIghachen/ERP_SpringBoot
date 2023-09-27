@@ -8,7 +8,7 @@
 	<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
 	<meta name="author" content="Dreamguys - Bootstrap Admin Template">
 	<meta name="robots" content="noindex, nofollow">
-	<title>Tasks - HRMS admin template</title>
+	<title>Tasks</title>
 
 	<style>
 		/* CSS styles for the selected task */
@@ -78,7 +78,7 @@
 
 		<!-- Header Title -->
 		<div class="page-title-box">
-			<h3>ALLIANCE EVER's ERP</h3>
+			<h3>Enterprise resource planning</h3>
 		</div>
 		<!-- /Header Title -->
 
@@ -152,8 +152,6 @@
 									<li class="nav-item dropdown dropdown-action">
 										<a href="/" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cog"></i></a>
 										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="/javascript:void(0)">Pending Tasks</a>
-											<a class="dropdown-item" href="/javascript:void(0)">Completed Tasks</a>
 											<a class="dropdown-item" href="/javascript:void(0)">All Tasks</a>
 										</div>
 									</li>
@@ -280,7 +278,7 @@
 							<div class="message-bar">
 								<div class="message-inner">
 
-									<a class="link attach-icon" href="/#"><img src="/assets/img/attachment.png" alt=""></a>
+									
 
 									<div class="message-area">
 										<div class="input-group">
@@ -323,9 +321,8 @@
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label>Client</label>
-										<select class="select" name="company_Name">
-											<option>Global Technologies</option>
-											<option>Delta Infotech</option>
+										<select class="select" name="company_Name" id="company_NameSelect1">
+											<option value="">Select a client</option>
 										</select>
 									</div>
 								</div>
@@ -359,6 +356,7 @@
 									<div class="form-group">
 										<label>Type</label>
 										<select class="select" name="rate_Type">
+											<option value="">Select type</option>
 											<option>Hourly</option>
 											<option>Fixed</option>
 										</select>
@@ -368,6 +366,7 @@
 									<div class="form-group">
 										<label>Priority</label>
 										<select class="select" name="priority">
+											<option value="">Select priority</option>
 											<option>High</option>
 											<option>Medium</option>
 											<option>Low</option>
@@ -386,18 +385,11 @@
 									<div class="form-group">
 										<label>Status</label>
 										<select class="select" name="status">
+											<option value="">Select status</option>
 											<option>Working</option>
 											<option>Completed</option>
 											<option>Pending</option>
 										</select>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-6">
-									<div class="form-group">
-										<label>Created by</label>
-										<input class="form-control" type="text" name="created_By">
 									</div>
 								</div>
 							</div>
@@ -656,6 +648,42 @@
 		'Authorization': `Bearer ${token}`
 	};
 </script>
+
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		// Wait for the DOM to be fully loaded
+
+		// Select the <select> element
+		const company_NameSelect1 = document.getElementById("company_NameSelect1");
+
+		// Send a GET request to the endpoint
+		fetch('/client/all',{
+			headers: headersAuth
+		})
+				.then((response) => {
+					if (!response.ok) {
+						throw new Error("Network response was not ok");
+					}
+					return response.json();
+				})
+				.then((data) => {
+					// Iterate through the fetched data and populate the <select> element
+					data.forEach((client) => {
+						const option1 = document.createElement("option");
+						option1.value = client.company_Name;
+						option1.textContent = client.company_Name;
+
+						company_NameSelect1.appendChild(option1);
+					});
+				})
+				.catch((error) => {
+					console.error("Fetch error:", error);
+				});
+	});
+</script>
+
+
 
 <script th:inline="javascript">
 	// Add Project

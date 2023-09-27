@@ -8,7 +8,7 @@
 	<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
 	<meta name="author" content="Dreamguys - Bootstrap Admin Template">
 	<meta name="robots" content="noindex, nofollow">
-	<title>Projects - HRMS admin template</title>
+	<title>Projects</title>
 
 	<!-- Favicon -->
 	<link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.png">
@@ -65,7 +65,7 @@
 
 		<!-- Header Title -->
 		<div class="page-title-box">
-			<h3>ALLIANCE EVER's ERP</h3>
+			<h3>Enterprise resource planning</h3>
 		</div>
 		<!-- /Header Title -->
 
@@ -113,7 +113,6 @@
 						<a href="/#"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
 						<ul style="display: none;">
 							<li><a href="/index.html">Admin Dashboard</a></li>
-							<li><a href="/employee-dashboard.html">Employee Dashboard</a></li>
 						</ul>
 					</li>
 					<li class="menu-title">
@@ -139,9 +138,6 @@
 						<ul style="display: none;">
 							<li><a class="active" href="/projects.html">Projects</a></li>
 						</ul>
-					</li>
-					<li>
-						<a href="/leads.html"><i class="la la-user-secret"></i> <span>Leads</span></a>
 					</li>
 					<li class="menu-title">
 						<span>HR</span>
@@ -200,8 +196,7 @@
 							</div>
 							<h4 class="project-title"><a th:href="@{/project-view.html/{id}(id=${project.getProjectID()})}" th:text="${project.getProject_Name()}">Office Management</a></h4>
 							<small class="block text-ellipsis m-b-15">
-								<span class="text-xs">1</span> <span class="text-muted">open tasks, </span>
-								<span class="text-xs">9</span> <span class="text-muted">tasks completed</span>
+
 							</small>
 							<p class="text-muted" th:text="${project.getDescription()}">Lorem Ipsum is simply dummy text of the printing and
 								typesetting industry. When an unknown printer took a galley of type and
@@ -255,10 +250,6 @@
 										</div>
 									</li>
 								</ul>
-							</div>
-							<p class="m-b-5">Progress <span class="text-success float-right" th:text="${project.getProgress() ?: '80%'}">40%</span></p>
-							<div class="progress progress-xs mb-0">
-								<div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="70%" style="width: 80%"></div>
 							</div>
 						</div>
 					</div>

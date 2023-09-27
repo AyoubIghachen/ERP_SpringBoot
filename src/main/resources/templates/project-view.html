@@ -8,7 +8,7 @@
 	<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
 	<meta name="author" content="Dreamguys - Bootstrap Admin Template">
 	<meta name="robots" content="noindex, nofollow">
-	<title>Project View - HRMS admin template</title>
+	<title>Project View</title>
 
 	<style>
 		/* CSS styles for the selected employee */
@@ -69,7 +69,7 @@
 
 		<!-- Header Title -->
 		<div class="page-title-box">
-			<h3>ALLIANCE EVER's ERP</h3>
+			<h3>Enterprise resource planning</h3>
 		</div>
 		<!-- /Header Title -->
 
@@ -117,7 +117,6 @@
 						<a href="/#"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
 						<ul style="display: none;">
 							<li><a href="/index.html">Admin Dashboard</a></li>
-							<li><a href="/employee-dashboard.html">Employee Dashboard</a></li>
 						</ul>
 					</li>
 					<li class="menu-title">
@@ -143,9 +142,6 @@
 						<ul style="display: none;">
 							<li><a class="active" href="/projects.html">Projects</a></li>
 						</ul>
-					</li>
-					<li>
-						<a href="/leads.html"><i class="la la-user-secret"></i> <span>Leads</span></a>
 					</li>
 					<li class="menu-title">
 						<span>HR</span>
@@ -178,7 +174,7 @@
 			<div class="page-header">
 				<div class="row align-items-center">
 					<div class="col">
-						<h3 class="page-title" th:text="${project.getProject_Name()}">Hospital Admin</h3>
+						<h3 class="page-title" th:text="${project.getProject_Name()}"></h3>
 						<ul class="breadcrumb">
 							<li class="breadcrumb-item"><a href="/index.html">Dashboard</a></li>
 							<li class="breadcrumb-item active">Project</li>
@@ -186,8 +182,7 @@
 					</div>
 					<div class="col-auto float-right ml-auto">
 						<a id="editProjectLink" class="btn add-btn edit-link" th:href="@{/project/{id}(id=${project.getProjectID()})}" th:data-project-id="${project.getProjectID()}" data-toggle="modal" data-target="#edit_project"><i class="fa fa-plus"></i> Edit Project</a>
-						<a th:href="@{/task-board.html/{id}(id=${project.getProjectID()})}" class="btn btn-white float-right m-r-10" data-toggle="tooltip" title="Task Board"><i class="fa fa-bars"></i></a>
-						<a th:href="@{/tasks.html/{id}(id=${project.getProjectID()})}" class="btn btn-white float-right m-r-10" data-toggle="tooltip" title="Tasks"><i class="fa fa-bars"></i></a>
+						<a th:href="@{/tasks.html/{id}(id=${project.getProjectID()})}" class="btn btn-white float-right m-r-10" data-toggle="tooltip" title="Tasks">Tasks View</a>
 					</div>
 				</div>
 			</div>
@@ -198,8 +193,8 @@
 					<div class="card">
 						<div class="card-body">
 							<div class="project-title">
-								<h5 class="card-title" th:text="${project.getCompany_Name()}">Hospital Administration</h5>
-								<small class="block text-ellipsis m-b-15"><span class="text-xs">2</span> <span class="text-muted">open tasks, </span><span class="text-xs">5</span> <span class="text-muted">tasks completed</span></small>
+								<h5 class="card-title" th:text="${project.getCompany_Name()}"></h5>
+								<small class="block text-ellipsis m-b-15"></small>
 							</div>
 							<p th:text="${project.getDescription()}"></p>
 							</div>
@@ -248,7 +243,7 @@
 								<li th:each="fileProject: ${fileProjects}">
 									<div class="files-cont">
 										<div class="file-type">
-											<span class="files-icon"><i class="fa fa-file-pdf-o"></i></span>
+											<span class="files-icon" th:href="@{'/assets/img/projects/' + ${fileProject.getFileName()}}"><i class="fa fa-file-pdf-o"></i></span>
 										</div>
 										<div class="files-info">
 											<span class="file-name text-ellipsis"><a target="_blank" th:href="@{'/assets/img/projects/' + ${fileProject.getFileName()}}"  th:text="${fileProject.getOriginalName()}"></a></span>
@@ -270,8 +265,6 @@
 					<div class="project-task">
 						<ul class="nav nav-tabs nav-tabs-top nav-justified mb-0">
 							<li class="nav-item"><a class="nav-link active" href="/#all_tasks" data-toggle="tab" aria-expanded="true">All Tasks</a></li>
-							<li class="nav-item"><a class="nav-link" href="/#pending_tasks" data-toggle="tab" aria-expanded="false">Pending Tasks</a></li>
-							<li class="nav-item"><a class="nav-link" href="/#completed_tasks" data-toggle="tab" aria-expanded="false">Completed Tasks</a></li>
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane show active" id="all_tasks">
@@ -342,10 +335,6 @@
 								</tr>
 								</tbody>
 							</table>
-							<p class="m-b-5">Progress <span class="text-success float-right" th:text="${project.getProgress() ?: '80%'}">40%</span></p>
-							<div class="progress progress-xs mb-0">
-								<div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="40%" style="width: 40%"></div>
-							</div>
 						</div>
 					</div>
 					<div class="card project-user">

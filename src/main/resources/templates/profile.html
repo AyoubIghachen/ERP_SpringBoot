@@ -8,7 +8,7 @@
 	<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
 	<meta name="author" content="Dreamguys - Bootstrap Admin Template">
 	<meta name="robots" content="noindex, nofollow">
-	<title>Employee Profile - HRMS admin template</title>
+	<title>Employee Profile</title>
 
 	<!-- Favicon -->
 	<link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.png">
@@ -65,7 +65,7 @@
 
 		<!-- Header Title -->
 		<div class="page-title-box">
-			<h3>ALLIANCE EVER's ERP</h3>
+			<h3>Enterprise resource planning</h3>
 		</div>
 		<!-- /Header Title -->
 
@@ -113,7 +113,6 @@
 						<a href="/#"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
 						<ul style="display: none;">
 							<li><a href="/index.html">Admin Dashboard</a></li>
-							<li><a href="/employee-dashboard.html">Employee Dashboard</a></li>
 						</ul>
 					</li>
 					<li class="menu-title">
@@ -139,9 +138,6 @@
 						<ul style="display: none;">
 							<li><a href="/projects.html">Projects</a></li>
 						</ul>
-					</li>
-					<li>
-						<a href="/leads.html"><i class="la la-user-secret"></i> <span>Leads</span></a>
 					</li>
 					<li class="menu-title">
 						<span>HR</span>
@@ -199,8 +195,8 @@
 										<div class="col-md-5">
 											<div class="profile-info-left">
 												<h3 class="user-name m-t-0 mb-0" th:text="${employee.getFirst_Name()+' '+employee.getLast_Name()}">Employee Name</h3>
-												<h6 class="text-muted" th:text="${employee.getDepartement()}"></h6>
-												<small class="text-muted" th:text="${employee.getDesignation()}"></small>
+												<h6 class="text-muted" th:text="${employee.getDepartement() ?: '.'}"></h6>
+												<small class="text-muted" th:text="${employee.getDesignation() ?: '.'}"></small>
 												<div class="staff-id" th:text="'Employee ID : E-'+${employee.getEmployeeID()}"></div>
 												<div class="small doj text-muted" th:text="'Date of Join : '+${employee.getJoinDate()}"></div>
 											</div>
@@ -209,23 +205,35 @@
 											<ul class="personal-info">
 												<li>
 													<div class="title">Phone:</div>
-													<div class="text" th:text="${employee.getPhone() ?: 'Null'}"></div>
+													<div class="text" th:text="${employee.getPhone() ?: '.'}"></div>
 												</li>
 												<li>
 													<div class="title">Email:</div>
-													<div class="text" th:text="${employee.getEmail() ?: 'Null'}"></div>
+													<div class="text" th:text="${employee.getEmail() ?: '.'}"></div>
 												</li>
 												<li>
 													<div class="title">Birthday:</div>
-													<div class="text" th:text="${employee.getBirthday() ?: 'Null'}"></div>
+													<div class="text" th:text="${employee.getBirthday() ?: '.'}"></div>
 												</li>
 												<li>
 													<div class="title">Address:</div>
-													<div class="text" th:text="${employee.getAddress() ?: 'Null'}"></div>
+													<div class="text" th:text="${employee.getAddress() ?: '.'}"></div>
 												</li>
 												<li>
 													<div class="title">Gender:</div>
-													<div class="text" th:text="${employee.getGender() ?: 'Null'}"></div>
+													<div class="text" th:text="${employee.getGender() ?: '.'}"></div>
+												</li>
+												<li>
+													<div class="title">State:</div>
+													<div class="text" th:text="${employee.getState() ?: '.'}"></div>
+												</li>
+												<li>
+													<div class="title">Country:</div>
+													<div class="text" th:text="${employee.getCountry() ?: '.'}"></div>
+												</li>
+												<li>
+													<div class="title">Pin code:</div>
+													<div class="text" th:text="${employee.getPinCode() ?: '.'}"></div>
 												</li>
 											</ul>
 										</div>
@@ -259,8 +267,7 @@
 								<div class="card-body">
 									<h4 class="project-title"><a th:href="@{/project-view.html/{id}(id=${project.getProjectID()})}" th:text="${project.getProject_Name()}"></a></h4>
 									<small class="block text-ellipsis m-b-15">
-										<span class="text-xs">1</span> <span class="text-muted">open tasks, </span>
-										<span class="text-xs">9</span> <span class="text-muted">tasks completed</span>
+
 									</small>
 									<p class="text-muted" th:text="${project.getDescription()}">
 									</p>
@@ -312,10 +319,6 @@
 												</div>
 											</li>
 										</ul>
-									</div>
-									<p class="m-b-5">Progress <span class="text-success float-right" th:text="${project.getProgress() ?: '80%'}">40%</span></p>
-									<div class="progress progress-xs mb-0">
-										<div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="70%" style="width: 80%"></div>
 									</div>
 								</div>
 							</div>
@@ -428,17 +431,6 @@
 										<label>Designation <span class="text-danger">*</span></label>
 										<select class="select" name="designation" id="designationSelect1">
 											<option value="">Select a designation</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label>Reports To <span class="text-danger">*</span></label>
-										<select class="select" name="reportTo">
-											<option>-</option>
-											<option>Wilmer Deluna</option>
-											<option>Lesley Grauer</option>
-											<option>Jeffery Lalor</option>
 										</select>
 									</div>
 								</div>

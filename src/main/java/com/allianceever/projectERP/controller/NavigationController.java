@@ -167,43 +167,6 @@ public class NavigationController {
         }
     }
 
-    @RequestMapping("/employee-dashboard.html")
-    public String getEmployeeDashboard(Model model, @CookieValue(value = "jwtToken", defaultValue = "") String jwtToken){
-        String username = "";
-        String role = "";
-        try {
-            Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(rsaKeyProperties.getPublicKey()) // Use the public key for verification
-                    .build()
-                    .parseClaimsJws(jwtToken)
-                    .getBody();
-
-            // Retrieve username and role from the jwt
-            username = (String) claims.get("sub");
-            role = (String) claims.get("roles");
-            if(role.equals("ADMIN")){
-                Employee user = new Employee();
-                user.setFirst_Name("ADMIN");
-                user.setImageName("admin.png");
-                model.addAttribute("user", user);
-            }else {
-                model.addAttribute("user", employeeService.getByUsername(username));
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if(!role.equals("")){
-            if(!role.equals("ADMIN")){
-                return "employee-dashboard";
-            }else{
-                return "error-404";// 401 unauthorized
-            }
-        }else{
-            return "login";
-        }
-    }
 
     @RequestMapping("/error-404.html")
     public String getError404(){
